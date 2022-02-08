@@ -1,5 +1,7 @@
 package de.yanwittmann.bingo.generator;
 
+import java.util.StringJoiner;
+
 public class BingoBoard {
 
     private final BingoTile[][] board;
@@ -27,11 +29,11 @@ public class BingoBoard {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int y = 0; y < getHeight(); y++) {
+            StringJoiner row = new StringJoiner(",  ");
             for (int x = 0; x < getWidth(); x++) {
-                sb.append(board[x][y]);
-                sb.append(" ");
+                row.add(String.valueOf(board[x][y]));
             }
-            sb.append("\n");
+            sb.append(row).append("\n");
         }
         return sb.toString();
     }

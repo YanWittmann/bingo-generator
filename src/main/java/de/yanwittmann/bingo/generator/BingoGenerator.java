@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BingoGenerator {
 
@@ -40,6 +41,7 @@ public class BingoGenerator {
         }
 
         LOG.info("Board difficulty is [{}]", calculateDifficulty(tiles));
+        LOG.info("Categories [{}]", configuration.countCategories(tiles));
 
         return board;
     }
@@ -56,7 +58,7 @@ public class BingoGenerator {
 
     private void fillBoard(List<BingoTile> tiles) {
         int tileCount = width * height;
-        while (tiles.size() < tileCount) tiles.add(configuration.generateTile());
+        while (tiles.size() < tileCount) tiles.add(configuration.generateTile(tiles, width * height));
     }
 
     private double calculateDifficulty(List<BingoTile> tiles) {
