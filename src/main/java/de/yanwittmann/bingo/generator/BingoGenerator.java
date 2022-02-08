@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class BingoGenerator {
 
@@ -26,11 +25,9 @@ public class BingoGenerator {
         }
 
         List<BingoTile> tiles = new ArrayList<>();
-        for (int i = 0; i < (width * height) * 2; i++) {
-            fillBoard(tiles);
-            removeByDifficulty(tiles);
+        for (int i = 0; i < (width * height) * 5; i++) {
+            createAndRemoveTiles(tiles, width * height);
         }
-        fillBoard(tiles);
 
         BingoBoard board = new BingoBoard(width, height);
         tiles.sort((o1, o2) -> (int) (Math.random() * 2) - 1);
@@ -46,23 +43,52 @@ public class BingoGenerator {
         return board;
     }
 
-    private void removeByDifficulty(List<BingoTile> tiles) {
+    private void createAndRemoveTiles(List<BingoTile> tiles, int maxTileCount) {
+        for (int i = 0; i < maxTileCount; i++) {
+            fillBoard(tiles);
+            ArrayList<BingoTile> backup = new ArrayList<>(tiles);
+            removeByDifficulty(tiles, (width + height) / 2);
+            fillBoard(tiles);
+            if (distanceToDestinationDifficulty(calculateDifficulty(tiles)) > distanceToDestinationDifficulty(calculateDifficulty(backup))) {
+                tiles = new ArrayList<>(backup);
+                removeRandom(tiles, 2);
+                fillBoard(tiles);
+                if (distanceToDestinationDifficulty(calculateDifficulty(tiles)) > distanceToDestinationDifficulty(calculateDifficulty(backup))) {
+                    tiles = backup;
+                }
+            }
+        }
+    }
+
+    private void removeByDifficulty(List<BingoTile> tiles, int amount) {
         tiles.sort((o1, o2) -> Double.compare(o2.getDifficulty(), o1.getDifficulty()));
-        double currentDifficulty = calculateDifficulty(tiles);
-        if (currentDifficulty > difficulty) {
-            tiles.remove(0);
-        } else {
-            tiles.remove(tiles.size() - 1);
+        for (int i = 0; i < amount && tiles.size() > 0; i++) {
+            double currentDifficulty = calculateDifficulty(tiles);
+            if (currentDifficulty > difficulty) {
+                tiles.remove(0);
+            } else {
+                tiles.remove(tiles.size() - 1);
+            }
+        }
+    }
+
+    private void removeRandom(List<BingoTile> tiles, int amount) {
+        for (int i = 0; i < amount && tiles.size() > 0; i++) {
+            tiles.remove((int) Math.abs(Math.random() * tiles.size()));
         }
     }
 
     private void fillBoard(List<BingoTile> tiles) {
         int tileCount = width * height;
-        while (tiles.size() < tileCount) tiles.add(configuration.generateTile(tiles, width * height));
+        while (tiles.size() < tileCount) tiles.add(configuration.generateTile(tiles, width * height, difficulty));
     }
 
     private double calculateDifficulty(List<BingoTile> tiles) {
         return tiles.stream().mapToDouble(BingoTile::getDifficulty).average().orElse(0.0);
+    }
+
+    private double distanceToDestinationDifficulty(double difficulty) {
+        return Math.abs(difficulty - this.difficulty);
     }
 
     public BingoConfiguration getConfiguration() {

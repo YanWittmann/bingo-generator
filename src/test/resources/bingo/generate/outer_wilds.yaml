@@ -1,0 +1,91 @@
+tile generators:
+  - text: Land your ship on [PLANET]
+    categories: [ goto, ship ]
+    difficulty: 1
+    weight: 1
+  - text: Die on [LOCATION]
+    categories: [ goto, die ]
+    difficulty: 3
+    weight: 1
+
+snippets:
+  PLANET:
+    - text: Timber Hearth
+      categories: [ timber_hearth ]
+      difficulty: 1
+      weight: 4
+    - text: The Attlerock
+      categories: [ attlerock ]
+      difficulty: 1
+      weight: 5
+    - text: The Ember Twin
+      categories: [ ember_twin ]
+      difficulty: 1.5
+      weight: 10
+    - text: The Ash Twin
+      categories: [ ash_twin ]
+      difficulty: 1.5
+      weight: 10
+    - text: Briddle Hollow
+      categories: [ briddle_hollow ]
+      difficulty: 1.5
+      weight: 10
+    - text: Hollows Lantern
+      categories: [ hollows_lantern ]
+      difficulty: 2
+      weight: 6
+    - text: Giant's Deep
+      categories: [ giants_deep ]
+      difficulty: 1.8
+      weight: 10
+    - text: Dark Bramble
+      categories: [ dark_bramble ]
+      difficulty: 1.5
+      weight: 6
+    - text: The Interloper
+      categories: [ interloper ]
+      difficulty: 2
+      weight: 6
+    - text: The Quatum Moon
+      categories: [ quatum_moon ]
+      difficulty: 1.8
+      weight: 6
+    - text: The Stranger
+      categories: [ stranger ]
+      difficulty: 1.5
+      weight: 6
+  LOCATION:
+    - text: the Sun Station
+      categories: [ sun ]
+      difficulty: 4
+      weight: 3
+    - text: the Construction Site
+      categories: [ giants_deep ]
+      difficulty: 1.5
+      weight: 10
+
+categories:
+  die:
+    name: Die
+    max:
+      absolute: 1
+    min:
+      absolute: 1
+  goto:
+    name: Goto
+  ship:
+    name: Ship
+  timber_hearth:
+    name: Timber Hearth
+    min:
+      relative: 10
+    max:
+      relative: 50
+  interloper:
+    name: Interloper
+    max:
+      relative: 20
+  hollows_lantern:
+    name: Hollows Lantern
+    max:
+      relative: 20
