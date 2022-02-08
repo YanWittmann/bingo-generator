@@ -47,7 +47,7 @@ public class BingoConfiguration {
                         if (entry.getValue() instanceof Map) {
                             Map<String, Object> optionMap = (Map<String, Object>) entry.getValue();
                             if (Category.validate(optionMap)) {
-                                categories.put(entry.getKey(), new Category(optionMap));
+                                categories.put(entry.getKey(), new Category(optionMap, categories));
                             }
                         }
                     }
@@ -166,25 +166,27 @@ public class BingoConfiguration {
         }
         TileGenerator selectedGenerator = getRandom(filteredTileGenerators);
         String text = selectedGenerator.getText();
-        Set<Category> tileCategories = new HashSet<>(selectedGenerator.getCategories());
 
         String currentClosestText = null;
         double currentClosestDifficulty = Double.MAX_VALUE;
+        Set<Category> bestTileCategories = new HashSet<>();
         for (int i = 0; i < 10; i++) {
             AtomicReference<Double> currentDifficulty = new AtomicReference<>(0.0);
-            String tmp = insertSnippets(text, createdMustBeCategories, createdMayNotBeCategories, currentDifficulty, tileCategories);
+            Set<Category> currentTileCategories = new HashSet<>();
+            String tmp = insertSnippets(text, createdMustBeCategories, createdMayNotBeCategories, currentDifficulty, currentTileCategories);
             double currentDistance = Math.abs(currentDifficulty.get() - destDifficulty);
             double currentClosestDistance = Math.abs(currentClosestDifficulty - destDifficulty);
             if (currentDistance < currentClosestDistance) {
                 currentClosestText = tmp;
                 currentClosestDifficulty = currentDifficulty.get();
-                LOG.info("Found closer text [{}] [{} -> {}]", currentClosestText, currentClosestDistance, currentDistance);
+                bestTileCategories = currentTileCategories;
             }
         }
         if (currentClosestText != null) text = currentClosestText;
 
         BingoTile bingoTile = new BingoTile(text, currentClosestDifficulty + selectedGenerator.getDifficulty());
-        tileCategories.forEach(bingoTile::addCategory);
+        selectedGenerator.getCategories().forEach(bingoTile::addCategory);
+        bestTileCategories.forEach(bingoTile::addCategory);
         return bingoTile;
     }
 
@@ -244,8 +246,6 @@ public class BingoConfiguration {
 
     public static class TileGenerator implements Weightable {
 
-        private final Logger LOG = LoggerFactory.getLogger(getClass());
-
         private String text;
         private double difficulty;
         private double weight;
@@ -257,21 +257,9 @@ public class BingoConfiguration {
             this.difficulty = Double.parseDouble(String.valueOf(optionMap.getOrDefault(KEY_TILE_GENERATOR_DIFFICULTY, 1)));
             this.weight = Double.parseDouble(String.valueOf(optionMap.getOrDefault(KEY_TILE_GENERATOR_WEIGHT, 1)));
             this.categories = new ArrayList<>();
-            createCategories((List<String>) optionMap.getOrDefault(KEY_TILE_GENERATOR_CATEGORIES, Collections.emptyList()), categories);
+            Category.createCategories((List<String>) optionMap.getOrDefault(KEY_TILE_GENERATOR_CATEGORIES, Collections.emptyList()), categories, this.categories, text);
             this.derivedCategories = new HashSet<>();
             deriveSnippetCategories(text, textSnippets);
-            LOG.info("Derived [{}] categories for snippets on [{}]: {}", derivedCategories.size(), text, derivedCategories);
-        }
-
-        private void createCategories(List<String> categories, Map<String, Category> knownCategories) {
-            for (String category : categories) {
-                if (!knownCategories.containsKey(category)) {
-                    LOG.warn("Category [{}] on tile generator {} does not exist yet, creating new", category, text);
-                    knownCategories.put(category, new Category(category));
-                } else {
-                    this.categories.add(knownCategories.get(category));
-                }
-            }
         }
 
         private void deriveSnippetCategories(String text, Map<String, List<TextSnippet>> textSnippets) {
@@ -357,8 +345,6 @@ public class BingoConfiguration {
 
     public static class TextSnippet implements Weightable {
 
-        private final Logger LOG = LoggerFactory.getLogger(getClass());
-
         private String text;
         private double difficulty;
         private double weight;
@@ -370,21 +356,8 @@ public class BingoConfiguration {
             this.difficulty = Double.parseDouble(String.valueOf(optionMap.getOrDefault(KEY_TEXT_SNIPPETS_DIFFICULTY, 1)));
             this.weight = Double.parseDouble(String.valueOf(optionMap.getOrDefault(KEY_TEXT_SNIPPETS_WEIGHT, 1)));
             this.categories = new ArrayList<>();
-            createCategories((List<String>) optionMap.getOrDefault(KEY_TEXT_SNIPPETS_CATEGORIES, Collections.emptyList()), categories);
+            Category.createCategories((List<String>) optionMap.getOrDefault(KEY_TEXT_SNIPPETS_CATEGORIES, Collections.emptyList()), categories, this.categories, text);
             this.derivedCategories = new HashSet<>();
-        }
-
-        private void createCategories(List<String> categories, Map<String, Category> knownCategories) {
-            for (String category : categories) {
-                if (!knownCategories.containsKey(category)) {
-                    LOG.warn("Category [{}] on text snippet {} does not exist yet, creating new", category, text);
-                    Category cat = new Category(category);
-                    knownCategories.put(category, cat);
-                    this.categories.add(cat);
-                } else {
-                    this.categories.add(knownCategories.get(category));
-                }
-            }
         }
 
         private void deriveSnippetCategories(String text, Map<String, List<TextSnippet>> textSnippets) {
@@ -463,12 +436,16 @@ public class BingoConfiguration {
     }
 
     public static class Category {
-        public static final Category UNKNOWN = new Category("Unknown");
+
+        private static final Logger LOG = LoggerFactory.getLogger(Category.class);
+
         private String name;
         private double maxAbsolute = Double.MAX_VALUE, maxRelative = Double.MAX_VALUE;
         private double minAbsolute = 0, minRelative = 0;
+        private final List<Category> synergies = new ArrayList<>();
+        private final List<Category> antisynergy = new ArrayList<>();
 
-        public Category(Map<String, Object> optionMap) {
+        public Category(Map<String, Object> optionMap, Map<String, Category> categories) {
             this.name = (String) optionMap.get(KEY_CATEGORY_NAME);
             Map<String, Object> maxMap = (Map<String, Object>) optionMap.getOrDefault(KEY_CATEGORY_MAX, null);
             Map<String, Object> minMap = (Map<String, Object>) optionMap.getOrDefault(KEY_CATEGORY_MIN, null);
@@ -488,6 +465,8 @@ public class BingoConfiguration {
                     this.minRelative = Double.parseDouble(String.valueOf(minMap.get(KEY_CATEGORY_RELATIVE)));
                 }
             }
+            Category.createCategories((List<String>) optionMap.getOrDefault(KEY_CATEGORY_SYNERGY, Collections.emptyList()), categories, this.synergies, name);
+            Category.createCategories((List<String>) optionMap.getOrDefault(KEY_CATEGORY_ANTISYNERGY, Collections.emptyList()), categories, this.antisynergy, name);
         }
 
         public Category(String name) {
@@ -534,6 +513,14 @@ public class BingoConfiguration {
             this.minRelative = minRelative;
         }
 
+        public List<Category> getSynergies() {
+            return synergies;
+        }
+
+        public List<Category> getAntisynergy() {
+            return antisynergy;
+        }
+
         public static boolean validate(Map<String, Object> optionMap) {
             validateContained(optionMap, KEY_CATEGORY_NAME, true, String.class);
             validateContained(optionMap, KEY_CATEGORY_MAX, false, Map.class);
@@ -548,7 +535,22 @@ public class BingoConfiguration {
                 validateContained(minMap, KEY_CATEGORY_ABSOLUTE, false, Double.class, Integer.class);
                 validateContained(minMap, KEY_CATEGORY_RELATIVE, false, Double.class, Integer.class);
             }
+            validateContained(optionMap, KEY_CATEGORY_ANTISYNERGY, false, List.class);
+            validateContained(optionMap, KEY_CATEGORY_SYNERGY, false, List.class);
             return true;
+        }
+
+        public static void createCategories(List<String> categories, Map<String, Category> knownCategories, List<Category> addTo, String forWhat) {
+            for (String category : categories) {
+                if (!knownCategories.containsKey(category)) {
+                    LOG.warn("Category [{}] on text snippet {} does not exist yet, creating new", category, forWhat);
+                    Category cat = new Category(category);
+                    knownCategories.put(category, cat);
+                    addTo.add(cat);
+                } else {
+                    addTo.add(knownCategories.get(category));
+                }
+            }
         }
 
         @Override
@@ -590,4 +592,6 @@ public class BingoConfiguration {
     private final static String KEY_CATEGORY_MIN = "min";
     private final static String KEY_CATEGORY_ABSOLUTE = "absolute";
     private final static String KEY_CATEGORY_RELATIVE = "relative";
+    private final static String KEY_CATEGORY_ANTISYNERGY = "antisynergy";
+    private final static String KEY_CATEGORY_SYNERGY = "synergy";
 }

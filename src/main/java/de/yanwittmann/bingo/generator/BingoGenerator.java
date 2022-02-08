@@ -30,12 +30,7 @@ public class BingoGenerator {
         }
 
         BingoBoard board = new BingoBoard(width, height);
-        tiles.sort((o1, o2) -> (int) (Math.random() * 2) - 1);
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                board.set(i, j, tiles.get(i * height + j));
-            }
-        }
+        board.populate(tiles, configuration.getCategories());
 
         LOG.info("Board difficulty is [{}]", calculateDifficulty(tiles));
         LOG.info("Categories [{}]", configuration.countCategories(tiles));
