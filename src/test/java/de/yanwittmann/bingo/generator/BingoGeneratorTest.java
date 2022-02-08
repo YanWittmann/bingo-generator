@@ -13,7 +13,7 @@ class BingoGeneratorTest {
         BingoGenerator generator = new BingoGenerator(configuration);
         generator.setWidth(5);
         generator.setHeight(5);
-        generator.setDifficulty(0);
+        generator.setDifficultyLevel("Easy");
         System.out.println(generator.generateBingoBoard());
     }
 }

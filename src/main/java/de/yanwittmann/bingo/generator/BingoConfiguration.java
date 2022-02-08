@@ -18,7 +18,9 @@ public class BingoConfiguration {
 
     private final List<TileGenerator> tileGenerators = new ArrayList<>();
     private final Map<String, List<TextSnippet>> textSnippets = new HashMap<>();
+    private final Map<String, ValueProvider> numberValueProviders = new HashMap<>();
     private final Map<String, Category> categories = new HashMap<>();
+    private final List<Difficulty> difficulties = new ArrayList<>();
 
     public BingoConfiguration(File file) throws FileNotFoundException {
         parse(new Yaml().load(new FileInputStream(file)));
@@ -34,6 +36,10 @@ public class BingoConfiguration {
 
     public Map<String, Category> getCategories() {
         return categories;
+    }
+
+    public List<Difficulty> getDifficulties() {
+        return difficulties;
     }
 
     private void parse(Object rootObject) {
@@ -100,6 +106,42 @@ public class BingoConfiguration {
             }
         }
 
+        if (rootObject instanceof Map) {
+            Map<String, Object> rootMap = (Map<String, Object>) rootObject;
+            if (rootMap.containsKey(KEY_DIFFICULTY)) {
+                Object optionsObject = rootMap.get(KEY_DIFFICULTY);
+                if (optionsObject instanceof List) {
+                    List<Object> optionsList = (List<Object>) optionsObject;
+                    for (Object optionObject : optionsList) {
+                        if (optionObject instanceof Map) {
+                            Map<String, Object> optionMap = (Map<String, Object>) optionObject;
+                            if (Difficulty.validate(optionMap)) {
+                                difficulties.add(new Difficulty(optionMap));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (rootObject instanceof Map) {
+            Map<String, Object> rootMap = (Map<String, Object>) rootObject;
+            if (rootMap.containsKey(KEY_VALUE_PROVIDERS)) {
+                Object optionsObject = rootMap.get(KEY_VALUE_PROVIDERS);
+                if (optionsObject instanceof Map) {
+                    Map<String, Object> optionsMap = (Map<String, Object>) optionsObject;
+                    for (Map.Entry<String, Object> entry : optionsMap.entrySet()) {
+                        if (entry.getValue() instanceof Map) {
+                            Map<String, Object> optionMap = (Map<String, Object>) entry.getValue();
+                            if (ValueProvider.validate(optionMap)) {
+                                numberValueProviders.put(entry.getKey(), new ValueProvider(optionMap));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         for (Map.Entry<String, List<TextSnippet>> snippet : textSnippets.entrySet()) {
             for (TextSnippet textSnippet : snippet.getValue()) {
                 textSnippet.deriveSnippetCategories(snippet.getKey(), textSnippets);
@@ -108,7 +150,19 @@ public class BingoConfiguration {
 
         LOG.info("Loaded [{}] tile generators", tileGenerators.size());
         LOG.info("Loaded [{}] text snippet types with a total of [{}] snippets", textSnippets.size(), textSnippets.values().stream().mapToInt(List::size).sum());
+        LOG.info("Loaded [{}] value providers", numberValueProviders.size());
         LOG.info("Loaded [{}] categories", categories.size());
+        LOG.info("Loaded [{}] difficulty levels", difficulties.size());
+    }
+
+    public double getDifficultyForLevel(int level) {
+        if (difficulties.isEmpty()) return 1.0;
+        if (difficulties.size() < level) level = difficulties.size();
+        return difficulties.get(level - 1).getScore();
+    }
+
+    public double getDifficultyForLevel(String level) {
+        return difficulties.stream().filter(d -> d.getName().equalsIgnoreCase(level)).findFirst().map(Difficulty::getScore).orElse(1.0);
     }
 
     public Map<Category, Integer> countCategories(List<BingoTile> tiles) {
@@ -124,7 +178,7 @@ public class BingoConfiguration {
         return counts;
     }
 
-    public BingoTile generateTile(List<BingoTile> existingTiles, int destAmount, double destDifficulty) {
+    public BingoTile generateTile(List<BingoTile> existingTiles, int destAmount, double destinationDifficulty) {
         // find what categories are allowed and not allowed in the existing tiles
         Map<Category, Integer> categoryCount = countCategories(existingTiles);
         Set<Category> createdMustBeCategories = new HashSet<>();
@@ -173,9 +227,9 @@ public class BingoConfiguration {
         for (int i = 0; i < 10; i++) {
             AtomicReference<Double> currentDifficulty = new AtomicReference<>(0.0);
             Set<Category> currentTileCategories = new HashSet<>();
-            String tmp = insertSnippets(text, createdMustBeCategories, createdMayNotBeCategories, currentDifficulty, currentTileCategories);
-            double currentDistance = Math.abs(currentDifficulty.get() - destDifficulty);
-            double currentClosestDistance = Math.abs(currentClosestDifficulty - destDifficulty);
+            String tmp = insertSnippets(text, createdMustBeCategories, createdMayNotBeCategories, currentDifficulty, destinationDifficulty, currentTileCategories);
+            double currentDistance = Math.abs(currentDifficulty.get() - destinationDifficulty);
+            double currentClosestDistance = Math.abs(currentClosestDifficulty - destinationDifficulty);
             if (currentDistance < currentClosestDistance) {
                 currentClosestText = tmp;
                 currentClosestDifficulty = currentDifficulty.get();
@@ -190,15 +244,15 @@ public class BingoConfiguration {
         return bingoTile;
     }
 
-    private String insertSnippets(String text, Set<Category> createdMustBeCategories, Set<Category> createdMayNotBeCategories, AtomicReference<Double> currentDifficulty, Set<Category> tileCategories) {
+    private String insertSnippets(String text, Set<Category> createdMustBeCategories, Set<Category> createdMayNotBeCategories, AtomicReference<Double> currentDifficulty, double destinationDifficulty, Set<Category> tileCategories) {
         boolean found;
         do {
             found = false;
             Matcher snippetsMatcher = TextSnippet.SNIPPET_PATTERN.matcher(text);
             while (snippetsMatcher.find()) {
                 String snippetType = snippetsMatcher.group(1);
-                List<TextSnippet> snippets = new ArrayList<>(textSnippets.getOrDefault(snippetType, new ArrayList<>()));
-                if (snippets.size() > 0) {
+                if (textSnippets.containsKey(snippetType)) {
+                    List<TextSnippet> snippets = new ArrayList<>(textSnippets.get(snippetType));
                     if (!createdMustBeCategories.isEmpty()) {
                         for (int i = snippets.size() - 1; i >= 0; i--) {
                             TextSnippet snippet = snippets.get(i);
@@ -224,11 +278,32 @@ public class BingoConfiguration {
                     text = text.replaceFirst(Pattern.quote(snippetsMatcher.group()), selectedSnippet.getText());
                     found = true;
                 } else {
-                    LOG.error("No snippets found for type [{}]", snippetType);
+                    ValueProvider valueProvider = numberValueProviders.getOrDefault(snippetType, null);
+                    if (valueProvider != null) {
+                        Difficulty difficulty = getDifficulty(destinationDifficulty);
+                        ValueProvider.NumberProviderResult result = valueProvider.getValue(difficulty.getName());
+                        if (result != null) {
+                            text = text.replaceFirst(Pattern.quote(snippetsMatcher.group()), String.valueOf(result.getValue()));
+                            currentDifficulty.set(currentDifficulty.get() + difficulty.getScore());
+                        }
+                    }
                 }
             }
         } while (found);
         return text;
+    }
+
+    public Difficulty getDifficulty(double difficulty) {
+        double closestDifficulty = Double.MAX_VALUE;
+        Difficulty closestDifficultyDifficulty = null;
+        for (Difficulty difficultyDifficulty : difficulties) {
+            double currentDifficulty = Math.abs(difficultyDifficulty.getScore() - difficulty);
+            if (currentDifficulty < closestDifficulty) {
+                closestDifficulty = currentDifficulty;
+                closestDifficultyDifficulty = difficultyDifficulty;
+            }
+        }
+        return closestDifficultyDifficulty;
     }
 
     public <T extends Weightable> T getRandom(Collection<T> collection) {
@@ -559,6 +634,103 @@ public class BingoConfiguration {
         }
     }
 
+    public static class Difficulty {
+        private final String name;
+        private final double score;
+
+        public Difficulty(Map<String, Object> optionMap) {
+            this.name = (String) optionMap.get(KEY_DIFFICULTY_NAME);
+            this.score = Double.parseDouble(String.valueOf(optionMap.getOrDefault(KEY_DIFFICULTY_SCORE, 1)));
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public double getScore() {
+            return score;
+        }
+
+        public static boolean validate(Map<String, Object> optionMap) {
+            validateContained(optionMap, KEY_DIFFICULTY_NAME, true, String.class);
+            validateContained(optionMap, KEY_DIFFICULTY_SCORE, true, Double.class, Integer.class);
+            return true;
+        }
+    }
+
+    public static class ValueProvider {
+        private final Map<String, NumberProvider> difficultyProviders = new HashMap<>();
+
+        public ValueProvider(Map<String, Object> optionMap) {
+            for (Map.Entry<String, Object> difficultyEntry : optionMap.entrySet()) {
+                difficultyProviders.put(difficultyEntry.getKey(), new NumberProvider((Map<String, Object>) difficultyEntry.getValue()));
+            }
+        }
+
+        public NumberProviderResult getValue(String difficulty) {
+            return difficultyProviders.get(difficulty).getValue();
+        }
+
+        public static boolean validate(Map<String, Object> optionMap) {
+            for (Map.Entry<String, Object> difficultyEntry : optionMap.entrySet()) {
+                if (difficultyEntry.getValue() instanceof Map) {
+                    validateContained((Map<String, Object>) difficultyEntry.getValue(), KEY_VALUE_PROVIDERS_MIN, true, Integer.class);
+                    validateContained((Map<String, Object>) difficultyEntry.getValue(), KEY_VALUE_PROVIDERS_MAX, true, Integer.class);
+                    validateContained((Map<String, Object>) difficultyEntry.getValue(), KEY_VALUE_PROVIDERS_SCORE, true, Double.class, Integer.class);
+                } else {
+                    throw new IllegalArgumentException("Difficulty value provider must be a map");
+                }
+            }
+            return true;
+        }
+
+        private static class NumberProvider {
+            private final int min, max;
+            private final double score;
+
+            public NumberProvider(Map<String, Object> optionMap) {
+                this.min = (int) optionMap.get(KEY_VALUE_PROVIDERS_MIN);
+                this.max = (int) optionMap.get(KEY_VALUE_PROVIDERS_MAX);
+                this.score = Double.parseDouble(String.valueOf(optionMap.getOrDefault(KEY_VALUE_PROVIDERS_SCORE, 1)));
+            }
+
+            public NumberProviderResult getValue() {
+                double random = Math.round(Math.random() * (max - min) + min);
+                return new NumberProviderResult((int) (random), score);
+            }
+
+            public int getMin() {
+                return min;
+            }
+
+            public int getMax() {
+                return max;
+            }
+
+            public double getScore() {
+                return score;
+            }
+        }
+
+        private static class NumberProviderResult {
+            private final int value;
+            private final double score;
+
+            public NumberProviderResult(int value, double score) {
+                this.value = value;
+                this.score = score;
+            }
+
+            public int getValue() {
+                return value;
+            }
+
+            public double getScore() {
+                return score;
+            }
+        }
+    }
+
     private static void validateContained(Map<String, Object> optionMap, String key, boolean forcePresent, Class<?>... clazz) {
         if (!optionMap.containsKey(key)) {
             if (forcePresent) {
@@ -594,4 +766,11 @@ public class BingoConfiguration {
     private final static String KEY_CATEGORY_RELATIVE = "relative";
     private final static String KEY_CATEGORY_ANTISYNERGY = "antisynergy";
     private final static String KEY_CATEGORY_SYNERGY = "synergy";
+    private final static String KEY_DIFFICULTY = "difficulty";
+    private final static String KEY_DIFFICULTY_NAME = "name";
+    private final static String KEY_DIFFICULTY_SCORE = "score";
+    private final static String KEY_VALUE_PROVIDERS = "value providers";
+    private final static String KEY_VALUE_PROVIDERS_MIN = "min";
+    private final static String KEY_VALUE_PROVIDERS_MAX = "max";
+    private final static String KEY_VALUE_PROVIDERS_SCORE = "score";
 }

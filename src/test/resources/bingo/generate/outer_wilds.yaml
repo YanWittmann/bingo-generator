@@ -1,5 +1,5 @@
 tile generators:
-  - text: Land your ship on [PLANET]
+  - text: Land your ship on [PLANET] [basic range] times
     categories: [ goto, ship ]
     difficulty: 1
     weight: 1
@@ -93,3 +93,26 @@ categories:
       relative: 10
     max:
       relative: 20
+
+value providers:
+  basic range:
+    Easy:
+      min: 1
+      max: 2
+      score: 1
+    Normal:
+      min: 3
+      max: 4
+      score: 2
+    Hard:
+      min: 5
+      max: 6
+      score: 3
+
+difficulty:
+  - name: Easy
+    score: 2
+  - name: Normal
+    score: 3
+  - name: Hard
+    score: 4

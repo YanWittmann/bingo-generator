@@ -11,7 +11,7 @@ public class BingoGenerator {
     private final Logger LOG = LoggerFactory.getLogger(getClass());
 
     private BingoConfiguration configuration;
-    private double difficulty = 1;
+    private double difficulty = 2;
     private int width = 5;
     private int height = 5;
 
@@ -100,6 +100,14 @@ public class BingoGenerator {
 
     public void setDifficulty(double difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public void setDifficultyLevel(int difficulty) {
+        this.difficulty = configuration.getDifficultyForLevel(difficulty);
+    }
+
+    public void setDifficultyLevel(String difficulty) {
+        this.difficulty = configuration.getDifficultyForLevel(difficulty);
     }
 
     public int getWidth() {
