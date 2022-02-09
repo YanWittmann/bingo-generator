@@ -13,97 +13,59 @@ difficulty:
     score: 6
 
 tile generators:
-  - text: Land your ship on [PLANET] [basic range] times
+  - text: Land your ship on [PLANET] times
     tooltip: Damaged or not, it must be standing on the surface.
     categories: [ goto, ship ]
-    difficulty: 1
-    weight: 1
   - text: Die on [LOCATION]
     tooltip: Die at the given location in any way you want.
     categories: [ goto, die ]
-    difficulties: [ Normal, Hard ]
-    difficulty: 3
-    weight: 1
 
 snippets:
   PLANET:
     - text: Timber Hearth
       categories: [ timber_hearth ]
-      difficulty: 1
-      weight: 4
     - text: The Attlerock
       categories: [ attlerock ]
-      difficulty: 1
-      weight: 5
     - text: The Ember Twin
       categories: [ ember_twin ]
-      difficulty: 1.5
-      weight: 10
     - text: The Ash Twin
       categories: [ ash_twin ]
-      difficulty: 1.5
-      weight: 10
     - text: Briddle Hollow
       categories: [ briddle_hollow ]
-      difficulty: 1.5
-      weight: 10
     - text: Hollows Lantern
       categories: [ hollows_lantern ]
-      difficulty: 2
-      weight: 6
     - text: Giant's Deep
       categories: [ giants_deep ]
-      difficulty: 1.8
-      weight: 10
     - text: Dark Bramble
       categories: [ dark_bramble ]
-      difficulty: 1.5
-      weight: 6
     - text: The Interloper
       categories: [ interloper ]
-      difficulty: 2
-      weight: 6
     - text: The Quatum Moon
       categories: [ quatum_moon ]
-      difficulty: 1.8
-      weight: 6
     - text: The Stranger
       categories: [ stranger ]
-      difficulty: 1.5
-      weight: 6
+  TRAVELER:
+    - text: Esker
+      categories: [ traveler, esker, attlerock ]
+    - text: Chert
+      categories: [ traveler, chert, ember_twin ]
+    - text: Riebek
+      categories: [ traveler, riebek, brim_hollow ]
+    - text: Gabbro
+      categories: [ traveler, gabbro, giants_deep ]
+    - text: Feldspar
+      categories: [ traveler, feldspar, dark_bramble ]
   LOCATION:
     - text: the Sun Station
       categories: [ sun, sun_station ]
-      difficulty: 4
-      weight: 3
     - text: the Construction Site
       categories: [ giants_deep, construction_site ]
-      difficulty: 1.5
-      weight: 10
+  STRANGER_ACTIVITIES:
+    - text: Ride a raft
+      categories: [ stranger, raft ]
+    - text: View the slide [STRANGER_SLIDE]
+      categories: [ stranger, slide ]
 
 categories:
-  die:
-    name: Die
-    max:
-      absolute: 1
-    min:
-      absolute: 1
-  goto:
-    name: Go To
-  ship:
-    name: Ship
 
 value providers:
-  basic range:
-    Easy:
-      min: 1
-      max: 2
-      score: 1
-    Normal:
-      min: 3
-      max: 4
-      score: 2
-    Hard:
-      min: 5
-      max: 6
-      score: 3

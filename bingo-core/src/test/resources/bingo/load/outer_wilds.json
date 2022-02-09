@@ -1,5 +1,5 @@
 {
-  "difficulty": 4.02,
+  "difficulty": 2,
   "metadata": {
     "game": "Outer Wilds",
     "description": "Bingo for Outer Wilds",
@@ -11,125 +11,75 @@
   },
   "width": 5,
   "categories": {
-    "Die": 1,
-    "construction_site": 1,
-    "attlerock": 17,
+    "die": 14,
+    "construction_site": 7,
+    "attlerock": 1,
     "hollows_lantern": 0,
-    "Go To": 25,
-    "dark_bramble": 0,
-    "interloper": 0,
-    "sun": 0,
-    "timber_hearth": 7,
+    "ship": 11,
+    "dark_bramble": 2,
+    "sun": 7,
+    "interloper": 1,
+    "timber_hearth": 3,
     "quatum_moon": 0,
-    "sun_station": 0,
-    "giants_deep": 1,
-    "briddle_hollow": 0,
-    "ash_twin": 0,
-    "stranger": 0,
-    "Ship": 24,
+    "sun_station": 7,
+    "giants_deep": 7,
+    "goto": 25,
+    "briddle_hollow": 2,
+    "ash_twin": 1,
+    "stranger": 1,
     "ember_twin": 0
   },
   "board": [
     [
       {
-        "difficulty": 4,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 3 times",
+        "difficulty": 2,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on the Sun Station",
         "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
+          "goto",
+          "die",
+          "sun_station",
+          "sun"
         ]
       },
       {
-        "difficulty": 4,
+        "difficulty": 2,
         "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 4 times",
+        "text": "Land your ship on Dark Bramble times",
         "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
+          "goto",
+          "ship",
+          "dark_bramble"
         ]
       },
       {
-        "difficulty": 4,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 3 times",
+        "difficulty": 2,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on the Construction Site",
         "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
+          "goto",
+          "die",
+          "construction_site",
+          "giants_deep"
         ]
       },
       {
-        "difficulty": 4,
+        "difficulty": 2,
         "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 4 times",
+        "text": "Land your ship on Timber Hearth times",
         "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
-        ]
-      },
-      {
-        "difficulty": 4,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 3 times",
-        "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
-        ]
-      }
-    ],
-    [
-      {
-        "difficulty": 4,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 3 times",
-        "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
-        ]
-      },
-      {
-        "difficulty": 4,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 4 times",
-        "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
-        ]
-      },
-      {
-        "difficulty": 4,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Timber Hearth 3 times",
-        "categories": [
-          "Go To",
-          "Ship",
+          "goto",
+          "ship",
           "timber_hearth"
         ]
       },
       {
-        "difficulty": 4,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 4 times",
-        "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
-        ]
-      },
-      {
-        "difficulty": 4.5,
+        "difficulty": 2,
         "tooltip": "Die at the given location in any way you want.",
         "text": "Die on the Construction Site",
         "categories": [
-          "Go To",
-          "Die",
+          "goto",
+          "die",
           "construction_site",
           "giants_deep"
         ]
@@ -137,157 +87,220 @@
     ],
     [
       {
-        "difficulty": 4,
+        "difficulty": 2,
         "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Timber Hearth 3 times",
+        "text": "Land your ship on Briddle Hollow times",
         "categories": [
-          "Go To",
-          "Ship",
+          "goto",
+          "ship",
+          "briddle_hollow"
+        ]
+      },
+      {
+        "difficulty": 2,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Timber Hearth times",
+        "categories": [
+          "goto",
+          "ship",
           "timber_hearth"
         ]
       },
       {
-        "difficulty": 4,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 3 times",
+        "difficulty": 2,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on the Construction Site",
         "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
+          "goto",
+          "die",
+          "construction_site",
+          "giants_deep"
         ]
       },
       {
-        "difficulty": 4,
+        "difficulty": 2,
         "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 3 times",
+        "text": "Land your ship on Briddle Hollow times",
         "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
+          "goto",
+          "ship",
+          "briddle_hollow"
         ]
       },
       {
-        "difficulty": 4,
+        "difficulty": 2,
         "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Timber Hearth 4 times",
+        "text": "Land your ship on Timber Hearth times",
         "categories": [
-          "Go To",
-          "Ship",
+          "goto",
+          "ship",
           "timber_hearth"
-        ]
-      },
-      {
-        "difficulty": 4,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 4 times",
-        "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
         ]
       }
     ],
     [
       {
-        "difficulty": 4,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 3 times",
+        "difficulty": 2,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on the Sun Station",
         "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
+          "goto",
+          "die",
+          "sun_station",
+          "sun"
         ]
       },
       {
-        "difficulty": 4,
+        "difficulty": 2,
         "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Timber Hearth 3 times",
+        "text": "Land your ship on Dark Bramble times",
         "categories": [
-          "Go To",
-          "Ship",
-          "timber_hearth"
+          "goto",
+          "ship",
+          "dark_bramble"
         ]
       },
       {
-        "difficulty": 4,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 3 times",
+        "difficulty": 2,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on the Sun Station",
         "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
+          "goto",
+          "die",
+          "sun_station",
+          "sun"
         ]
       },
       {
-        "difficulty": 4,
+        "difficulty": 2,
         "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 3 times",
+        "text": "Land your ship on The Interloper times",
         "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
+          "goto",
+          "ship",
+          "interloper"
         ]
       },
       {
-        "difficulty": 4,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 4 times",
+        "difficulty": 2,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on the Construction Site",
         "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
+          "goto",
+          "die",
+          "construction_site",
+          "giants_deep"
         ]
       }
     ],
     [
       {
-        "difficulty": 4,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 3 times",
+        "difficulty": 2,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on the Sun Station",
         "categories": [
-          "Go To",
-          "Ship",
+          "goto",
+          "die",
+          "sun_station",
+          "sun"
+        ]
+      },
+      {
+        "difficulty": 2,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on the Construction Site",
+        "categories": [
+          "goto",
+          "die",
+          "construction_site",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 2,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on the Sun Station",
+        "categories": [
+          "goto",
+          "die",
+          "sun_station",
+          "sun"
+        ]
+      },
+      {
+        "difficulty": 2,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on the Construction Site",
+        "categories": [
+          "goto",
+          "die",
+          "construction_site",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 2,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on the Sun Station",
+        "categories": [
+          "goto",
+          "die",
+          "sun_station",
+          "sun"
+        ]
+      }
+    ],
+    [
+      {
+        "difficulty": 2,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on the Sun Station",
+        "categories": [
+          "goto",
+          "die",
+          "sun_station",
+          "sun"
+        ]
+      },
+      {
+        "difficulty": 2,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Attlerock times",
+        "categories": [
+          "goto",
+          "ship",
           "attlerock"
         ]
       },
       {
-        "difficulty": 4,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Timber Hearth 3 times",
+        "difficulty": 2,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on the Construction Site",
         "categories": [
-          "Go To",
-          "Ship",
-          "timber_hearth"
+          "goto",
+          "die",
+          "construction_site",
+          "giants_deep"
         ]
       },
       {
-        "difficulty": 4,
+        "difficulty": 2,
         "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Timber Hearth 4 times",
+        "text": "Land your ship on The Ash Twin times",
         "categories": [
-          "Go To",
-          "Ship",
-          "timber_hearth"
+          "goto",
+          "ship",
+          "ash_twin"
         ]
       },
       {
-        "difficulty": 4,
+        "difficulty": 2,
         "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock 4 times",
+        "text": "Land your ship on The Stranger times",
         "categories": [
-          "Go To",
-          "Ship",
-          "attlerock"
-        ]
-      },
-      {
-        "difficulty": 4,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Timber Hearth 3 times",
-        "categories": [
-          "Go To",
-          "Ship",
-          "timber_hearth"
+          "goto",
+          "ship",
+          "stranger"
         ]
       }
     ]

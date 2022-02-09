@@ -16,7 +16,7 @@ public class TextSnippet implements Weightable {
 
     public TextSnippet(Map<String, Object> optionMap, Map<String, Category> categories) {
         this.text = (String) optionMap.get(BingoConfiguration.KEY_TEXT_SNIPPETS_TEXT);
-        this.difficulty = Double.parseDouble(String.valueOf(optionMap.getOrDefault(BingoConfiguration.KEY_TEXT_SNIPPETS_DIFFICULTY, 1)));
+        this.difficulty = Double.parseDouble(String.valueOf(optionMap.getOrDefault(BingoConfiguration.KEY_TEXT_SNIPPETS_DIFFICULTY, 0)));
         this.weight = Double.parseDouble(String.valueOf(optionMap.getOrDefault(BingoConfiguration.KEY_TEXT_SNIPPETS_WEIGHT, 1)));
         this.categories = new ArrayList<>();
         Category.createCategories((List<String>) optionMap.getOrDefault(BingoConfiguration.KEY_TEXT_SNIPPETS_CATEGORIES, Collections.emptyList()), categories, this.categories, text);
