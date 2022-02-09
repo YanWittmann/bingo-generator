@@ -1,5 +1,6 @@
 package de.yanwittmann.bingo.generator;
 
+import de.yanwittmann.bingo.generator.config.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,7 @@ public class BingoTile {
 
     private final String text;
     private final double difficulty;
-    private final List<BingoConfiguration.Category> categories = new ArrayList<>();
+    private final List<Category> categories = new ArrayList<>();
 
     public BingoTile(String text, double difficulty) {
         this.text = text;
@@ -27,7 +28,7 @@ public class BingoTile {
         return difficulty;
     }
 
-    public void addCategory(BingoConfiguration.Category category) {
+    public void addCategory(Category category) {
         if (category == null || categories.contains(category)) {
             LOG.warn("Not adding category [{}] to [{}]", category, text);
             return;
@@ -35,7 +36,7 @@ public class BingoTile {
         categories.add(category);
     }
 
-    public List<BingoConfiguration.Category> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 

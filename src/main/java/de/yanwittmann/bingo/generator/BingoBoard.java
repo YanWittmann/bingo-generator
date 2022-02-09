@@ -1,5 +1,6 @@
 package de.yanwittmann.bingo.generator;
 
+import de.yanwittmann.bingo.generator.config.Category;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +46,7 @@ public class BingoBoard {
         return board[0].length;
     }
 
-    public void populate(List<BingoTile> tiles, Map<String, BingoConfiguration.Category> categories) {
+    public void populate(List<BingoTile> tiles, Map<String, Category> categories) {
         System.out.println(tiles);
         int bestScore = Integer.MIN_VALUE;
         BingoTile[][] bestBoard = null;
@@ -75,7 +76,7 @@ public class BingoBoard {
      * @param categories The categories to check the antisynergies and synergies of.
      * @return The score of the board. The higher, the better.
      */
-    private int scoreBoard(BingoTile[][] board, Map<String, BingoConfiguration.Category> categories) {
+    private int scoreBoard(BingoTile[][] board, Map<String, Category> categories) {
         // find vertical rows
         int score = 0;
         List<BingoTile> row = new ArrayList<>(getWidth());
@@ -118,18 +119,18 @@ public class BingoBoard {
         return score;
     }
 
-    private int scoreRow(List<BingoTile> row, Map<String, BingoConfiguration.Category> categories) {
+    private int scoreRow(List<BingoTile> row, Map<String, Category> categories) {
         int score = 0;
-        for (Map.Entry<String, BingoConfiguration.Category> category : categories.entrySet()) {
+        for (Map.Entry<String, Category> category : categories.entrySet()) {
             if (rowContainsCategory(row, category.getValue())) {
                 // check for antisynergies
-                for (BingoConfiguration.Category antisynergy : category.getValue().getAntisynergy()) {
+                for (Category antisynergy : category.getValue().getAntisynergy()) {
                     if (rowContainsCategory(row, antisynergy)) {
                         score -= 10;
                     }
                 }
                 // check for synergies
-                for (BingoConfiguration.Category synergy : category.getValue().getSynergies()) {
+                for (Category synergy : category.getValue().getSynergies()) {
                     if (rowContainsCategory(row, synergy)) {
                         score += 4;
                     }
@@ -139,7 +140,7 @@ public class BingoBoard {
         return score;
     }
 
-    private boolean rowContainsCategory(List<BingoTile> row, BingoConfiguration.Category category) {
+    private boolean rowContainsCategory(List<BingoTile> row, Category category) {
         return row.stream().anyMatch(tile -> tile.getCategories().contains(category));
     }
 

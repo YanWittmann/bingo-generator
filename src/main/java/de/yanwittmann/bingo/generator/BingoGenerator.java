@@ -1,5 +1,6 @@
 package de.yanwittmann.bingo.generator;
 
+import de.yanwittmann.bingo.generator.config.BingoConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
