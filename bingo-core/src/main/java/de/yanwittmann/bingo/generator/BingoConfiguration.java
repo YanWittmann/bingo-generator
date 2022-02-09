@@ -1,6 +1,6 @@
-package de.yanwittmann.bingo.generator.config;
+package de.yanwittmann.bingo.generator;
 
-import de.yanwittmann.bingo.generator.BingoTile;
+import de.yanwittmann.bingo.BingoTile;
 import de.yanwittmann.bingo.interfaces.Weightable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

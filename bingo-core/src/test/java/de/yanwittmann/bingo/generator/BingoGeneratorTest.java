@@ -1,6 +1,6 @@
 package de.yanwittmann.bingo.generator;
 
-import de.yanwittmann.bingo.generator.config.BingoConfiguration;
+import de.yanwittmann.bingo.BingoBoard;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;

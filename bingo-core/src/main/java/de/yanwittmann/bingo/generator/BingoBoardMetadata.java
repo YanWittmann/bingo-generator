@@ -1,4 +1,4 @@
-package de.yanwittmann.bingo.generator.config;
+package de.yanwittmann.bingo.generator;
 
 import de.yanwittmann.bingo.interfaces.Jsonable;
 import org.json.JSONObject;

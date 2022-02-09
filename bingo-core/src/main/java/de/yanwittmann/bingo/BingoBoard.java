@@ -1,7 +1,7 @@
-package de.yanwittmann.bingo.generator;
+package de.yanwittmann.bingo;
 
-import de.yanwittmann.bingo.generator.config.BingoBoardMetadata;
-import de.yanwittmann.bingo.generator.config.Category;
+import de.yanwittmann.bingo.generator.BingoBoardMetadata;
+import de.yanwittmann.bingo.generator.Category;
 import de.yanwittmann.bingo.interfaces.Jsonable;
 import org.json.JSONArray;
 import org.json.JSONObject;

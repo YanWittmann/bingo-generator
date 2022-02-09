@@ -1,6 +1,6 @@
-package de.yanwittmann.bingo.generator;
+package de.yanwittmann.bingo;
 
-import de.yanwittmann.bingo.generator.config.Category;
+import de.yanwittmann.bingo.generator.Category;
 import de.yanwittmann.bingo.interfaces.Jsonable;
 import org.json.JSONObject;
 import org.slf4j.Logger;

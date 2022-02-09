@@ -1,4 +1,4 @@
-package de.yanwittmann.bingo.generator.config;
+package de.yanwittmann.bingo.generator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
