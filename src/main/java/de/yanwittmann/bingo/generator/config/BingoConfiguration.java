@@ -1,7 +1,7 @@
 package de.yanwittmann.bingo.generator.config;
 
 import de.yanwittmann.bingo.generator.BingoTile;
-import de.yanwittmann.bingo.generator.Weightable;
+import de.yanwittmann.bingo.interfaces.Weightable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
@@ -18,6 +18,7 @@ public class BingoConfiguration {
 
     private final Logger LOG = LoggerFactory.getLogger(getClass());
 
+    private BingoBoardMetadata boardMetadata;
     private final List<TileGenerator> tileGenerators = new ArrayList<>();
     private final Map<Difficulty, List<TileGenerator>> tileGeneratorsByDifficulty = new HashMap<>();
     private final Map<String, List<TextSnippet>> textSnippets = new HashMap<>();
@@ -27,6 +28,10 @@ public class BingoConfiguration {
 
     public BingoConfiguration(File file) throws FileNotFoundException {
         parse(new Yaml().load(new FileInputStream(file)));
+    }
+
+    public BingoBoardMetadata getBoardMetadata() {
+        return boardMetadata;
     }
 
     public List<TileGenerator> getTileGenerators() {
@@ -48,6 +53,11 @@ public class BingoConfiguration {
     private void parse(Object rootObject) {
         if (rootObject instanceof Map) {
             Map<String, Object> rootMap = (Map<String, Object>) rootObject;
+
+            if (BingoBoardMetadata.validate(rootMap)) {
+                boardMetadata = new BingoBoardMetadata(rootMap);
+            }
+
             if (rootMap.containsKey((KEY_CATEGORY))) {
                 Object optionsObject = rootMap.get(KEY_CATEGORY);
                 if (optionsObject instanceof Map) {
@@ -62,10 +72,7 @@ public class BingoConfiguration {
                     }
                 }
             }
-        }
 
-        if (rootObject instanceof Map) {
-            Map<String, Object> rootMap = (Map<String, Object>) rootObject;
             if (rootMap.containsKey(KEY_TEXT_SNIPPETS)) {
                 Object optionsObject = rootMap.get(KEY_TEXT_SNIPPETS);
                 if (optionsObject instanceof Map) {
@@ -85,10 +92,7 @@ public class BingoConfiguration {
                     }
                 }
             }
-        }
 
-        if (rootObject instanceof Map) {
-            Map<String, Object> rootMap = (Map<String, Object>) rootObject;
             if (rootMap.containsKey(KEY_TILE_GENERATOR)) {
                 Object optionsObject = rootMap.get(KEY_TILE_GENERATOR);
                 if (optionsObject instanceof List) {
@@ -103,10 +107,7 @@ public class BingoConfiguration {
                     }
                 }
             }
-        }
 
-        if (rootObject instanceof Map) {
-            Map<String, Object> rootMap = (Map<String, Object>) rootObject;
             if (rootMap.containsKey(KEY_DIFFICULTY)) {
                 Object optionsObject = rootMap.get(KEY_DIFFICULTY);
                 if (optionsObject instanceof List) {
@@ -121,10 +122,7 @@ public class BingoConfiguration {
                     }
                 }
             }
-        }
 
-        if (rootObject instanceof Map) {
-            Map<String, Object> rootMap = (Map<String, Object>) rootObject;
             if (rootMap.containsKey(KEY_VALUE_PROVIDERS)) {
                 Object optionsObject = rootMap.get(KEY_VALUE_PROVIDERS);
                 if (optionsObject instanceof Map) {
@@ -276,7 +274,7 @@ public class BingoConfiguration {
             currentClosestDifficulty -= selectedGenerator.getDifficulty();
         }
 
-        BingoTile bingoTile = new BingoTile(text, currentClosestDifficulty + selectedGenerator.getDifficulty());
+        BingoTile bingoTile = new BingoTile(text, selectedGenerator.getTooltip(), currentClosestDifficulty + selectedGenerator.getDifficulty());
         selectedGenerator.getCategories().forEach(bingoTile::addCategory);
         bestTileCategories.forEach(bingoTile::addCategory);
         return bingoTile;
@@ -400,6 +398,12 @@ public class BingoConfiguration {
             throw new IllegalArgumentException("Option [" + key + "] is not of type " + clazz[0].getName() + " in " + optionMap);
         }
     }
+
+    final static String KEY_GENERAL_TITLE = "tilte";
+    final static String KEY_GENERAL_DESCRIPTION = "description";
+    final static String KEY_GENERAL_GAME = "game";
+    final static String KEY_GENERAL_AUTHORS = "authors";
+    final static String KEY_GENERAL_VERSION = "version";
 
     final static String KEY_TILE_GENERATOR = "tile generators";
     final static String KEY_TILE_GENERATOR_TEXT = "text";

@@ -1,6 +1,6 @@
 package de.yanwittmann.bingo.generator.config;
 
-import de.yanwittmann.bingo.generator.Weightable;
+import de.yanwittmann.bingo.interfaces.Weightable;
 
 import java.util.*;
 import java.util.regex.Matcher;

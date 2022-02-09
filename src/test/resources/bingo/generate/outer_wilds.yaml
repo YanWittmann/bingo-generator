@@ -1,3 +1,17 @@
+tilte: Outer Wilds Bingo
+description: Bingo for Outer Wilds
+game: Outer Wilds
+version: 0.1
+authors: [ Yan Wittmann ]
+
+difficulty:
+  - name: Easy
+    score: 2
+  - name: Normal
+    score: 4
+  - name: Hard
+    score: 6
+
 tile generators:
   - text: Land your ship on [PLANET] [basic range] times
     tooltip: Damaged or not, it must be standing on the surface.
@@ -118,11 +132,3 @@ value providers:
       min: 5
       max: 6
       score: 3
-
-difficulty:
-  - name: Easy
-    score: 2
-  - name: Normal
-    score: 4
-  - name: Hard
-    score: 6

@@ -15,6 +15,8 @@ class BingoGeneratorTest {
         generator.setWidth(5);
         generator.setHeight(10);
         generator.setDifficultyLevel("Hard");
-        System.out.println(generator.generateBingoBoard());
+        BingoBoard bingoBoard = generator.generateBingoBoard();
+        System.out.println(bingoBoard);
+        System.out.println(bingoBoard.toJson());
     }
 }

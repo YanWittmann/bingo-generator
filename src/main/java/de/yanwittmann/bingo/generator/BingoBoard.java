@@ -1,6 +1,10 @@
 package de.yanwittmann.bingo.generator;
 
+import de.yanwittmann.bingo.generator.config.BingoBoardMetadata;
 import de.yanwittmann.bingo.generator.config.Category;
+import de.yanwittmann.bingo.interfaces.Jsonable;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,11 +13,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
-public class BingoBoard {
+public class BingoBoard implements Jsonable {
 
     private final Logger LOG = LoggerFactory.getLogger(getClass());
 
     private final BingoTile[][] board;
+    private BingoBoardMetadata boardMetadata;
 
     public BingoBoard(int width, int height) {
         board = new BingoTile[width][height];
@@ -44,6 +49,17 @@ public class BingoBoard {
 
     public int getHeight() {
         return board[0].length;
+    }
+
+    public void setBoardMetadata(BingoBoardMetadata boardMetadata) {
+        if (this.boardMetadata != null) {
+            throw new IllegalStateException("Board metadata already set");
+        }
+        this.boardMetadata = boardMetadata;
+    }
+
+    public BingoBoardMetadata getBoardMetadata() {
+        return boardMetadata;
     }
 
     public void populate(List<BingoTile> tiles, Map<String, Category> categories) {
@@ -216,5 +232,23 @@ public class BingoBoard {
             sb.append(row).append("\n");
         }
         return sb.toString();
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("width", getWidth());
+        json.put("height", getHeight());
+        if (boardMetadata != null) json.put("metadata", boardMetadata.toJson());
+        JSONArray rows = new JSONArray();
+        for (int x = 0; x < getWidth(); x++) {
+            JSONArray row = new JSONArray();
+            for (int y = 0; y < getHeight(); y++) {
+                row.put(board[x][y].toJson());
+            }
+            rows.put(row);
+        }
+        json.put("board", rows);
+        return json;
     }
 }

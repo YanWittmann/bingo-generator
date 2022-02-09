@@ -41,6 +41,7 @@ public class BingoGenerator {
 
         BingoBoard board = new BingoBoard(width, height);
         board.populate(tiles, configuration.getCategories());
+        board.setBoardMetadata(configuration.getBoardMetadata());
 
         LOG.info("Board difficulty is [{}]", calculateDifficulty(tiles));
         LOG.info("Categories [{}]", configuration.countCategories(tiles));
