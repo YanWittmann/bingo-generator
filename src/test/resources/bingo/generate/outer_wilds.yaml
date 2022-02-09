@@ -1,10 +1,12 @@
 tile generators:
   - text: Land your ship on [PLANET] [basic range] times
+    tooltip: Damaged or not, it must be standing on the surface.
     categories: [ goto, ship ]
     difficulty: 1
     weight: 1
     difficulties: [ Easy ]
   - text: Die on [LOCATION]
+    tooltip: Die at the given location in any way you want.
     categories: [ goto, die ]
     difficulty: 3
     weight: 1
@@ -57,11 +59,11 @@ snippets:
       weight: 6
   LOCATION:
     - text: the Sun Station
-      categories: [ sun ]
+      categories: [ sun, sun_station ]
       difficulty: 4
       weight: 3
     - text: the Construction Site
-      categories: [ giants_deep ]
+      categories: [ giants_deep, construction_site ]
       difficulty: 1.5
       weight: 10
 
@@ -94,6 +96,13 @@ categories:
       relative: 10
     max:
       relative: 20
+  construction_site:
+    name: Construction Site
+    antisynergy: [ die ]
+  sun_station:
+    name: Sun Station
+    max:
+      absolute: 5
 
 value providers:
   basic range:

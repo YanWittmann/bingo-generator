@@ -245,7 +245,7 @@ public class BingoConfiguration {
 
         if (filteredTileGenerators.isEmpty()) {
             filteredTileGenerators = new ArrayList<>(allowedTileGeneratorsByDifficulty);
-            LOG.warn("No generator for categories [MUST {}] [CANNOT {}], using all [{}]", createdMustBeCategories, createdMayNotBeCategories, allowedTileGeneratorsByDifficulty.size());
+            //LOG.warn("No generator for categories [MUST {}] [CANNOT {}], using all [{}]", createdMustBeCategories, createdMayNotBeCategories, allowedTileGeneratorsByDifficulty.size());
         }
         TileGenerator selectedGenerator = getRandom(filteredTileGenerators);
         String text = selectedGenerator.getText();
@@ -253,10 +253,16 @@ public class BingoConfiguration {
         String currentClosestText = null;
         double currentClosestDifficulty = Double.MAX_VALUE;
         Set<Category> bestTileCategories = new HashSet<>();
+        int repeatCount = 0;
         for (int i = 0; i < 3; i++) { // try finding a better tile 3 times
             AtomicReference<Double> currentDifficulty = new AtomicReference<>(0.0);
             Set<Category> currentTileCategories = new HashSet<>();
             String tmp = insertSnippets(text, createdMustBeCategories, createdMayNotBeCategories, currentDifficulty, destinationDifficulty, currentTileCategories);
+            if (repeatCount < 40 && checkForAnisynergies(currentTileCategories, selectedGenerator.getCategories())) {
+                repeatCount++;
+                i--;
+                continue;
+            }
             double currentDistance = Math.abs(currentDifficulty.get() - destinationDifficulty);
             double currentClosestDistance = Math.abs(currentClosestDifficulty - destinationDifficulty);
             if (currentDistance < currentClosestDistance) {
@@ -273,6 +279,19 @@ public class BingoConfiguration {
         return bingoTile;
     }
 
+    private boolean checkForAnisynergies(Collection<Category> c1, Collection<Category> c2) {
+        for (Category cat1 : c1) {
+            for (Category cat2 : c2) {
+                if (cat1.getAntisynergy().contains(cat2)) {
+                    return true;
+                } else if (cat2.getAntisynergy().contains(cat1)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     private String insertSnippets(String text, Set<Category> createdMustBeCategories, Set<Category> createdMayNotBeCategories, AtomicReference<Double> currentDifficulty, double destinationDifficulty, Set<Category> tileCategories) {
         boolean found;
         do {
@@ -283,11 +302,17 @@ public class BingoConfiguration {
                 if (textSnippets.containsKey(snippetType)) {
                     List<TextSnippet> snippets = new ArrayList<>(textSnippets.get(snippetType));
                     if (!createdMustBeCategories.isEmpty()) {
-                        for (int i = snippets.size() - 1; i >= 0; i--) {
-                            TextSnippet snippet = snippets.get(i);
+                        List<TextSnippet> remainingSnippets = new ArrayList<>(snippets);
+                        for (int i = remainingSnippets.size() - 1; i >= 0; i--) {
+                            TextSnippet snippet = remainingSnippets.get(i);
                             if (snippet.getCategories().stream().noneMatch(createdMustBeCategories::contains)) {
-                                snippets.remove(i);
+                                remainingSnippets.remove(i);
                             }
+                        }
+                        if (remainingSnippets.size() == 0) {
+                            LOG.warn("No snippets for categories [MUST {}], rollback to {}", createdMustBeCategories, snippets);
+                        } else {
+                            snippets = remainingSnippets;
                         }
                     }
                     if (!createdMayNotBeCategories.isEmpty()) {
@@ -300,6 +325,7 @@ public class BingoConfiguration {
                     }
                     if (snippets.size() == 0) {
                         snippets = textSnippets.getOrDefault(snippetType, new ArrayList<>());
+                        LOG.warn("No snippets for [{}], [MUST {}] [CANNOT {}], using all [{}]", snippetType, createdMustBeCategories, createdMayNotBeCategories, snippets.size());
                     }
                     TextSnippet selectedSnippet = getRandom(snippets);
                     currentDifficulty.set(currentDifficulty.get() + selectedSnippet.getDifficulty());
@@ -376,6 +402,7 @@ public class BingoConfiguration {
 
     final static String KEY_TILE_GENERATOR = "tile generators";
     final static String KEY_TILE_GENERATOR_TEXT = "text";
+    final static String KEY_TILE_GENERATOR_TOOLTIP = "tooltip";
     final static String KEY_TILE_GENERATOR_DIFFICULTY = "difficulty";
     final static String KEY_TILE_GENERATOR_DIFFICULTIES = "difficulties";
     final static String KEY_TILE_GENERATOR_WEIGHT = "weight";

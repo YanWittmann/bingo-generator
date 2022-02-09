@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 public class TileGenerator implements Weightable {
 
     private String text;
+    private String tooltip;
     private double difficulty;
     private double weight;
     private final List<Category> categories;
@@ -16,6 +17,7 @@ public class TileGenerator implements Weightable {
 
     public TileGenerator(Map<String, Object> optionMap, Map<String, Category> categories, Map<String, List<TextSnippet>> textSnippets) {
         this.text = (String) optionMap.get(BingoConfiguration.KEY_TILE_GENERATOR_TEXT);
+        this.tooltip = (String) optionMap.get(BingoConfiguration.KEY_TILE_GENERATOR_TOOLTIP);
         this.difficulty = Double.parseDouble(String.valueOf(optionMap.getOrDefault(BingoConfiguration.KEY_TILE_GENERATOR_DIFFICULTY, 1)));
         this.difficulties = (List<String>) optionMap.getOrDefault(BingoConfiguration.KEY_TILE_GENERATOR_DIFFICULTIES, Collections.emptyList());
         this.weight = Double.parseDouble(String.valueOf(optionMap.getOrDefault(BingoConfiguration.KEY_TILE_GENERATOR_WEIGHT, 1)));
@@ -96,6 +98,10 @@ public class TileGenerator implements Weightable {
         return difficulties;
     }
 
+    public String getTooltip() {
+        return tooltip;
+    }
+
     @Override
     public String toString() {
         return text;
@@ -103,6 +109,7 @@ public class TileGenerator implements Weightable {
 
     public static boolean validate(Map<String, Object> optionMap) {
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TILE_GENERATOR_TEXT, true, String.class);
+        BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TILE_GENERATOR_TOOLTIP, false, String.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TILE_GENERATOR_DIFFICULTY, false, Double.class, Integer.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TILE_GENERATOR_DIFFICULTIES, false, List.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TILE_GENERATOR_WEIGHT, false, Double.class, Integer.class);
