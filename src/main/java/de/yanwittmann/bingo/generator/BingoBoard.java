@@ -47,7 +47,6 @@ public class BingoBoard {
     }
 
     public void populate(List<BingoTile> tiles, Map<String, Category> categories) {
-        System.out.println(tiles);
         int bestScore = Integer.MIN_VALUE;
         BingoTile[][] bestBoard = null;
         for (int i = 0; i < 100; i++) {
@@ -56,7 +55,6 @@ public class BingoBoard {
             if (score > bestScore) {
                 bestScore = score;
                 bestBoard = populatedBoard;
-                LOG.info("New best score: [{}]", score);
             }
         }
         // board is final, copy cells individually

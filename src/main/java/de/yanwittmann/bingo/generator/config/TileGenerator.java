@@ -11,11 +11,13 @@ public class TileGenerator implements Weightable {
     private double difficulty;
     private double weight;
     private final List<Category> categories;
+    private final List<String> difficulties;
     private final Set<Category> derivedCategories;
 
     public TileGenerator(Map<String, Object> optionMap, Map<String, Category> categories, Map<String, List<TextSnippet>> textSnippets) {
         this.text = (String) optionMap.get(BingoConfiguration.KEY_TILE_GENERATOR_TEXT);
         this.difficulty = Double.parseDouble(String.valueOf(optionMap.getOrDefault(BingoConfiguration.KEY_TILE_GENERATOR_DIFFICULTY, 1)));
+        this.difficulties = (List<String>) optionMap.getOrDefault(BingoConfiguration.KEY_TILE_GENERATOR_DIFFICULTIES, Collections.emptyList());
         this.weight = Double.parseDouble(String.valueOf(optionMap.getOrDefault(BingoConfiguration.KEY_TILE_GENERATOR_WEIGHT, 1)));
         this.categories = new ArrayList<>();
         Category.createCategories((List<String>) optionMap.getOrDefault(BingoConfiguration.KEY_TILE_GENERATOR_CATEGORIES, Collections.emptyList()), categories, this.categories, text);
@@ -90,6 +92,10 @@ public class TileGenerator implements Weightable {
         return derivedCategories;
     }
 
+    public List<String> getDifficulties() {
+        return difficulties;
+    }
+
     @Override
     public String toString() {
         return text;
@@ -98,6 +104,7 @@ public class TileGenerator implements Weightable {
     public static boolean validate(Map<String, Object> optionMap) {
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TILE_GENERATOR_TEXT, true, String.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TILE_GENERATOR_DIFFICULTY, false, Double.class, Integer.class);
+        BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TILE_GENERATOR_DIFFICULTIES, false, List.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TILE_GENERATOR_WEIGHT, false, Double.class, Integer.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TILE_GENERATOR_CATEGORIES, false, List.class);
         return true;

@@ -19,6 +19,7 @@ public class BingoConfiguration {
     private final Logger LOG = LoggerFactory.getLogger(getClass());
 
     private final List<TileGenerator> tileGenerators = new ArrayList<>();
+    private final Map<Difficulty, List<TileGenerator>> tileGeneratorsByDifficulty = new HashMap<>();
     private final Map<String, List<TextSnippet>> textSnippets = new HashMap<>();
     private final Map<String, ValueProvider> numberValueProviders = new HashMap<>();
     private final Map<String, Category> categories = new HashMap<>();
@@ -77,8 +78,6 @@ public class BingoConfiguration {
                                     Map<String, Object> optionMap = (Map<String, Object>) optionObject;
                                     if (TextSnippet.validate(optionMap)) {
                                         textSnippets.computeIfAbsent(entry.getKey(), k -> new ArrayList<>()).add(new TextSnippet(optionMap, categories));
-                                    } else {
-                                        LOG.error("Invalid text snippet: {}", optionMap);
                                     }
                                 }
                             }
@@ -99,8 +98,6 @@ public class BingoConfiguration {
                             Map<String, Object> optionMap = (Map<String, Object>) optionObject;
                             if (TileGenerator.validate(optionMap)) {
                                 tileGenerators.add(new TileGenerator(optionMap, categories, textSnippets));
-                            } else {
-                                LOG.error("Invalid tile generator: {}", optionMap);
                             }
                         }
                     }
@@ -144,6 +141,19 @@ public class BingoConfiguration {
             }
         }
 
+        tileGeneratorsByDifficulty.clear();
+        for (TileGenerator tileGenerator : tileGenerators) {
+            if (tileGenerator.getDifficulties().isEmpty()) {
+                for (Difficulty difficulty : difficulties) {
+                    tileGeneratorsByDifficulty.computeIfAbsent(difficulty, k -> new ArrayList<>()).add(tileGenerator);
+                }
+            } else {
+                for (String difficulty : tileGenerator.getDifficulties()) {
+                    tileGeneratorsByDifficulty.computeIfAbsent(getDifficulty(difficulty), k -> new ArrayList<>()).add(tileGenerator);
+                }
+            }
+        }
+
         for (Map.Entry<String, List<TextSnippet>> snippet : textSnippets.entrySet()) {
             for (TextSnippet textSnippet : snippet.getValue()) {
                 textSnippet.deriveSnippetCategories(snippet.getKey(), textSnippets);
@@ -181,6 +191,12 @@ public class BingoConfiguration {
     }
 
     public BingoTile generateTile(List<BingoTile> existingTiles, int destAmount, double destinationDifficulty) {
+        List<TileGenerator> allowedTileGeneratorsByDifficulty = tileGeneratorsByDifficulty.getOrDefault(getDifficulty(destinationDifficulty), new ArrayList<>());
+        if (allowedTileGeneratorsByDifficulty.size() == 0) {
+            LOG.warn("No tile generators found for difficulty [{}], using all generators", destinationDifficulty);
+            allowedTileGeneratorsByDifficulty = new ArrayList<>(tileGenerators);
+        }
+
         // find what categories are allowed and not allowed in the existing tiles
         Map<Category, Integer> categoryCount = countCategories(existingTiles);
         Set<Category> createdMustBeCategories = new HashSet<>();
@@ -196,7 +212,18 @@ public class BingoConfiguration {
             }
         }
 
-        List<TileGenerator> filteredTileGenerators = new ArrayList<>(this.tileGenerators);
+        List<TileGenerator> filteredTileGenerators = new ArrayList<>(allowedTileGeneratorsByDifficulty);
+        // remove all tile generators that are not the right difficulty level
+        if (difficulties.size() > 0) {
+            Difficulty destDiff = getDifficulty(destinationDifficulty);
+            for (int i = filteredTileGenerators.size() - 1; i >= 0; i--) {
+                List<String> difficulties = filteredTileGenerators.get(i).getDifficulties();
+                if (difficulties.size() > 0 && !difficulties.contains(destDiff.getName())) {
+                    filteredTileGenerators.remove(i);
+                }
+            }
+        }
+        // remove all tile generators that do not match the must-be categories
         if (!createdMustBeCategories.isEmpty()) {
             for (int i = filteredTileGenerators.size() - 1; i >= 0; i--) {
                 TileGenerator tileGenerator = filteredTileGenerators.get(i);
@@ -206,6 +233,7 @@ public class BingoConfiguration {
                 }
             }
         }
+        // remove all tile generators that match the may-not-be categories
         if (!createdMayNotBeCategories.isEmpty()) {
             for (int i = filteredTileGenerators.size() - 1; i >= 0; i--) {
                 TileGenerator tileGenerator = filteredTileGenerators.get(i);
@@ -215,10 +243,9 @@ public class BingoConfiguration {
             }
         }
 
-        //LOG.info("[{}/{}] [MUST {}]  [CANNOT {}]  [{}]", existingTiles.size() + 1, destAmount, createdMustBeCategories, createdMayNotBeCategories, filteredTileGenerators.size());
         if (filteredTileGenerators.isEmpty()) {
-            LOG.warn("No tile generators matching the criteria, using all [{}] tile generators", this.tileGenerators.size());
-            filteredTileGenerators = new ArrayList<>(this.tileGenerators);
+            filteredTileGenerators = new ArrayList<>(allowedTileGeneratorsByDifficulty);
+            LOG.warn("No generator for categories [MUST {}] [CANNOT {}], using all [{}]", createdMustBeCategories, createdMayNotBeCategories, allowedTileGeneratorsByDifficulty.size());
         }
         TileGenerator selectedGenerator = getRandom(filteredTileGenerators);
         String text = selectedGenerator.getText();
@@ -226,7 +253,7 @@ public class BingoConfiguration {
         String currentClosestText = null;
         double currentClosestDifficulty = Double.MAX_VALUE;
         Set<Category> bestTileCategories = new HashSet<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 3; i++) { // try finding a better tile 3 times
             AtomicReference<Double> currentDifficulty = new AtomicReference<>(0.0);
             Set<Category> currentTileCategories = new HashSet<>();
             String tmp = insertSnippets(text, createdMustBeCategories, createdMayNotBeCategories, currentDifficulty, destinationDifficulty, currentTileCategories);
@@ -306,6 +333,15 @@ public class BingoConfiguration {
             }
         }
         return closestDifficultyDifficulty;
+    }
+
+    public Difficulty getDifficulty(String difficulty) {
+        for (Difficulty difficultyDifficulty : difficulties) {
+            if (difficultyDifficulty.getName().equals(difficulty)) {
+                return difficultyDifficulty;
+            }
+        }
+        return null;
     }
 
     public <T extends Weightable> T getRandom(Collection<T> collection) {

@@ -3,6 +3,7 @@ tile generators:
     categories: [ goto, ship ]
     difficulty: 1
     weight: 1
+    difficulties: [ Easy ]
   - text: Die on [LOCATION]
     categories: [ goto, die ]
     difficulty: 3
