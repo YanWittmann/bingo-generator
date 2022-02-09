@@ -25,6 +25,13 @@ public class BingoTile implements Jsonable {
         this.difficulty = difficulty;
     }
 
+    public BingoTile(JSONObject jsonObject) {
+        text = jsonObject.getString("text");
+        tooltip = jsonObject.getString("tooltip");
+        difficulty = jsonObject.getDouble("difficulty");
+        categories.addAll(jsonObject.getJSONArray("categories").toList().stream().map(s -> new Category(String.valueOf(s))).collect(Collectors.toList()));
+    }
+
     public String getText() {
         return text;
     }

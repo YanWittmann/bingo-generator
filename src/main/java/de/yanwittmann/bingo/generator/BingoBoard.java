@@ -24,6 +24,21 @@ public class BingoBoard implements Jsonable {
         board = new BingoTile[width][height];
     }
 
+    public BingoBoard(JSONObject json) {
+        this(json.getInt("width"), json.getInt("height"));
+        if (json.has("metadata")) {
+            boardMetadata = new BingoBoardMetadata(json.getJSONObject("metadata").toMap());
+        }
+        JSONArray jsonBoard = json.getJSONArray("board");
+        for (int x = 0; x < getWidth(); x++) {
+            JSONArray row = jsonBoard.getJSONArray(x);
+            for (int y = 0; y < getHeight(); y++) {
+                BingoTile tile = new BingoTile(row.getJSONObject(y));
+                set(x, y, tile);
+            }
+        }
+    }
+
     public BingoTile get(int x, int y) {
         validateCoordinates(x, y);
         return board[x][y];

@@ -1,0 +1,526 @@
+{
+  "metadata": {
+    "game": "Outer Wilds",
+    "description": "Bingo for Outer Wilds",
+    "tilte": "Outer Wilds Bingo",
+    "version": "0.1",
+    "authors": [
+      "Yan Wittmann"
+    ]
+  },
+  "width": 5,
+  "board": [
+    [
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Interloper 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Interloper"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Hollows Lantern 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Hollows Lantern"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Hollows Lantern 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Hollows Lantern"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Hollows Lantern 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Hollows Lantern"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Hollows Lantern 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Hollows Lantern"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Hollows Lantern 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Hollows Lantern"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Interloper 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Interloper"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Interloper 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Interloper"
+        ]
+      }
+    ],
+    [
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Interloper 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Interloper"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Interloper 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Interloper"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Hollows Lantern 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Hollows Lantern"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Hollows Lantern 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Hollows Lantern"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Hollows Lantern 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Hollows Lantern"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Quatum Moon 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "quatum_moon"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Hollows Lantern 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Hollows Lantern"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Interloper 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Interloper"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Interloper 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Interloper"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Interloper 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Interloper"
+        ]
+      }
+    ],
+    [
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Interloper 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Interloper"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Hollows Lantern 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Hollows Lantern"
+        ]
+      },
+      {
+        "difficulty": 7,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on the Sun Station",
+        "categories": [
+          "Goto",
+          "Die",
+          "Sun Station",
+          "sun"
+        ]
+      },
+      {
+        "difficulty": 6,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Interloper 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Interloper"
+        ]
+      },
+      {
+        "difficulty": 5,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Timber Hearth 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Timber Hearth"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Quatum Moon 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "quatum_moon"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      }
+    ],
+    [
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 5,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Timber Hearth 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Timber Hearth"
+        ]
+      },
+      {
+        "difficulty": 5,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Timber Hearth 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Timber Hearth"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 5,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Timber Hearth 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Timber Hearth"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 5,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Timber Hearth 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "Timber Hearth"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Quatum Moon 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "quatum_moon"
+        ]
+      }
+    ],
+    [
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 6 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Quatum Moon 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "quatum_moon"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "giants_deep"
+        ]
+      },
+      {
+        "difficulty": 5.8,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Quatum Moon 5 times",
+        "categories": [
+          "Goto",
+          "Ship",
+          "quatum_moon"
+        ]
+      }
+    ]
+  ],
+  "height": 10
+}
