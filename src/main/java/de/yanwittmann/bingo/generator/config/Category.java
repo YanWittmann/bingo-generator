@@ -116,7 +116,7 @@ public class Category {
     public static void createCategories(List<String> categories, Map<String, Category> knownCategories, List<Category> addTo, String forWhat) {
         for (String category : categories) {
             if (!knownCategories.containsKey(category)) {
-                LOG.warn("Category [{}] on text snippet {} does not exist yet, creating new", category, forWhat);
+                LOG.warn("Creating category [{}] on [{}]", category, forWhat);
                 Category cat = new Category(category);
                 knownCategories.put(category, cat);
                 addTo.add(cat);

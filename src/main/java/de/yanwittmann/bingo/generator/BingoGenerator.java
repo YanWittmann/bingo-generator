@@ -45,13 +45,23 @@ public class BingoGenerator {
             ArrayList<BingoTile> backup = new ArrayList<>(tiles);
             removeByDifficulty(tiles, (width + height) / 2);
             fillBoard(tiles);
-            if (distanceToDestinationDifficulty(calculateDifficulty(tiles)) > distanceToDestinationDifficulty(calculateDifficulty(backup))) {
-                tiles = new ArrayList<>(backup);
+            double newDifficultyDistance = distanceToDestinationDifficulty(calculateDifficulty(tiles));
+            double oldDifficultyDistance = distanceToDestinationDifficulty(calculateDifficulty(backup));
+            if (newDifficultyDistance > oldDifficultyDistance) {
+                tiles.clear();
+                tiles.addAll(backup);
                 removeRandom(tiles, 2);
                 fillBoard(tiles);
-                if (distanceToDestinationDifficulty(calculateDifficulty(tiles)) > distanceToDestinationDifficulty(calculateDifficulty(backup))) {
-                    tiles = backup;
+                newDifficultyDistance = distanceToDestinationDifficulty(calculateDifficulty(tiles));
+                oldDifficultyDistance = distanceToDestinationDifficulty(calculateDifficulty(backup));
+                if (newDifficultyDistance > oldDifficultyDistance) {
+                    tiles.clear();
+                    tiles.addAll(backup);
+                } else if (newDifficultyDistance < oldDifficultyDistance) {
+                    LOG.info("2. Difficulty [{}] -> [{}]", oldDifficultyDistance, newDifficultyDistance);
                 }
+            } else if (newDifficultyDistance < oldDifficultyDistance) {
+                LOG.info("1. Difficulty [{}] -> [{}]", oldDifficultyDistance, newDifficultyDistance);
             }
         }
     }
