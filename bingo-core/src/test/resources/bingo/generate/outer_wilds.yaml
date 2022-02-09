@@ -89,34 +89,9 @@ categories:
     min:
       absolute: 1
   goto:
-    name: Goto
+    name: Go To
   ship:
     name: Ship
-  timber_hearth:
-    name: Timber Hearth
-    min:
-      relative: 10
-    max:
-      relative: 50
-  interloper:
-    name: Interloper
-    antisynergy: [ die ]
-    max:
-      relative: 20
-  hollows_lantern:
-    name: Hollows Lantern
-    synergy: [ die ]
-    min:
-      relative: 10
-    max:
-      relative: 20
-  construction_site:
-    name: Construction Site
-    antisynergy: [ die ]
-  sun_station:
-    name: Sun Station
-    max:
-      absolute: 5
 
 value providers:
   basic range:

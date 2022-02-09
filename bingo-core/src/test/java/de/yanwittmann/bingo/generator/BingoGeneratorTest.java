@@ -17,8 +17,8 @@ class BingoGeneratorTest {
         BingoConfiguration configuration = new BingoConfiguration(new File("src/test/resources/bingo/generate/outer_wilds.yaml"));
         BingoGenerator generator = new BingoGenerator(configuration);
         generator.setWidth(5);
-        generator.setHeight(10);
-        generator.setDifficultyLevel("Hard");
+        generator.setHeight(5);
+        generator.setDifficultyLevel("Normal");
         BingoBoard bingoBoard = generator.generateBingoBoard();
         System.out.println(bingoBoard);
         System.out.println(bingoBoard.toJson());

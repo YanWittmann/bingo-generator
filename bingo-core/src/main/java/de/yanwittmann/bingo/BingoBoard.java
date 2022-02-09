@@ -8,10 +8,7 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class BingoBoard implements Jsonable {
 
@@ -19,6 +16,8 @@ public class BingoBoard implements Jsonable {
 
     private final BingoTile[][] board;
     private BingoBoardMetadata boardMetadata;
+    private Map<Category, Integer> categoryCount;
+    private double difficulty = -1;
 
     public BingoBoard(int width, int height) {
         board = new BingoTile[width][height];
@@ -36,6 +35,17 @@ public class BingoBoard implements Jsonable {
                 BingoTile tile = new BingoTile(row.getJSONObject(y));
                 set(x, y, tile);
             }
+        }
+        if (json.has("categories")) {
+            JSONObject jsonCategoryCount = json.getJSONObject("categories");
+            categoryCount = new HashMap<>();
+            for (Map.Entry<String, Object> entry : jsonCategoryCount.toMap().entrySet()) {
+                Category category = new Category(entry.getKey());
+                categoryCount.put(category, (Integer) entry.getValue());
+            }
+        }
+        if (json.has("difficulty")) {
+            difficulty = json.getDouble("difficulty");
         }
     }
 
@@ -75,6 +85,22 @@ public class BingoBoard implements Jsonable {
 
     public BingoBoardMetadata getBoardMetadata() {
         return boardMetadata;
+    }
+
+    public void setCategoryCount(Map<Category, Integer> categoryCount) {
+        this.categoryCount = categoryCount;
+    }
+
+    public Map<Category, Integer> getCategoryCount() {
+        return categoryCount;
+    }
+
+    public void setDifficulty(double difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public double getDifficulty() {
+        return difficulty;
     }
 
     public void populate(List<BingoTile> tiles, Map<String, Category> categories) {
@@ -255,6 +281,8 @@ public class BingoBoard implements Jsonable {
         json.put("width", getWidth());
         json.put("height", getHeight());
         if (boardMetadata != null) json.put("metadata", boardMetadata.toJson());
+        if (categoryCount != null) json.put("categories", categoryCount);
+        if (difficulty != -1) json.put("difficulty", difficulty);
         JSONArray rows = new JSONArray();
         for (int x = 0; x < getWidth(); x++) {
             JSONArray row = new JSONArray();
