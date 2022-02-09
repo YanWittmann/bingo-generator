@@ -10,7 +10,7 @@ class BingoGeneratorTest {
 
     @Test
     void generateTest() throws FileNotFoundException {
-        BingoConfiguration configuration = new BingoConfiguration(new File("src/test/resources/bingo/generate/test_outer_wilds.yaml"));
+        BingoConfiguration configuration = new BingoConfiguration(new File("src/test/resources/bingo/generate/outer_wilds.yaml"));
         BingoGenerator generator = new BingoGenerator(configuration);
         generator.setWidth(5);
         generator.setHeight(5);

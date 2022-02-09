@@ -4,6 +4,8 @@ import de.yanwittmann.bingo.generator.config.BingoConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,11 @@ public class BingoGenerator {
     private double difficulty = 2;
     private int width = 5;
     private int height = 5;
+    private int maxGenerationAttempts = -1;
+
+    public BingoGenerator(File configurationFile) throws FileNotFoundException {
+        this.configuration = new BingoConfiguration(configurationFile);
+    }
 
     public BingoGenerator(BingoConfiguration configuration) {
         this.configuration = configuration;
@@ -26,7 +33,9 @@ public class BingoGenerator {
         }
 
         List<BingoTile> tiles = new ArrayList<>();
-        for (int i = 0; i < (width * height) * 5; i++) {
+        int maxAttempts = this.maxGenerationAttempts == -1 ? (2000 / Math.max(1, width * height - 10)) + 10 : this.maxGenerationAttempts;
+        LOG.info("Generation attempts [{}]", maxAttempts);
+        for (int i = 0; i < maxAttempts; i++) {
             createAndRemoveTiles(tiles, width * height);
         }
 
@@ -58,10 +67,10 @@ public class BingoGenerator {
                     tiles.clear();
                     tiles.addAll(backup);
                 } else if (newDifficultyDistance < oldDifficultyDistance) {
-                    LOG.info("2. Difficulty [{}] -> [{}]", oldDifficultyDistance, newDifficultyDistance);
+                    LOG.info("Found better board [{}] -> [{}]", oldDifficultyDistance, newDifficultyDistance);
                 }
             } else if (newDifficultyDistance < oldDifficultyDistance) {
-                LOG.info("1. Difficulty [{}] -> [{}]", oldDifficultyDistance, newDifficultyDistance);
+                LOG.info("Found better board [{}] -> [{}]", oldDifficultyDistance, newDifficultyDistance);
             }
         }
     }
@@ -135,5 +144,13 @@ public class BingoGenerator {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public void setMaxGenerationAttempts(int maxGenerationAttempts) {
+        this.maxGenerationAttempts = maxGenerationAttempts;
+    }
+
+    public int getMaxGenerationAttempts() {
+        return maxGenerationAttempts;
     }
 }

@@ -1,13 +1,13 @@
 tile generators:
-  - text: Land your ship on [PLANET] times
+  - text: Land your ship on [PLANET] [basic range] times
     tooltip: Damaged or not, it must be standing on the surface.
     categories: [ goto, ship ]
     difficulty: 1
     weight: 1
-    difficulties: [ Easy ]
   - text: Die on [LOCATION]
     tooltip: Die at the given location in any way you want.
     categories: [ goto, die ]
+    difficulties: [ Normal, Hard ]
     difficulty: 3
     weight: 1
 
@@ -68,13 +68,61 @@ snippets:
       weight: 10
 
 categories:
+  die:
+    name: Die
+    max:
+      absolute: 1
+    min:
+      absolute: 1
+  goto:
+    name: Goto
+  ship:
+    name: Ship
+  timber_hearth:
+    name: Timber Hearth
+    min:
+      relative: 10
+    max:
+      relative: 50
+  interloper:
+    name: Interloper
+    antisynergy: [ die ]
+    max:
+      relative: 20
+  hollows_lantern:
+    name: Hollows Lantern
+    synergy: [ die ]
+    min:
+      relative: 10
+    max:
+      relative: 20
+  construction_site:
+    name: Construction Site
+    antisynergy: [ die ]
+  sun_station:
+    name: Sun Station
+    max:
+      absolute: 5
 
 value providers:
+  basic range:
+    Easy:
+      min: 1
+      max: 2
+      score: 1
+    Normal:
+      min: 3
+      max: 4
+      score: 2
+    Hard:
+      min: 5
+      max: 6
+      score: 3
 
 difficulty:
   - name: Easy
     score: 2
   - name: Normal
-    score: 3
-  - name: Hard
     score: 4
+  - name: Hard
+    score: 6
