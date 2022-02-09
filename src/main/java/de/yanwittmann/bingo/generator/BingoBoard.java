@@ -47,14 +47,16 @@ public class BingoBoard {
     }
 
     public void populate(List<BingoTile> tiles, Map<String, Category> categories) {
+        LOG.info("Populating board with [{}] tiles", tiles.size());
         int bestScore = Integer.MIN_VALUE;
         BingoTile[][] bestBoard = null;
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 1000; i++) {
             BingoTile[][] populatedBoard = populate(tiles);
             int score = scoreBoard(populatedBoard, categories);
             if (score > bestScore) {
                 bestScore = score;
                 bestBoard = populatedBoard;
+                LOG.info("New best score [{}]", bestScore);
             }
         }
         // board is final, copy cells individually
@@ -63,6 +65,19 @@ public class BingoBoard {
                 if (getHeight() >= 0) System.arraycopy(bestBoard[x], 0, board[x], 0, getHeight());
             }
         }
+
+        LOG.info("Board score is [{}]", bestScore);
+    }
+
+    private BingoTile[][] populate(List<BingoTile> tiles) {
+        tiles.sort((o1, o2) -> (int) (Math.random() * 2) - 1);
+        BingoTile[][] board = new BingoTile[getWidth()][getHeight()];
+        for (int i = 0; i < getWidth(); i++) {
+            for (int j = 0; j < getHeight(); j++) {
+                board[i][j] = tiles.get(i * getHeight() + j);
+            }
+        }
+        return board;
     }
 
     /**
@@ -96,22 +111,71 @@ public class BingoBoard {
         }
 
         // find diagonal rows
+        int diagonalRowLength = Math.min(getWidth(), getHeight());
+        if (getWidth() >= getHeight()) {
+            for (int x = 0; x < getWidth() - diagonalRowLength + 1; x++) {
+                for (int y = 0; y < diagonalRowLength; y++) {
+                    row.add(board[x + y][y]);
+                }
+                score += scoreRow(row, categories);
+                row.clear();
+
+                int i = 0;
+                for (int y = getHeight() - 1; y >= 0; y--) {
+                    row.add(board[x + i][y]);
+                    i++;
+                }
+                score += scoreRow(row, categories);
+                row.clear();
+            }
+        } else {
+            for (int y = 0; y < getHeight() - diagonalRowLength + 1; y++) {
+                for (int x = 0; x < diagonalRowLength; x++) {
+                    row.add(board[x][y + x]);
+                }
+                score += scoreRow(row, categories);
+                row.clear();
+
+                int i = 0;
+                for (int x = getWidth() - 1; x >= 0; x--) {
+                    row.add(board[x][y + i]);
+                    i++;
+                }
+                score += scoreRow(row, categories);
+                row.clear();
+            }
+        }
+
+        // give points for having a larger difficulty on outer layers compared to inner layers (circles)
+        // example, a board like this, the numbers being the difficulties:
+        //  1 2 3 4
+        //  5 6 7 8
+        //  9 10 11 12
+        //  13 14 15 16
+        // would have two layers, one the outer ring and one the inner ring.
+        // the outer ring would have a score of (1+2+3+4+5+8+9+19+13+14+15+16 = 109), the inner ring would have a score of (6+7+10+11 = 34).
+        int layers = (int) Math.ceil(Math.max(getWidth(), getHeight()) / 2.0);
+        double[] totalDifficultyPerLayer = new double[layers];
+        int[] elementsPerLayer = new int[layers];
+        double centerX = (getWidth() - 1) / 2.0;
+        double centerY = (getHeight() - 1) / 2.0;
         for (int x = 0; x < getWidth(); x++) {
             for (int y = 0; y < getHeight(); y++) {
-                if (x < getHeight()) {
-                    row.add(board[x][x]);
-                }
+                double distance = Math.max(Math.abs(x - centerX), Math.abs(y - centerY));
+                int layer = (int) Math.floor(distance);
+                totalDifficultyPerLayer[layer] += board[x][y].getDifficulty();
+                elementsPerLayer[layer]++;
             }
-            score += scoreRow(row, categories);
-            row.clear();
-
-            for (int y = 0; y < getHeight(); y++) {
-                if (x < getWidth() && y < getHeight()) {
-                    row.add(board[getWidth() - x - 1][x]);
-                }
+        }
+        for (int i = 0; i < layers; i++) {
+            totalDifficultyPerLayer[i] /= elementsPerLayer[i];
+        }
+        for (int i = 0; i < layers - 1; i++) {
+            if (totalDifficultyPerLayer[i] <= totalDifficultyPerLayer[i + 1]) {
+                score += 5;
+            } else {
+                score -= 2;
             }
-            score += scoreRow(row, categories);
-            row.clear();
         }
 
         return score;
@@ -140,17 +204,6 @@ public class BingoBoard {
 
     private boolean rowContainsCategory(List<BingoTile> row, Category category) {
         return row.stream().anyMatch(tile -> tile.getCategories().contains(category));
-    }
-
-    private BingoTile[][] populate(List<BingoTile> tiles) {
-        tiles.sort((o1, o2) -> (int) (Math.random() * 2) - 1);
-        BingoTile[][] board = new BingoTile[getWidth()][getHeight()];
-        for (int i = 0; i < getWidth(); i++) {
-            for (int j = 0; j < getHeight(); j++) {
-                board[i][j] = tiles.get(i * getHeight() + j);
-            }
-        }
-        return board;
     }
 
     public String toString() {
