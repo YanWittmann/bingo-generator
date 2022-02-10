@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 public class TextSnippet implements Weightable {
 
     private String text;
+    private String tooltip;
     private double difficulty;
     private double weight;
     private final List<Category> categories;
@@ -16,6 +17,7 @@ public class TextSnippet implements Weightable {
 
     public TextSnippet(Map<String, Object> optionMap, Map<String, Category> categories) {
         this.text = (String) optionMap.get(BingoConfiguration.KEY_TEXT_SNIPPETS_TEXT);
+        this.tooltip = (String) optionMap.getOrDefault(BingoConfiguration.KEY_TEXT_SNIPPETS_TOOLTIP, null);
         this.difficulty = Double.parseDouble(String.valueOf(optionMap.getOrDefault(BingoConfiguration.KEY_TEXT_SNIPPETS_DIFFICULTY, 0)));
         this.weight = Double.parseDouble(String.valueOf(optionMap.getOrDefault(BingoConfiguration.KEY_TEXT_SNIPPETS_WEIGHT, 1)));
         this.categories = new ArrayList<>();
@@ -82,6 +84,10 @@ public class TextSnippet implements Weightable {
         categories.remove(category);
     }
 
+    public String getTooltip() {
+        return tooltip;
+    }
+
     @Override
     public String toString() {
         return text;
@@ -89,6 +95,7 @@ public class TextSnippet implements Weightable {
 
     public static boolean validate(Map<String, Object> optionMap) {
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TEXT_SNIPPETS_TEXT, true, String.class);
+        BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TEXT_SNIPPETS_TOOLTIP, false, String.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TEXT_SNIPPETS_CATEGORIES, false, List.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TEXT_SNIPPETS_DIFFICULTY, false, Double.class, Integer.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TEXT_SNIPPETS_WEIGHT, false, Double.class, Integer.class);

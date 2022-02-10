@@ -45,10 +45,7 @@ public class BingoTile implements Jsonable {
     }
 
     public void addCategory(Category category) {
-        if (category == null || categories.contains(category)) {
-            LOG.warn("Not adding category [{}] to [{}]", category, text);
-            return;
-        }
+        if (category == null || categories.contains(category)) return;
         categories.add(category);
     }
 

@@ -247,15 +247,19 @@ public class BingoConfiguration {
         }
         TileGenerator selectedGenerator = getRandom(filteredTileGenerators);
         String text = selectedGenerator.getText();
+        StringJoiner tooltips = new StringJoiner("\n");
+        if (selectedGenerator.getTooltip() != null) tooltips.add(selectedGenerator.getTooltip());
 
         String currentClosestText = null;
         double currentClosestDifficulty = Double.MAX_VALUE;
+        String currentClosestTooltips = null;
         Set<Category> bestTileCategories = new HashSet<>();
         int repeatCount = 0;
         for (int i = 0; i < 3; i++) { // try finding a better tile 3 times
             AtomicReference<Double> currentDifficulty = new AtomicReference<>(selectedGenerator.getDifficulty());
             Set<Category> currentTileCategories = new HashSet<>();
-            String tmp = insertSnippets(text, createdMustBeCategories, createdMayNotBeCategories, currentDifficulty, destinationDifficulty, currentTileCategories);
+            StringJoiner currentTooltips = new StringJoiner("\n");
+            String tmp = insertSnippets(text, createdMustBeCategories, createdMayNotBeCategories, currentDifficulty, destinationDifficulty, currentTileCategories, currentTooltips);
             if (repeatCount < 40 && checkForAnisynergies(currentTileCategories, selectedGenerator.getCategories())) {
                 repeatCount++;
                 i--;
@@ -267,14 +271,18 @@ public class BingoConfiguration {
                 currentClosestText = tmp;
                 currentClosestDifficulty = currentDifficulty.get();
                 bestTileCategories = currentTileCategories;
+                currentClosestTooltips = currentTooltips.toString();
             }
         }
         if (currentClosestText != null) {
             text = currentClosestText;
             currentClosestDifficulty -= selectedGenerator.getDifficulty();
         }
+        if (currentClosestTooltips != null && !currentClosestTooltips.isEmpty()) {
+            tooltips.add(currentClosestTooltips);
+        }
 
-        BingoTile bingoTile = new BingoTile(text, selectedGenerator.getTooltip(), currentClosestDifficulty + selectedGenerator.getDifficulty());
+        BingoTile bingoTile = new BingoTile(text, tooltips.toString(), currentClosestDifficulty + selectedGenerator.getDifficulty());
         selectedGenerator.getCategories().forEach(bingoTile::addCategory);
         bestTileCategories.forEach(bingoTile::addCategory);
         return bingoTile;
@@ -293,7 +301,11 @@ public class BingoConfiguration {
         return false;
     }
 
-    private String insertSnippets(String text, Set<Category> createdMustBeCategories, Set<Category> createdMayNotBeCategories, AtomicReference<Double> currentDifficulty, double destinationDifficulty, Set<Category> tileCategories) {
+    private String insertSnippets(String text,
+                                  Set<Category> createdMustBeCategories, Set<Category> createdMayNotBeCategories,
+                                  AtomicReference<Double> currentDifficulty, double destinationDifficulty,
+                                  Set<Category> tileCategories,
+                                  StringJoiner currentTooltips) {
         boolean found;
         do {
             found = false;
@@ -329,6 +341,7 @@ public class BingoConfiguration {
                     TextSnippet selectedSnippet = getRandom(snippets);
                     currentDifficulty.set(currentDifficulty.get() + selectedSnippet.getDifficulty());
                     tileCategories.addAll(selectedSnippet.getCategories());
+                    if (selectedSnippet.getTooltip() != null) currentTooltips.add(selectedSnippet.getTooltip());
                     text = text.replaceFirst(Pattern.quote(snippetsMatcher.group()), selectedSnippet.getText());
                     found = true;
                 } else {
@@ -416,6 +429,7 @@ public class BingoConfiguration {
     final static String KEY_TEXT_SNIPPETS = "snippets";
     final static String KEY_TEXT_SNIPPETS_CATEGORIES = "categories";
     final static String KEY_TEXT_SNIPPETS_TEXT = "text";
+    final static String KEY_TEXT_SNIPPETS_TOOLTIP = "tooltip";
     final static String KEY_TEXT_SNIPPETS_DIFFICULTY = "difficulty";
     final static String KEY_TEXT_SNIPPETS_WEIGHT = "weight";
 

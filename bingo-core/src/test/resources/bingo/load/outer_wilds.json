@@ -1,5 +1,5 @@
 {
-  "difficulty": 2,
+  "difficulty": 0,
   "metadata": {
     "game": "Outer Wilds",
     "description": "Bingo for Outer Wilds",
@@ -11,259 +11,78 @@
   },
   "width": 5,
   "categories": {
-    "die": 14,
-    "construction_site": 7,
-    "attlerock": 1,
-    "hollows_lantern": 0,
-    "ship": 11,
-    "dark_bramble": 2,
-    "sun": 7,
+    "die": 4,
+    "chert": 0,
+    "traveler": 0,
+    "activity": 5,
+    "endless_canyon": 0,
+    "riebek": 0,
+    "abandoned_temple": 0,
+    "raft": 4,
+    "ship": 10,
+    "dark_bramble": 1,
+    "feldspar": 0,
+    "strange_flames": 0,
     "interloper": 1,
-    "timber_hearth": 3,
+    "timber_hearth": 1,
+    "starlit_cove": 1,
+    "damaged_laboratory": 2,
+    "goto": 20,
+    "dream_world": 0,
+    "river_lowlands": 0,
+    "gabbro": 0,
+    "ember_twin": 3,
+    "forbidden_archive": 0,
+    "attlerock": 1,
+    "hollows_lantern": 1,
+    "esker": 0,
     "quatum_moon": 0,
-    "sun_station": 7,
-    "giants_deep": 7,
-    "goto": 25,
-    "briddle_hollow": 2,
+    "vision": 0,
+    "giants_deep": 0,
+    "brim_hollow": 0,
+    "briddle_hollow": 0,
     "ash_twin": 1,
-    "stranger": 1,
-    "ember_twin": 0
+    "slide": 1,
+    "subterranean_lake": 0,
+    "hidden_gorge": 1,
+    "shrouded_woodlands": 0,
+    "stranger": 12,
+    "cinder_isles": 1,
+    "reservoir": 1
   },
   "board": [
     [
       {
-        "difficulty": 2,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on the Sun Station",
+        "difficulty": 0,
+        "tooltip": "Reach any of the hidden rooms with the burned slides.",
+        "text": "Reach Any slide burning room",
         "categories": [
           "goto",
-          "die",
-          "sun_station",
-          "sun"
+          "stranger"
         ]
       },
       {
-        "difficulty": 2,
+        "difficulty": 0,
+        "tooltip": "Enter the stranger via the hull breach.",
+        "text": "Reach The Damaged Laboratory",
+        "categories": [
+          "goto",
+          "stranger",
+          "damaged_laboratory"
+        ]
+      },
+      {
+        "difficulty": 0,
         "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Dark Bramble times",
+        "text": "Land your ship on The Ember Twin times",
         "categories": [
           "goto",
           "ship",
-          "dark_bramble"
+          "ember_twin"
         ]
       },
       {
-        "difficulty": 2,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on the Construction Site",
-        "categories": [
-          "goto",
-          "die",
-          "construction_site",
-          "giants_deep"
-        ]
-      },
-      {
-        "difficulty": 2,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Timber Hearth times",
-        "categories": [
-          "goto",
-          "ship",
-          "timber_hearth"
-        ]
-      },
-      {
-        "difficulty": 2,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on the Construction Site",
-        "categories": [
-          "goto",
-          "die",
-          "construction_site",
-          "giants_deep"
-        ]
-      }
-    ],
-    [
-      {
-        "difficulty": 2,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Briddle Hollow times",
-        "categories": [
-          "goto",
-          "ship",
-          "briddle_hollow"
-        ]
-      },
-      {
-        "difficulty": 2,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Timber Hearth times",
-        "categories": [
-          "goto",
-          "ship",
-          "timber_hearth"
-        ]
-      },
-      {
-        "difficulty": 2,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on the Construction Site",
-        "categories": [
-          "goto",
-          "die",
-          "construction_site",
-          "giants_deep"
-        ]
-      },
-      {
-        "difficulty": 2,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Briddle Hollow times",
-        "categories": [
-          "goto",
-          "ship",
-          "briddle_hollow"
-        ]
-      },
-      {
-        "difficulty": 2,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Timber Hearth times",
-        "categories": [
-          "goto",
-          "ship",
-          "timber_hearth"
-        ]
-      }
-    ],
-    [
-      {
-        "difficulty": 2,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on the Sun Station",
-        "categories": [
-          "goto",
-          "die",
-          "sun_station",
-          "sun"
-        ]
-      },
-      {
-        "difficulty": 2,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Dark Bramble times",
-        "categories": [
-          "goto",
-          "ship",
-          "dark_bramble"
-        ]
-      },
-      {
-        "difficulty": 2,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on the Sun Station",
-        "categories": [
-          "goto",
-          "die",
-          "sun_station",
-          "sun"
-        ]
-      },
-      {
-        "difficulty": 2,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Interloper times",
-        "categories": [
-          "goto",
-          "ship",
-          "interloper"
-        ]
-      },
-      {
-        "difficulty": 2,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on the Construction Site",
-        "categories": [
-          "goto",
-          "die",
-          "construction_site",
-          "giants_deep"
-        ]
-      }
-    ],
-    [
-      {
-        "difficulty": 2,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on the Sun Station",
-        "categories": [
-          "goto",
-          "die",
-          "sun_station",
-          "sun"
-        ]
-      },
-      {
-        "difficulty": 2,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on the Construction Site",
-        "categories": [
-          "goto",
-          "die",
-          "construction_site",
-          "giants_deep"
-        ]
-      },
-      {
-        "difficulty": 2,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on the Sun Station",
-        "categories": [
-          "goto",
-          "die",
-          "sun_station",
-          "sun"
-        ]
-      },
-      {
-        "difficulty": 2,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on the Construction Site",
-        "categories": [
-          "goto",
-          "die",
-          "construction_site",
-          "giants_deep"
-        ]
-      },
-      {
-        "difficulty": 2,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on the Sun Station",
-        "categories": [
-          "goto",
-          "die",
-          "sun_station",
-          "sun"
-        ]
-      }
-    ],
-    [
-      {
-        "difficulty": 2,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on the Sun Station",
-        "categories": [
-          "goto",
-          "die",
-          "sun_station",
-          "sun"
-        ]
-      },
-      {
-        "difficulty": 2,
+        "difficulty": 0,
         "tooltip": "Damaged or not, it must be standing on the surface.",
         "text": "Land your ship on The Attlerock times",
         "categories": [
@@ -273,18 +92,181 @@
         ]
       },
       {
-        "difficulty": 2,
+        "difficulty": 0,
         "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on the Construction Site",
+        "text": "Die on [LOCATION]",
         "categories": [
           "goto",
-          "die",
-          "construction_site",
-          "giants_deep"
+          "die"
+        ]
+      }
+    ],
+    [
+      {
+        "difficulty": 0,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on [LOCATION]",
+        "categories": [
+          "goto",
+          "die"
         ]
       },
       {
-        "difficulty": 2,
+        "difficulty": 0,
+        "tooltip": "Perform this action at the stranger.\nStand on a raft and use any light source to move it.",
+        "text": "Stranger activity: Ride a raft",
+        "categories": [
+          "activity",
+          "stranger",
+          "raft"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on [LOCATION]",
+        "categories": [
+          "goto",
+          "die"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Perform this action at the stranger.\nStand on a raft and use any light source to move it.",
+        "text": "Stranger activity: Ride a raft",
+        "categories": [
+          "activity",
+          "stranger",
+          "raft"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Interloper times",
+        "categories": [
+          "goto",
+          "ship",
+          "interloper"
+        ]
+      }
+    ],
+    [
+      {
+        "difficulty": 0,
+        "tooltip": "Enter the stranger via the hull breach.",
+        "text": "Reach The Damaged Laboratory",
+        "categories": [
+          "goto",
+          "stranger",
+          "damaged_laboratory"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die on [LOCATION]",
+        "categories": [
+          "goto",
+          "die"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Dark Bramble times",
+        "categories": [
+          "goto",
+          "ship",
+          "dark_bramble"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Timber Hearth times",
+        "categories": [
+          "goto",
+          "ship",
+          "timber_hearth"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Perform this action at the stranger.\nStand on a raft and use any light source to move it.",
+        "text": "Stranger activity: Ride a raft",
+        "categories": [
+          "activity",
+          "stranger",
+          "raft"
+        ]
+      }
+    ],
+    [
+      {
+        "difficulty": 0,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Ember Twin times",
+        "categories": [
+          "goto",
+          "ship",
+          "ember_twin"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Stand in front, inside or on top.",
+        "text": "Reach The Island Tower",
+        "categories": [
+          "goto",
+          "stranger",
+          "cinder_isles"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Stranger times",
+        "categories": [
+          "goto",
+          "ship",
+          "stranger"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Ember Twin times",
+        "categories": [
+          "goto",
+          "ship",
+          "ember_twin"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Perform this action at the stranger.\nStand on a raft and use any light source to move it.",
+        "text": "Stranger activity: Ride a raft",
+        "categories": [
+          "activity",
+          "stranger",
+          "raft"
+        ]
+      }
+    ],
+    [
+      {
+        "difficulty": 0,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Hollows Lantern times",
+        "categories": [
+          "goto",
+          "ship",
+          "hollows_lantern"
+        ]
+      },
+      {
+        "difficulty": 0,
         "tooltip": "Damaged or not, it must be standing on the surface.",
         "text": "Land your ship on The Ash Twin times",
         "categories": [
@@ -294,13 +276,34 @@
         ]
       },
       {
-        "difficulty": 2,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Stranger times",
+        "difficulty": 0,
+        "tooltip": "Perform this action at the stranger.\nMust be viewed completely, burned or not.\nThe third seal reel at the Hidden Gorge.",
+        "text": "Stranger activity: View the slide \"Seal reel 3\"",
+        "categories": [
+          "activity",
+          "stranger",
+          "slide",
+          "hidden_gorge"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Be outside the flame building.",
+        "text": "Reach The Starlit Cove",
         "categories": [
           "goto",
-          "ship",
-          "stranger"
+          "stranger",
+          "starlit_cove"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "The area behind the warming gates and before/on top the dam.",
+        "text": "Reach The Reservoir",
+        "categories": [
+          "goto",
+          "stranger",
+          "reservoir"
         ]
       }
     ]

@@ -13,12 +13,16 @@ difficulty:
     score: 6
 
 tile generators:
-  - text: Land your ship on [PLANET] times
+  - text: Land your ship on [PLANET]
     tooltip: Damaged or not, it must be standing on the surface.
     categories: [ goto, ship ]
-  - text: Die on [LOCATION]
+  - text: Die at [LOCATION]
     tooltip: Die at the given location in any way you want.
     categories: [ goto, die ]
+  - text: "Stranger activity: [STRANGER_ACTIVITIES]"
+    categories: [ activity, stranger ]
+  - text: Reach [STRANGER_LOCATIONS]
+    categories: [ goto, stranger ]
 
 snippets:
   PLANET:
@@ -55,16 +59,133 @@ snippets:
       categories: [ traveler, gabbro, giants_deep ]
     - text: Feldspar
       categories: [ traveler, feldspar, dark_bramble ]
-  LOCATION:
-    - text: the Sun Station
-      categories: [ sun, sun_station ]
-    - text: the Construction Site
-      categories: [ giants_deep, construction_site ]
   STRANGER_ACTIVITIES:
     - text: Ride a raft
       categories: [ stranger, raft ]
-    - text: View the slide [STRANGER_SLIDE]
+    - text: Make a full loop
+      categories: [ stranger, raft ]
+      tooltip: Stand on a raft and use any light source to move it.
+    - text: View the slide "[STRANGER_SLIDE]"
       categories: [ stranger, slide ]
+      tooltip: Must be viewed completely, burned or not.
+    - text: Enter any Code
+      categories: [ stranger ]
+      tooltip: The code must be correct.
+    - text: Use an elevator
+      categories: [ stranger ]
+  STRANGER_LOCATIONS:
+    - text: The Reservoir
+      categories: [ stranger, reservoir ]
+      tooltip: The area behind the warming gates and before/on top the dam.
+    - text: The inside of the Submerged Bell
+      categories: [ stranger, reservoir, strange_flames ]
+      tooltip: Must be inside the bell, standing on the surface (not in the water).
+    - text: The River Lowlands
+      categories: [ stranger, river_lowlands ]
+      tooltip: The area between the dam and the rapids.
+    - text: The Cinder Isles
+      categories: [ stranger, cinder_isles ]
+      tooltip: The area between the rapids and gorges.
+    - text: The Hidden Gorge
+      categories: [ stranger, hidden_gorge ]
+      tooltip: Must use the elevator to reach the top.
+    - text: The Damaged Laboratory
+      categories: [ stranger, damaged_laboratory ]
+      tooltip: Enter the stranger via the hull breach.
+    - text: The Abandoned temple
+      categories: [ stranger, abandoned_temple ]
+      tooltip: The temple at the Hidden Gorge.
+    - text: Any slide burning room
+      categories: [ stranger ]
+      tooltip: Reach any of the hidden rooms with the burned slides.
+    - text: The Island Tower
+      categories: [ stranger, cinder_isles ]
+      tooltip: Stand in front, inside or on top.
+    - text: The Island Tower middle room
+      categories: [ stranger, cinder_isles ]
+      tooltip: The room reached by using the cave.
+    - text: The Island Tower code room
+      categories: [ stranger, dream_world, cinder_isles ]
+      tooltip: The room behind the mural that requires entering the dream world.
+    - text: The Endless Canion
+      categories: [ stranger, dream_world, endless_canyon ]
+      tooltip: Be outside the flame building.
+    - text: The Starlit Cove
+      categories: [ stranger, starlit_cove ]
+      tooltip: Be outside the flame building.
+    - text: The Shrouded Woodlands
+      categories: [ stranger, shrouded_woodlands ]
+      tooltip: Be outside the flame building.
+    - text: Any Forbidden Archive
+      categories: [ stranger, forbidden_archive ]
+      tooltip: Enter any forbidden archive.
+    - text: The Dam
+      categories: [ stranger, reservoir ]
+      tooltip: Stand on top of the dam.
+    - text: The Dam supernova room
+      categories: [ stranger, reservoir ]
+      tooltip: The lower room with the projector.
+  STRANGER_SLIDE:
+    - text: First story reel
+      categories: [ river_lowlands ]
+      tooltip: The story reel at the River Lowlands.
+    - text: Seal reel 1
+      categories: [ river_lowlands ]
+      tooltip: The first seal reel at the River Lowlands.
+    - text: Archive path reel 1
+      categories: [ river_lowlands ]
+      tooltip: The first archive path reel for the Shrouded Woodlands at the River Lowlands.
+    - text: Second story reel
+      categories: [ cinder_isles ]
+      tooltip: The story reel at the Cinder Isles.
+    - text: Seal reel 2
+      categories: [ cinder_isles ]
+      tooltip: The second seal reel at the Cinder Isles.
+    - text: Archive path reel 2
+      categories: [ cinder_isles ]
+      tooltip: The second archive path reel for the Starlit Cove at the Cinder Isles.
+    - text: Lantern secret reel
+      categories: [ cinder_isles ]
+      tooltip: The lantern secret reel inside the Cinder Isles Tower.
+    - text: Third story reel
+      categories: [ hidden_gorge ]
+      tooltip: The story reel at the Hidden Gorge.
+    - text: Seal reel 3
+      categories: [ hidden_gorge ]
+      tooltip: The third seal reel at the Hidden Gorge.
+    - text: Archive path reel 3
+      categories: [ hidden_gorge ]
+      tooltip: The third archive path reel for the Endless Canyon at the Hidden Gorge.
+    - text: Damage report
+      categories: [ hidden_gorge ]
+      tooltip: The damage report reel at the Hidden Gorge.
+    - text: Artifact experiments
+      categories: [ damaged_laboratory ]
+      tooltip: The artifact experiments reel at the Damaged Laboratory.
+    - text: Artifact experiments vision
+      categories: [ damaged_laboratory, vision ]
+      tooltip: View any vision at the Damaged Laboratory.
+    - text: Fourth story reel
+      categories: [ reservoir ]
+      tooltip: The story reel at the Reservoir.
+    - text: Slide Burning Reel
+      categories: [ abandoned_temple ]
+      tooltip: "The reel in the Abandoned Temple (🌒 🪐 🌒 ✨ ✨)"
+    - text: Tower vision
+      categories: [ subterranean_lake, vision, dream_world ]
+      tooltip: View the vision from the crack in the Valut in the Subterranean Lake.
+    - text: Submerged bell vision
+      categories: [ raft, vision, dream_world ]
+      tooltip: View the vision from outside the bell in the Dream World.
+    - text: Shrouded Woodland Glitch reel
+      categories: [ shrouded_woodlands, forbidden_archive, dream_world ]
+      tooltip: Get past the Fire and view Glitch reel in the Forbidden Archive.
+    - text: Starlit Cove Glitch reel
+      categories: [ starlit_cove, forbidden_archive, dream_world ]
+      tooltip: Get past into the well and view any of the two Glitch reels in the Forbidden Archive.
+    - text: Endless Canyon Glitch reel
+      categories: [ endless_canyon, forbidden_archive, dream_world ]
+      tooltip: Cross the invisible bridge and view Glitch reel in the Forbidden Archive.
 
 categories:
 
