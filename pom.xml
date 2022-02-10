@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>bingo-core</module>
+        <module>bingo-java-visualizer</module>
     </modules>
 
     <properties>

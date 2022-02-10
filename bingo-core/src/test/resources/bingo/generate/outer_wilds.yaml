@@ -21,7 +21,7 @@ tile generators:
     categories: [ goto, die ]
   - text: "Stranger activity: [STRANGER_ACTIVITIES]"
     categories: [ activity, stranger ]
-  - text: Reach [STRANGER_LOCATIONS]
+  - text: Reach [STRANGER_LOCATIONS] on The Stranger
     categories: [ goto, stranger ]
 
 snippets:
@@ -62,7 +62,7 @@ snippets:
   STRANGER_ACTIVITIES:
     - text: Ride a raft
       categories: [ stranger, raft ]
-    - text: Make a full loop
+    - text: Make a full loop around the ring world
       categories: [ stranger, raft ]
       tooltip: Stand on a raft and use any light source to move it.
     - text: View the slide "[STRANGER_SLIDE]"
@@ -73,6 +73,17 @@ snippets:
       tooltip: The code must be correct.
     - text: Use an elevator
       categories: [ stranger ]
+    - text: Use a structure in the dream world to extinguish/light lanterns
+      categories: [ stranger, dream_world ]
+    - text: (fail to) translate any text
+      categories: [ stranger, translate ]
+    - text: Touch any Symbol of the Eye of the Universe
+      categories: [ stranger ]
+    - text: Refuel your jetpack
+      categories: [ stranger, refuel ]
+    - text: Touch any antenna
+      categories: [ stranger ]
+      tooltip: Like the antenna on the Dream World shrines or the one at the signal blocker
   STRANGER_LOCATIONS:
     - text: The Reservoir
       categories: [ stranger, reservoir ]
@@ -125,6 +136,9 @@ snippets:
     - text: The Dam supernova room
       categories: [ stranger, reservoir ]
       tooltip: The lower room with the projector.
+    - text: Burned Eye Church in the Dream World
+      categories: [ stranger, dream_world, starlit_cove ]
+      tooltip: The eye church in the Starlit Cove.
   STRANGER_SLIDE:
     - text: First story reel
       categories: [ river_lowlands ]
@@ -188,5 +202,11 @@ snippets:
       tooltip: Cross the invisible bridge and view Glitch reel in the Forbidden Archive.
 
 categories:
+  die:
+    name: Die
+    max:
+      absolute: 1
+    min:
+      absolute: 1
 
 value providers:

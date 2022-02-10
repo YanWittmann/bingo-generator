@@ -11,42 +11,44 @@
   },
   "width": 5,
   "categories": {
-    "die": 4,
     "chert": 0,
+    "die": 2,
+    "activity": 10,
     "traveler": 0,
-    "activity": 5,
-    "endless_canyon": 0,
     "riebek": 0,
-    "abandoned_temple": 0,
-    "raft": 4,
-    "ship": 10,
-    "dark_bramble": 1,
+    "endless_canyon": 0,
+    "abandoned_temple": 1,
+    "raft": 1,
+    "ship": 8,
+    "dark_bramble": 0,
     "feldspar": 0,
     "strange_flames": 0,
-    "interloper": 1,
-    "timber_hearth": 1,
+    "interloper": 0,
+    "timber_hearth": 0,
+    "translate": 0,
     "starlit_cove": 1,
-    "damaged_laboratory": 2,
-    "goto": 20,
-    "dream_world": 0,
-    "river_lowlands": 0,
+    "damaged_laboratory": 0,
+    "goto": 15,
+    "dream_world": 2,
+    "river_lowlands": 1,
     "gabbro": 0,
-    "ember_twin": 3,
-    "forbidden_archive": 0,
-    "attlerock": 1,
+    "ember_twin": 0,
+    "forbidden_archive": 1,
+    "attlerock": 2,
     "hollows_lantern": 1,
+    "refuel": 2,
     "esker": 0,
     "quatum_moon": 0,
     "vision": 0,
-    "giants_deep": 0,
+    "giants_deep": 2,
     "brim_hollow": 0,
-    "briddle_hollow": 0,
-    "ash_twin": 1,
+    "briddle_hollow": 1,
     "slide": 1,
+    "ash_twin": 1,
+    "hidden_gorge": 0,
     "subterranean_lake": 0,
-    "hidden_gorge": 1,
-    "shrouded_woodlands": 0,
-    "stranger": 12,
+    "shrouded_woodlands": 1,
+    "stranger": 16,
     "cinder_isles": 1,
     "reservoir": 1
   },
@@ -54,211 +56,78 @@
     [
       {
         "difficulty": 0,
-        "tooltip": "Reach any of the hidden rooms with the burned slides.",
-        "text": "Reach Any slide burning room",
-        "categories": [
-          "goto",
-          "stranger"
-        ]
-      },
-      {
-        "difficulty": 0,
-        "tooltip": "Enter the stranger via the hull breach.",
-        "text": "Reach The Damaged Laboratory",
+        "tooltip": "The temple at the Hidden Gorge.",
+        "text": "Reach The Abandoned temple on The Stranger",
         "categories": [
           "goto",
           "stranger",
-          "damaged_laboratory"
+          "abandoned_temple"
         ]
       },
       {
         "difficulty": 0,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Ember Twin times",
+        "tooltip": "Stand on top of the dam.",
+        "text": "Reach The Dam on The Stranger",
         "categories": [
           "goto",
-          "ship",
-          "ember_twin"
+          "stranger",
+          "reservoir"
         ]
       },
       {
         "difficulty": 0,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Attlerock times",
-        "categories": [
-          "goto",
-          "ship",
-          "attlerock"
-        ]
-      },
-      {
-        "difficulty": 0,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on [LOCATION]",
-        "categories": [
-          "goto",
-          "die"
-        ]
-      }
-    ],
-    [
-      {
-        "difficulty": 0,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on [LOCATION]",
-        "categories": [
-          "goto",
-          "die"
-        ]
-      },
-      {
-        "difficulty": 0,
-        "tooltip": "Perform this action at the stranger.\nStand on a raft and use any light source to move it.",
-        "text": "Stranger activity: Ride a raft",
+        "tooltip": "",
+        "text": "Stranger activity: Use an elevator",
         "categories": [
           "activity",
-          "stranger",
-          "raft"
-        ]
-      },
-      {
-        "difficulty": 0,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on [LOCATION]",
-        "categories": [
-          "goto",
-          "die"
-        ]
-      },
-      {
-        "difficulty": 0,
-        "tooltip": "Perform this action at the stranger.\nStand on a raft and use any light source to move it.",
-        "text": "Stranger activity: Ride a raft",
-        "categories": [
-          "activity",
-          "stranger",
-          "raft"
-        ]
-      },
-      {
-        "difficulty": 0,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Interloper times",
-        "categories": [
-          "goto",
-          "ship",
-          "interloper"
-        ]
-      }
-    ],
-    [
-      {
-        "difficulty": 0,
-        "tooltip": "Enter the stranger via the hull breach.",
-        "text": "Reach The Damaged Laboratory",
-        "categories": [
-          "goto",
-          "stranger",
-          "damaged_laboratory"
-        ]
-      },
-      {
-        "difficulty": 0,
-        "tooltip": "Die at the given location in any way you want.",
-        "text": "Die on [LOCATION]",
-        "categories": [
-          "goto",
-          "die"
-        ]
-      },
-      {
-        "difficulty": 0,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Dark Bramble times",
-        "categories": [
-          "goto",
-          "ship",
-          "dark_bramble"
-        ]
-      },
-      {
-        "difficulty": 0,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Timber Hearth times",
-        "categories": [
-          "goto",
-          "ship",
-          "timber_hearth"
-        ]
-      },
-      {
-        "difficulty": 0,
-        "tooltip": "Perform this action at the stranger.\nStand on a raft and use any light source to move it.",
-        "text": "Stranger activity: Ride a raft",
-        "categories": [
-          "activity",
-          "stranger",
-          "raft"
-        ]
-      }
-    ],
-    [
-      {
-        "difficulty": 0,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Ember Twin times",
-        "categories": [
-          "goto",
-          "ship",
-          "ember_twin"
-        ]
-      },
-      {
-        "difficulty": 0,
-        "tooltip": "Stand in front, inside or on top.",
-        "text": "Reach The Island Tower",
-        "categories": [
-          "goto",
-          "stranger",
-          "cinder_isles"
-        ]
-      },
-      {
-        "difficulty": 0,
-        "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Stranger times",
-        "categories": [
-          "goto",
-          "ship",
           "stranger"
         ]
       },
       {
         "difficulty": 0,
         "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Ember Twin times",
+        "text": "Land your ship on Giant's Deep",
         "categories": [
           "goto",
           "ship",
-          "ember_twin"
+          "giants_deep"
         ]
       },
       {
         "difficulty": 0,
-        "tooltip": "Perform this action at the stranger.\nStand on a raft and use any light source to move it.",
-        "text": "Stranger activity: Ride a raft",
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die at [LOCATION]",
         "categories": [
-          "activity",
-          "stranger",
-          "raft"
+          "goto",
+          "die"
         ]
       }
     ],
     [
       {
         "difficulty": 0,
+        "tooltip": "",
+        "text": "Stranger activity: Refuel your jetpack",
+        "categories": [
+          "activity",
+          "stranger",
+          "refuel"
+        ]
+      },
+      {
+        "difficulty": 0,
         "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on Hollows Lantern times",
+        "text": "Land your ship on The Ash Twin",
+        "categories": [
+          "goto",
+          "ship",
+          "ash_twin"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Hollows Lantern",
         "categories": [
           "goto",
           "ship",
@@ -268,42 +137,175 @@
       {
         "difficulty": 0,
         "tooltip": "Damaged or not, it must be standing on the surface.",
-        "text": "Land your ship on The Ash Twin times",
+        "text": "Land your ship on Briddle Hollow",
         "categories": [
           "goto",
           "ship",
-          "ash_twin"
+          "briddle_hollow"
         ]
       },
       {
         "difficulty": 0,
-        "tooltip": "Perform this action at the stranger.\nMust be viewed completely, burned or not.\nThe third seal reel at the Hidden Gorge.",
-        "text": "Stranger activity: View the slide \"Seal reel 3\"",
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Stranger",
         "categories": [
-          "activity",
-          "stranger",
-          "slide",
-          "hidden_gorge"
+          "goto",
+          "ship",
+          "stranger"
+        ]
+      }
+    ],
+    [
+      {
+        "difficulty": 0,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on Giant's Deep",
+        "categories": [
+          "goto",
+          "ship",
+          "giants_deep"
         ]
       },
       {
         "difficulty": 0,
-        "tooltip": "Be outside the flame building.",
-        "text": "Reach The Starlit Cove",
+        "tooltip": "The eye church in the Starlit Cove.",
+        "text": "Reach Burned Eye Church in the Dream World on The Stranger",
         "categories": [
           "goto",
           "stranger",
+          "dream_world",
           "starlit_cove"
         ]
       },
       {
         "difficulty": 0,
-        "tooltip": "The area behind the warming gates and before/on top the dam.",
-        "text": "Reach The Reservoir",
+        "tooltip": "Must be viewed completely, burned or not.\nGet past the Fire and view Glitch reel in the Forbidden Archive.",
+        "text": "Stranger activity: View the slide \"Shrouded Woodland Glitch reel\"",
+        "categories": [
+          "activity",
+          "stranger",
+          "shrouded_woodlands",
+          "dream_world",
+          "slide",
+          "forbidden_archive"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Stand on a raft and use any light source to move it.",
+        "text": "Stranger activity: Make a full loop",
+        "categories": [
+          "activity",
+          "stranger",
+          "raft"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "",
+        "text": "Stranger activity: Refuel your jetpack",
+        "categories": [
+          "activity",
+          "stranger",
+          "refuel"
+        ]
+      }
+    ],
+    [
+      {
+        "difficulty": 0,
+        "tooltip": "The room reached by using the cave.",
+        "text": "Reach The Island Tower middle room on The Stranger",
         "categories": [
           "goto",
           "stranger",
-          "reservoir"
+          "cinder_isles"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "",
+        "text": "Stranger activity: Touch any Symbol of the Eye of the Universe",
+        "categories": [
+          "activity",
+          "stranger"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Like the antenna on the Dream World shrines or the one at the signal blocker",
+        "text": "Stranger activity: Touch any antenna",
+        "categories": [
+          "activity",
+          "stranger"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Attlerock",
+        "categories": [
+          "goto",
+          "ship",
+          "attlerock"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Damaged or not, it must be standing on the surface.",
+        "text": "Land your ship on The Attlerock",
+        "categories": [
+          "goto",
+          "ship",
+          "attlerock"
+        ]
+      }
+    ],
+    [
+      {
+        "difficulty": 0,
+        "tooltip": "The area between the dam and the rapids.",
+        "text": "Reach The River Lowlands on The Stranger",
+        "categories": [
+          "goto",
+          "stranger",
+          "river_lowlands"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Die at the given location in any way you want.",
+        "text": "Die at [LOCATION]",
+        "categories": [
+          "goto",
+          "die"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "",
+        "text": "Stranger activity: Use an elevator",
+        "categories": [
+          "activity",
+          "stranger"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "The code must be correct.",
+        "text": "Stranger activity: Enter any Code",
+        "categories": [
+          "activity",
+          "stranger"
+        ]
+      },
+      {
+        "difficulty": 0,
+        "tooltip": "Like the antenna on the Dream World shrines or the one at the signal blocker",
+        "text": "Stranger activity: Touch any antenna",
+        "categories": [
+          "activity",
+          "stranger"
         ]
       }
     ]

@@ -353,6 +353,12 @@ public class BingoConfiguration {
                             text = text.replaceFirst(Pattern.quote(snippetsMatcher.group()), String.valueOf(result.getValue()));
                             currentDifficulty.set(currentDifficulty.get() + result.getScore());
                         }
+                    } else {
+                        if(snippetType.matches("-?\\d+-?\\d+")) {
+                            int min = Integer.parseInt(snippetType.split("-")[0]);
+                            int max = Integer.parseInt(snippetType.split("-")[1]);
+                            text = text.replaceFirst(Pattern.quote(snippetsMatcher.group()), String.valueOf(new Random().nextInt(max - min + 1) + min));
+                        }
                     }
                 }
             }
