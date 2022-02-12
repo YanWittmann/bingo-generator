@@ -188,7 +188,7 @@ public class BingoConfiguration {
         return counts;
     }
 
-    public BingoTile generateTile(List<BingoTile> existingTiles, int destAmount, double destinationDifficulty) {
+    public BingoTile generateTile(List<BingoTile> existingTiles, int destAmount, double destinationDifficulty, Random random) {
         List<TileGenerator> allowedTileGeneratorsByDifficulty = tileGeneratorsByDifficulty.getOrDefault(getDifficulty(destinationDifficulty), new ArrayList<>());
         if (allowedTileGeneratorsByDifficulty.size() == 0) {
             LOG.warn("No tile generators found for difficulty [{}], using all generators", destinationDifficulty);
@@ -245,7 +245,7 @@ public class BingoConfiguration {
             filteredTileGenerators = new ArrayList<>(allowedTileGeneratorsByDifficulty);
             //LOG.warn("No generator for categories [MUST {}] [CANNOT {}], using all [{}]", createdMustBeCategories, createdMayNotBeCategories, allowedTileGeneratorsByDifficulty.size());
         }
-        TileGenerator selectedGenerator = getRandom(filteredTileGenerators);
+        TileGenerator selectedGenerator = getRandom(filteredTileGenerators, random);
         String text = selectedGenerator.getText();
         StringJoiner tooltips = new StringJoiner("\n");
         if (selectedGenerator.getTooltip() != null) tooltips.add(selectedGenerator.getTooltip());
@@ -259,7 +259,7 @@ public class BingoConfiguration {
             AtomicReference<Double> currentDifficulty = new AtomicReference<>(selectedGenerator.getDifficulty());
             Set<Category> currentTileCategories = new HashSet<>();
             StringJoiner currentTooltips = new StringJoiner("\n");
-            String tmp = insertSnippets(text, createdMustBeCategories, createdMayNotBeCategories, currentDifficulty, destinationDifficulty, currentTileCategories, currentTooltips);
+            String tmp = insertSnippets(text, createdMustBeCategories, createdMayNotBeCategories, currentDifficulty, destinationDifficulty, currentTileCategories, currentTooltips, random);
             if (repeatCount < 40 && checkForAnisynergies(currentTileCategories, selectedGenerator.getCategories())) {
                 repeatCount++;
                 i--;
@@ -305,7 +305,8 @@ public class BingoConfiguration {
                                   Set<Category> createdMustBeCategories, Set<Category> createdMayNotBeCategories,
                                   AtomicReference<Double> currentDifficulty, double destinationDifficulty,
                                   Set<Category> tileCategories,
-                                  StringJoiner currentTooltips) {
+                                  StringJoiner currentTooltips,
+                                  Random random) {
         boolean found;
         do {
             found = false;
@@ -338,7 +339,7 @@ public class BingoConfiguration {
                         snippets = textSnippets.getOrDefault(snippetType, new ArrayList<>());
                         //LOG.warn("No snippets for [{}], [MUST {}] [CANNOT {}], using all [{}]", snippetType, createdMustBeCategories, createdMayNotBeCategories, snippets.size());
                     }
-                    TextSnippet selectedSnippet = getRandom(snippets);
+                    TextSnippet selectedSnippet = getRandom(snippets, random);
                     currentDifficulty.set(currentDifficulty.get() + selectedSnippet.getDifficulty());
                     tileCategories.addAll(selectedSnippet.getCategories());
                     if (selectedSnippet.getTooltip() != null) currentTooltips.add(selectedSnippet.getTooltip());
@@ -357,7 +358,7 @@ public class BingoConfiguration {
                         if(snippetType.matches("-?\\d+-?\\d+")) {
                             int min = Integer.parseInt(snippetType.split("-")[0]);
                             int max = Integer.parseInt(snippetType.split("-")[1]);
-                            text = text.replaceFirst(Pattern.quote(snippetsMatcher.group()), String.valueOf(new Random().nextInt(max - min + 1) + min));
+                            text = text.replaceFirst(Pattern.quote(snippetsMatcher.group()), String.valueOf(random.nextInt(max - min + 1) + min));
                         }
                     }
                 }
@@ -388,13 +389,13 @@ public class BingoConfiguration {
         return null;
     }
 
-    public <T extends Weightable> T getRandom(Collection<T> collection) {
+    public <T extends Weightable> T getRandom(Collection<T> collection, Random random) {
         double totalWeight = collection.stream().mapToDouble(Weightable::getWeight).sum();
-        double random = new Random().nextDouble() * totalWeight;
+        double randomValue = random.nextDouble() * totalWeight;
         double currentWeight = 0;
         for (T weightable : collection) {
             currentWeight += weightable.getWeight();
-            if (currentWeight >= random) {
+            if (currentWeight >= randomValue) {
                 return weightable;
             }
         }

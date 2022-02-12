@@ -103,12 +103,12 @@ public class BingoBoard implements Jsonable {
         return difficulty;
     }
 
-    public void populate(List<BingoTile> tiles, Map<String, Category> categories) {
+    public void populate(List<BingoTile> tiles, Map<String, Category> categories, Random random) {
         LOG.info("Populating board with [{}] tiles", tiles.size());
         int bestScore = Integer.MIN_VALUE;
         BingoTile[][] bestBoard = null;
         for (int i = 0; i < 1000; i++) {
-            BingoTile[][] populatedBoard = populate(tiles);
+            BingoTile[][] populatedBoard = populate(tiles, random);
             int score = scoreBoard(populatedBoard, categories);
             if (score > bestScore) {
                 bestScore = score;
@@ -126,8 +126,8 @@ public class BingoBoard implements Jsonable {
         LOG.info("Board score is [{}]", bestScore);
     }
 
-    private BingoTile[][] populate(List<BingoTile> tiles) {
-        tiles.sort((o1, o2) -> (int) (Math.random() * 2) - 1);
+    private BingoTile[][] populate(List<BingoTile> tiles, Random random) {
+        Collections.shuffle(tiles, random);
         BingoTile[][] board = new BingoTile[getWidth()][getHeight()];
         for (int i = 0; i < getWidth(); i++) {
             for (int j = 0; j < getHeight(); j++) {

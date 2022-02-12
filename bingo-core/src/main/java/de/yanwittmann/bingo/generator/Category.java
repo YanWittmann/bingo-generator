@@ -95,7 +95,7 @@ public class Category {
     }
 
     public static boolean validate(Map<String, Object> optionMap) {
-        BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_CATEGORY_NAME, true, String.class);
+        BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_CATEGORY_NAME, false, String.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_CATEGORY_MAX, false, Map.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_CATEGORY_MIN, false, Map.class);
         Map<String, Object> maxMap = (Map<String, Object>) optionMap.getOrDefault(BingoConfiguration.KEY_CATEGORY_MAX, null);

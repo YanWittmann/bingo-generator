@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class BingoGenerator {
 
@@ -20,6 +21,7 @@ public class BingoGenerator {
     private int height = 5;
     private int maxGenerationAttempts = -1;
 
+
     public BingoGenerator(File configurationFile) throws FileNotFoundException {
         this.configuration = new BingoConfiguration(configurationFile);
     }
@@ -29,6 +31,10 @@ public class BingoGenerator {
     }
 
     public BingoBoard generateBingoBoard() {
+        return generateBingoBoard(new Random());
+    }
+
+    public BingoBoard generateBingoBoard(Random random) {
         if (configuration == null) {
             throw new IllegalStateException("Bingo configuration is not set.");
         }
@@ -37,11 +43,11 @@ public class BingoGenerator {
         int maxAttempts = this.maxGenerationAttempts == -1 ? (2000 / Math.max(1, width * height - 10)) + 10 : this.maxGenerationAttempts;
         LOG.info("Generation attempts [{}]", maxAttempts);
         for (int i = 0; i < maxAttempts; i++) {
-            createAndRemoveTiles(tiles, width * height);
+            createAndRemoveTiles(tiles, width * height, random);
         }
 
         BingoBoard board = new BingoBoard(width, height);
-        board.populate(tiles, configuration.getCategories());
+        board.populate(tiles, configuration.getCategories(), random);
         board.setBoardMetadata(configuration.getBoardMetadata());
         board.setCategoryCount(configuration.countCategories(tiles));
         board.setDifficulty(calculateDifficulty(tiles));
@@ -52,19 +58,19 @@ public class BingoGenerator {
         return board;
     }
 
-    private void createAndRemoveTiles(List<BingoTile> tiles, int maxTileCount) {
+    private void createAndRemoveTiles(List<BingoTile> tiles, int maxTileCount, Random random) {
         for (int i = 0; i < maxTileCount; i++) {
-            fillBoard(tiles);
+            fillBoard(tiles, random);
             ArrayList<BingoTile> backup = new ArrayList<>(tiles);
             removeByDifficulty(tiles, (width + height) / 2);
-            fillBoard(tiles);
+            fillBoard(tiles, random);
             double newDifficultyDistance = distanceToDestinationDifficulty(calculateDifficulty(tiles));
             double oldDifficultyDistance = distanceToDestinationDifficulty(calculateDifficulty(backup));
             if (newDifficultyDistance > oldDifficultyDistance) {
                 tiles.clear();
                 tiles.addAll(backup);
-                removeRandom(tiles, 2);
-                fillBoard(tiles);
+                removeRandom(tiles, 2, random);
+                fillBoard(tiles, random);
                 newDifficultyDistance = distanceToDestinationDifficulty(calculateDifficulty(tiles));
                 oldDifficultyDistance = distanceToDestinationDifficulty(calculateDifficulty(backup));
                 if (newDifficultyDistance > oldDifficultyDistance) {
@@ -91,15 +97,16 @@ public class BingoGenerator {
         }
     }
 
-    private void removeRandom(List<BingoTile> tiles, int amount) {
+    private void removeRandom(List<BingoTile> tiles, int amount, Random random) {
         for (int i = 0; i < amount && tiles.size() > 0; i++) {
-            tiles.remove((int) Math.abs(Math.random() * tiles.size()));
+            tiles.remove(random.nextInt(tiles.size()));
         }
     }
 
-    private void fillBoard(List<BingoTile> tiles) {
+    private void fillBoard(List<BingoTile> tiles, Random random) {
         int tileCount = width * height;
-        while (tiles.size() < tileCount) tiles.add(configuration.generateTile(tiles, width * height, difficulty));
+        while (tiles.size() < tileCount)
+            tiles.add(configuration.generateTile(tiles, width * height, difficulty, random));
     }
 
     private double calculateDifficulty(List<BingoTile> tiles) {

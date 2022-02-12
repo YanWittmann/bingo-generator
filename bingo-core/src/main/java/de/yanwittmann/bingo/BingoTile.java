@@ -41,6 +41,7 @@ public class BingoTile implements Jsonable {
     }
 
     public String getTooltip() {
+        if (tooltip == null || tooltip.length() == 0) return null;
         return tooltip;
     }
 
@@ -57,7 +58,7 @@ public class BingoTile implements Jsonable {
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("text", text);
-        json.put("tooltip", tooltip);
+        json.put("tooltip", getTooltip());
         json.put("difficulty", difficulty);
         json.put("categories", categories.stream().map(Category::getName).collect(Collectors.toList()));
         return json;

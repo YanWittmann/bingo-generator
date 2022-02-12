@@ -16,9 +16,10 @@ tile generators:
   - text: Land your ship on [PLANET]
     tooltip: Damaged or not, it must be standing on the surface.
     categories: [ goto, ship ]
-  - text: Die at [LOCATION]
-    tooltip: Die at the given location in any way you want.
-    categories: [ goto, die ]
+  - text: Meet and talk to the Traveler [TRAVELER]
+    categories: [ goto ]
+  - text: Meet and talk to the Hearthian [HEARTHIAN]
+    categories: [ goto ]
   - text: "Stranger activity: [STRANGER_ACTIVITIES]"
     categories: [ activity, stranger ]
   - text: Reach [STRANGER_LOCATIONS] on The Stranger
@@ -50,15 +51,66 @@ snippets:
       categories: [ stranger ]
   TRAVELER:
     - text: Esker
-      categories: [ traveler, esker, attlerock ]
+      tooltip: The Traveler on The Attlerock.
+      categories: [ hearthian, traveler, esker, attlerock ]
     - text: Chert
-      categories: [ traveler, chert, ember_twin ]
+      tooltip: The Traveler on The Ember Twin.
+      categories: [ hearthian, traveler, chert, ember_twin ]
     - text: Riebek
-      categories: [ traveler, riebek, brim_hollow ]
+      tooltip: The Traveler on Briddle Hollow.
+      categories: [ hearthian, traveler, riebek, brim_hollow ]
     - text: Gabbro
-      categories: [ traveler, gabbro, giants_deep ]
+      tooltip: The Traveler on Giant's Deep.
+      categories: [ hearthian, traveler, gabbro, giants_deep ]
     - text: Feldspar
-      categories: [ traveler, feldspar, dark_bramble ]
+      tooltip: The Traveler in Dark Bramble.
+      categories: [ hearthian, traveler, feldspar, dark_bramble ]
+  HEARTHIAN:
+    - text: Arkose
+      tooltip: The Hearthian that trows rocks at the Ghost Matter.
+      categories: [ hearthian, village, timber_hearth ]
+    - text: Galena
+      tooltip: The shy Hearthian that wants to play hide and seek.
+      categories: [ hearthian, village, timber_hearth ]
+    - text: Gneiss
+      tooltip: The Hearthian playing a banjo that created the instruments.
+      categories: [ hearthian, village, timber_hearth ]
+    - text: Gossan
+      tooltip: Your old flight coach at the entrance to the Zero-G-Cave.
+      categories: [ hearthian, village, timber_hearth, zero_g_cave ]
+    - text: Hal
+      tooltip: "Your childhood friend that built the translator together with you and is currently in the museum."
+      categories: [ hearthian, village, timber_hearth ]
+    - text: Hornfels
+      tooltip: The Hearthian that gives you the launch codes in the museum.
+      categories: [ hearthian, village, timber_hearth ]
+    - text: Marl
+      tooltip: The tree keeper Hearthian next to the geysers in the village center.
+      categories: [ hearthian, village, timber_hearth ]
+    - text: Mica
+      tooltip: The Hearthian with the model ship.
+      categories: [ hearthian, village, timber_hearth ]
+    - text: Moraine
+      tooltip: The Hearthian using the signalscope on the tree lookout platform.
+      categories: [ hearthian, village, timber_hearth ]
+    - text: Porphy
+      tooltip: The Hearthian producing sap wine next to the geysers in the village center.
+      categories: [ hearthian, village, timber_hearth ]
+    - text: Rutile
+      tooltip: The mayor of the Hearthian village next to the geysers in the village center.
+      categories: [ hearthian, village, timber_hearth ]
+    - text: Spinel
+      tooltip: The Hearthian fishing near the waterfall.
+      categories: [ hearthian, village, timber_hearth ]
+    - text: Tephra
+      tooltip: The Hearthian kid with the cowboy hat that wants to play hide and seek.
+      categories: [ hearthian, village, timber_hearth ]
+    - text: Tuff
+      tooltip: The Hearthian in the Zero-G-Cave.
+      categories: [ hearthian, village, timber_hearth, zero_g_cave ]
+    - text: Tektite
+      tooltip: The Hearthian checking on the Bramble Seed on Timber Hearth.
+      categories: [ hearthian, timber_hearth ]
   STRANGER_ACTIVITIES:
     - text: Ride a raft
       categories: [ stranger, raft ]
@@ -202,11 +254,30 @@ snippets:
       tooltip: Cross the invisible bridge and view Glitch reel in the Forbidden Archive.
 
 categories:
-  die:
-    name: Die
+  village:
+    name: Village
+    max:
+      relative: 8
+  esker:
+    name: Esker
     max:
       absolute: 1
-    min:
+  chert:
+    name: Chert
+    max:
       absolute: 1
+  riebek:
+    name: Riebek
+    max:
+      absolute: 1
+  gabbro:
+    name: Gabbro
+    max:
+      absolute: 1
+  feldspar:
+    name: Feldspar
+    max:
+      absolute: 1
+
 
 value providers:

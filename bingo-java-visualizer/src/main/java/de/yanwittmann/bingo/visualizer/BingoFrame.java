@@ -10,10 +10,13 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Random;
 
 public class BingoFrame extends JFrame {
 
-    private final Panel bingoGridPanel;
+    private final JPanel bingoGridPanel;
+    private final JPanel toolBarPanel;
+    private final JTextField seedField;
     private final JButton regenerateButton;
 
     public BingoFrame() {
@@ -23,10 +26,19 @@ public class BingoFrame extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        bingoGridPanel = new Panel();
+        bingoGridPanel = new JPanel();
         bingoGridPanel.setLayout(new GridLayout(5, 5));
         bingoGridPanel.add(new JLabel("Loading..."), 0, 0);
         add(bingoGridPanel, BorderLayout.NORTH);
+
+        toolBarPanel = new JPanel();
+        toolBarPanel.setLayout(new GridLayout(1, 2));
+        add(toolBarPanel, BorderLayout.SOUTH);
+
+        seedField = new JTextField();
+        seedField.setText("");
+        seedField.setToolTipText("Leave empty for random seed");
+        toolBarPanel.add(seedField, 0, 0);
 
         regenerateButton = new JButton("Regenerate");
         regenerateButton.addActionListener(e -> {
@@ -36,7 +48,7 @@ public class BingoFrame extends JFrame {
                 e1.printStackTrace();
             }
         });
-        add(regenerateButton, BorderLayout.SOUTH);
+        toolBarPanel.add(regenerateButton, 0, 1);
 
         setVisible(true);
     }
@@ -44,7 +56,13 @@ public class BingoFrame extends JFrame {
     public void generateAndShow() throws FileNotFoundException {
         BingoConfiguration configuration = new BingoConfiguration(new File("bingo-core/src/test/resources/bingo/generate/outer_wilds.yaml"));
         BingoGenerator generator = new BingoGenerator(configuration);
-        BingoBoard bingoBoard = generator.generateBingoBoard();
+        Random random;
+        if (seedField.getText().isEmpty() || !seedField.getText().matches("[0-9]+")) {
+            random = new Random();
+        } else {
+            random = new Random(Long.parseLong(seedField.getText()));
+        }
+        BingoBoard bingoBoard = generator.generateBingoBoard(random);
         showBoard(bingoBoard);
     }
 
@@ -56,6 +74,8 @@ public class BingoFrame extends JFrame {
         for (int i = 0; i < bingoBoard.getWidth(); i++) {
             for (int j = 0; j < bingoBoard.getHeight(); j++) {
                 JLabel bingoTile = new JLabel("<html><center>" + bingoBoard.get(i, j).getText() + "</center></html>");
+                if (bingoBoard.get(i, j).getTooltip() != null)
+                    bingoTile.setToolTipText("<html>" + bingoBoard.get(i, j).getTooltip().replace("\n", "<br>") + "</html>");
                 bingoTile.setHorizontalAlignment(SwingConstants.CENTER);
                 bingoTile.setVerticalAlignment(SwingConstants.CENTER);
                 bingoTile.setBackground(new Color(255, 217, 217));
@@ -70,6 +90,5 @@ public class BingoFrame extends JFrame {
 
     public static void main(String[] args) throws FileNotFoundException {
         new BingoFrame().generateAndShow();
-        System.out.println("Done");
     }
 }
