@@ -57,8 +57,8 @@ public class BingoTile implements Jsonable {
     public boolean isTextEqual(String text) {
         if (text == null && this.text == null) return true;
         if (text == null || this.text == null) return false;
-        String compare = text.toLowerCase().replaceAll("-?\\d", "").replace(" ", "");
-        String self = this.text.toLowerCase().replaceAll("-?\\d", "").replace(" ", "");
+        String compare = text.replaceAll("-?\\d", "");
+        String self = this.text.replaceAll("-?\\d", "");
         return compare.equalsIgnoreCase(self);
     }
 

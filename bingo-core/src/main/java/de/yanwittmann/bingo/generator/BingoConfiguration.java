@@ -292,12 +292,7 @@ public class BingoConfiguration {
     }
 
     private boolean doesTileAlreadyExist(String text, List<BingoTile> tiles) {
-        for (BingoTile tile : tiles) {
-            if (tile.isTextEqual(text)) {
-                return true;
-            }
-        }
-        return false;
+        return tiles.stream().anyMatch(tile -> tile.isTextEqual(text));
     }
 
     private boolean hasAntisynergies(Collection<Category> c1, Collection<Category> c2) {

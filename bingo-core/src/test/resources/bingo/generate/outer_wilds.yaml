@@ -18,13 +18,18 @@ tile generators:
     categories: [ location, ship ]
   - text: Rest at a campfire on [PLANET:tag(campfire)]
     categories: [ activity, campfire ]
-  - text: "Translate any text at: [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:tag(translate)]"
+  - text: "Translate any text at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:tag(translate)]"
     categories: [ translate ]
+  - text: "Use a projection pool at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:tag(projection_pool)]"
+    categories: [ projection_pool ]
+  - text: "Read the Hearthian Notes at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:tag(hearthian_notes)]"
+    categories: [ hearthian_notes ]
   - text: Meet and talk to the Traveler [TRAVELER]
   - text: Meet and talk to the Hearthian [HEARTHIAN]
   - text: Take off with a nomai ship from [PLANET:tag(nomai_ship)]
     categories: [ nomai_ship ]
-  - text: Travel from [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:STRANGER_LOCATIONS] to [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:STRANGER_LOCATIONS:avoid_duplicates:!tag(early_in_loop)]
+  - text: Travel from [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:STRANGER_LOCATIONS:!tag(late_in_loop)] to [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:STRANGER_LOCATIONS:avoid_duplicates:!tag(early_in_loop)]
+    tooltip: Must happen in a single loop in that order, but detours are allowed.
     categories: [ arbitrary_travel ]
   - text: Travel around [PLANET] in a straight line
     tooltip: Or at least as straight as possible.
@@ -38,6 +43,14 @@ tile generators:
     categories: [ location, ember_twin ]
   - text: "Ember Twin activity: [EMBER_TWIN_ACTIVITIES]"
     categories: [ activity, ember_twin ]
+  - text: Reach [ASH_TWIN_LOCATIONS] on Ash Twin
+    categories: [ location, ash_twin ]
+  - text: "Ash Twin activity: [ASH_TWIN_ACTIVITIES]"
+    categories: [ activity, ash_twin ]
+  - text: Reach [BRITTLE_HOLLOW_LOCATIONS] on Brittle Hollow
+    categories: [ location, brittle_hollow ]
+  - text: "Brittle Hollow activity: [BRITTLE_HOLLOW_ACTIVITIES]"
+    categories: [ activity, brittle_hollow ]
   - text: Reach [STRANGER_LOCATIONS] on The Stranger
     categories: [ location, stranger ]
   - text: "Stranger activity: [STRANGER_ACTIVITIES]"
@@ -58,8 +71,8 @@ snippets:
     - text: The Ash Twin
       categories: [ ash_twin ]
       tags: [ ]
-    - text: Briddle Hollow
-      categories: [ briddle_hollow ]
+    - text: Brittle Hollow
+      categories: [ brittle_hollow ]
       tags: [ campfire, nomai_ship, quantum_moon ]
     - text: Hollows Lantern
       categories: [ hollows_lantern ]
@@ -85,7 +98,7 @@ snippets:
       tooltip: The Traveler on The Ember Twin.
       categories: [ hearthian, traveler, chert, ember_twin ]
     - text: Riebek
-      tooltip: The Traveler on Briddle Hollow.
+      tooltip: The Traveler on Brittle Hollow.
       categories: [ hearthian, traveler, riebek, brim_hollow ]
     - text: Gabbro
       tooltip: The Traveler on Giant's Deep.
@@ -139,6 +152,7 @@ snippets:
     - text: Tektite
       tooltip: The Hearthian checking on the Bramble Seed on Timber Hearth.
       categories: [ hearthian, timber_hearth ]
+
   TIMBER_HEARTH_LOCATIONS:
     - text: The Geyser Mountains
       tooltip: Large mountains scattered around Timber Hearth that periodically spout water columns from their geyser peaks.
@@ -146,7 +160,7 @@ snippets:
     - text: The Geyser Cave System
       tooltip: Enter a water-filled cave via the geysers.
       categories: [ water, timber_hearth ]
-    - text: The Ash Twin Tower Receiver
+    - text: The Timber Hearth Ash Twin Tower Receiver
       tooltip: The Ash Twin Tower Warp Pad Receiver.
       categories: [ warp_pad, timber_hearth ]
     - text: The First Encounter Mural
@@ -156,7 +170,7 @@ snippets:
     - text: The Mining Site 2b
       tooltip: Open and enter the mining site inside the huge Geyser Mountain.
       categories: [ timber_hearth ]
-      tags: [ translate ]
+      tags: [ translate, projection_pool ]
     - text: The Zero-G Cave
       tooltip: Enter the Zero-G-Cave via the elevator.
       categories: [ zero_g_cave, village, timber_hearth ]
@@ -171,6 +185,7 @@ snippets:
     - text: The Radio Tower
       tooltip: The Radio Tower that starts the DLC.
       categories: [ timber_hearth ]
+      tags: [ hearthian_notes ]
   TIMBER_HEARTH_ACTIVITIES:
     - text: Geyser Cave System loop
       tooltip: Use the water streams to travel between all the caves
@@ -187,8 +202,9 @@ snippets:
       categories: [ quantum, timber_hearth ]
     - text: Touch the Postcard Satelite
       categories: [ timber_hearth ]
+
   EMBER_TWIN_LOCATIONS:
-    - text: Escape Pod 2
+    - text: Escape Pod 2 on Ember Twin
       categories: [ escape_pod, ember_twin ]
       tags: [ translate ]
     - text: The Sunless City
@@ -230,8 +246,8 @@ snippets:
     - text: The Quantum Moon Locator
       tooltip: At the south pole, stand in the center.
       categories: [ quantum, ember_twin ]
-      tags: [ translate ]
-    - text: The Ash Twin Tower Receiver
+      tags: [ translate, hearthian_notes ]
+    - text: The Ember Twin Ash Twin Tower Receiver
       categories: [ warp_pad, ember_twin ]
   EMBER_TWIN_ACTIVITIES:
     - text: Turn on all lights in the Sunless City
@@ -256,6 +272,119 @@ snippets:
       categories: [ quantum, ember_twin ]
     - text: Use a bridge to cross the huge gap carved by the sand.
       categories: [ ember_twin ]
+
+  ASH_TWIN_LOCATIONS:
+    - text: The Giant's Deep Tower
+      tooltip: Must be standing inside the tower.
+      categories: [ ash_twin_tower, ash_twin ]
+    - text: The Sun Station Tower
+      tooltip: Must be standing inside the tower (not at the warp pad).
+      categories: [ ash_twin_tower, ash_twin ]
+    - text: The Hourglass Twins Tower
+      tooltip: Must be standing inside one of the towers.
+      categories: [ ash_twin_tower, ash_twin ]
+    - text: The Brittle Hollow Tower
+      tooltip: Must be standing inside the tower.
+      categories: [ ash_twin_tower, ash_twin ]
+      tags: [ translate ]
+    - text: The Timber Hearth Tower
+      tooltip: Must be standing inside the tower.
+      categories: [ ash_twin_tower, ash_twin ]
+    - text: The Solar Panels
+      tooltip: Stand on top of one of the towers.
+      categories: [ ash_twin ]
+    - text: The Ash Twin Project
+      tooltip: Warp inside the chamber to reach the Ash Twin Project.
+      categories: [ ash_twin_project, ash_twin ]
+      tags: [ translate, projection_pool ]
+  ASH_TWIN_ACTIVITIES:
+    - text: Touch the core from the outside
+      categories: [ ash_twin ]
+    - text: Make a full loop around the Ash Twin Tower band.
+      categories: [ ash_twin ]
+    - text: Touch the core material from the outside
+      categories: [ ash_twin ]
+    - text: Touch the core material from the inside
+      categories: [ ash_twin_project, ash_twin ]
+    - text: Touch the nomai masks.
+      categories: [ ash_twin_project, ash_twin ]
+    - text: Turn off the gravity and open the casing.
+      tooltip: You don't have to take the core out of the casing.
+      categories: [ ash_twin_project, ash_twin ]
+
+  BRITTLE_HOLLOW_LOCATIONS:
+    - text: The Northern Glacier
+      tooltip: Must touch the snow.
+      categories: [ brittle_hollow ]
+      tags: [ translate, projection_pool ]
+    - text: The Hanging City
+      tags: [ translate ]
+      categories: [ hanging_city, brittle_hollow ]
+    - text: "The Hanging City: Outside the Black Hole Forge"
+      tooltip: Standing on the ceiling suffices.
+      tags: [ translate ]
+      categories: [ hanging_city, black_hole_forge, brittle_hollow ]
+    - text: "The Hanging City: Inside the Black Hole Forge"
+      tooltip: Must use the elevator to bring the forge up and enter it.
+      categories: [ hanging_city, black_hole_forge, brittle_hollow ]
+      tags: [ translate, projection_pool ]
+    - text: "The Hanging City: Meltwater District"
+      tooltip: Must stand in front of the scroll walls.
+      categories: [ hanging_city, brittle_hollow ]
+      tags: [ translate ]
+    - text: "The Hanging City: Eye Shrine District"
+      tooltip: Must stand inside one of the houses.
+      categories: [ hanging_city, brittle_hollow ]
+      tags: [ translate ]
+    - text: "The Hanging City: School District"
+      tooltip: Must walk over to the central room with the tree.
+      categories: [ hanging_city, brittle_hollow ]
+      tags: [ translate ]
+    - text: Gravity Crystal Workshop
+      tooltip: The small collection of houses.
+      categories: [ brittle_hollow ]
+      tags: [ hearthian_notes ]
+    - text: Crossroads
+      tooltip: Be on either of the two levels of the Crossroads.
+      categories: [ brittle_hollow ]
+      tags: [ hearthian_notes ]
+    - text: The Briddle Hollow Gravity Cannon
+      tooltip: The Gravity Cannon on Briddle Hollow.
+      categories: [ gravity_cannon, brittle_hollow ]
+      tags: [ translate, projection_pool ]
+    - text: Escape Pod 1 on Briddle Hollow
+      categories: [ escape_pod, brittle_hollow ]
+      tags: [ translate ]
+    - text: Old Settlement (upper level)
+      tooltip: Cross at least the first bridge to the central room on the upper level.
+      categories: [ brittle_hollow ]
+      tags: [ translate ]
+    - text: Old Settlement (lower level)
+      tooltip: Stand in the central room on the lower level.
+      categories: [ brittle_hollow ]
+      tags: [ translate ]
+    - text: Tower of Quantum Knowledge (outside)
+      tooltip: No need to enter the tower.
+      categories: [ quantum, brittle_hollow ]
+      tags: [ translate ]
+    - text: Tower of Quantum Knowledge (inside)
+      tooltip: Get inside the tower.
+      categories: [ quantum, brittle_hollow ]
+      tags: [ late_in_loop, translate ]
+    - text: Southern Observatory
+      tooltip: Must be inside the dome.
+      categories: [ brittle_hollow ]
+      tags: [ translate, projection_pool ]
+  BRITTLE_HOLLOW_ACTIVITIES:
+    - text: Fall inside the black hole.
+      categories: [ brittle_hollow ]
+    - text: Call back Solanums shuttle.
+      categories: [ brittle_hollow ]
+    - text: Fling yourself around the black hole and land back on the surface.
+      categories: [ brittle_hollow ]
+    - text: Enter the Hanging City via the meltwater shortcut.
+      categories: [ brittle_hollow ]
+
   STRANGER_LOCATIONS:
     - text: The Reservoir
       categories: [ stranger, reservoir, early_in_loop ]
@@ -417,14 +546,32 @@ categories:
     max:
       absolute: 2
   - categories: [ arbitrary_travel ]
+    min:
+      absolute: 1
     max:
-      relative: 5
+      relative: 10
   - categories: [ dream_world ]
     max:
       relative: 5
   - categories: [ quantum ]
     min:
       relative: 20
+  - categories: [ ash_twin_project ]
+    min:
+      absolute: 1
+    max:
+      absolute: 1
+  - categories: [ translate, projection_pool ]
+    min:
+      absolute: 1
+  - categories: [ hearthian_notes ]
+    max:
+      absolute: 2
+  - categories: [ location, activity ]
+    min:
+      relative: 10
+    max:
+      relative: 45
 
 
 value providers:
