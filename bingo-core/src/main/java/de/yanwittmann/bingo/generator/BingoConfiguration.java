@@ -260,10 +260,13 @@ public class BingoConfiguration {
             Set<Category> currentTileCategories = new HashSet<>();
             StringJoiner currentTooltips = new StringJoiner("\n");
             String tmp = insertSnippets(text, createdMustBeCategories, createdMayNotBeCategories, currentDifficulty, destinationDifficulty, currentTileCategories, currentTooltips, random);
-            if (repeatCount < 40 && checkForAnisynergies(currentTileCategories, selectedGenerator.getCategories())) {
-                repeatCount++;
-                i--;
-                continue;
+
+            if (repeatCount < 40) {
+                if (hasAntisynergies(currentTileCategories, selectedGenerator.getCategories()) || doesTileAlreadyExist(tmp, existingTiles)) {
+                    repeatCount++;
+                    i--;
+                    continue;
+                }
             }
             double currentDistance = Math.abs(currentDifficulty.get() - destinationDifficulty);
             double currentClosestDistance = Math.abs(currentClosestDifficulty - destinationDifficulty);
@@ -288,7 +291,16 @@ public class BingoConfiguration {
         return bingoTile;
     }
 
-    private boolean checkForAnisynergies(Collection<Category> c1, Collection<Category> c2) {
+    private boolean doesTileAlreadyExist(String text, List<BingoTile> tiles) {
+        for (BingoTile tile : tiles) {
+            if (tile.isTextEqual(text)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean hasAntisynergies(Collection<Category> c1, Collection<Category> c2) {
         for (Category cat1 : c1) {
             for (Category cat2 : c2) {
                 if (cat1.getAntisynergy().contains(cat2)) {
@@ -333,7 +345,7 @@ public class BingoConfiguration {
                         }
                     }
 
-                    List<TextSnippet> snippets = getTextSnippets(snippetTypes, createdMustBeCategories, createdMayNotBeCategories, conditions);
+                    List<TextSnippet> snippets = getTextSnippets(snippetTypes, createdMustBeCategories, createdMayNotBeCategories, conditions, text);
                     TextSnippet selectedSnippet = getRandom(snippets, random);
 
                     currentDifficulty.set(currentDifficulty.get() + selectedSnippet.getDifficulty());
@@ -374,7 +386,7 @@ public class BingoConfiguration {
         return snippets;
     }
 
-    private List<TextSnippet> getTextSnippets(List<String> snippetTypes, Set<Category> createdMustBeCategories, Set<Category> createdMayNotBeCategories, List<String> conditions) {
+    private List<TextSnippet> getTextSnippets(List<String> snippetTypes, Set<Category> createdMustBeCategories, Set<Category> createdMayNotBeCategories, List<String> conditions, String textSoFar) {
         List<TextSnippet> limitedSnippets = getSnippets(snippetTypes);
 
         if (conditions.size() > 0) {
@@ -382,7 +394,7 @@ public class BingoConfiguration {
             for (TextSnippet snippet : limitedSnippets) {
                 boolean valid = true;
                 for (String condition : conditions) {
-                    if (!snippet.matchesCondition(condition)) {
+                    if (!snippet.matchesCondition(condition, textSoFar)) {
                         valid = false;
                         break;
                     }
@@ -390,7 +402,7 @@ public class BingoConfiguration {
                 if (valid) filteredSnippets.add(snippet);
             }
             if (filteredSnippets.size() == 0) {
-                LOG.warn("No snippets found for type [{}] with conditions {}", snippetTypes, conditions);
+                //LOG.warn("No snippets found for type [{}] with conditions {}", snippetTypes, conditions);
             } else {
                 limitedSnippets = filteredSnippets;
             }
@@ -409,7 +421,7 @@ public class BingoConfiguration {
                 if (valid) filteredSnippets.add(snippet);
             }
             if (filteredSnippets.size() == 0) {
-                LOG.warn("No snippets found for type {} with must-be categories {}", snippetTypes, createdMustBeCategories);
+                //LOG.warn("No snippets found for type {} with must-be categories {}", snippetTypes, createdMustBeCategories);
             } else {
                 limitedSnippets = filteredSnippets;
             }
@@ -428,7 +440,7 @@ public class BingoConfiguration {
                 if (valid) filteredSnippets.add(snippet);
             }
             if (filteredSnippets.size() == 0) {
-                LOG.warn("No snippets found for type {} with may-not categories {}", snippetTypes, createdMayNotBeCategories);
+                //LOG.warn("No snippets found for type {} with may-not categories {}", snippetTypes, createdMayNotBeCategories);
             } else {
                 limitedSnippets = filteredSnippets;
             }

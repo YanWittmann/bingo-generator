@@ -22,12 +22,22 @@ tile generators:
     categories: [ translate ]
   - text: Meet and talk to the Traveler [TRAVELER]
   - text: Meet and talk to the Hearthian [HEARTHIAN]
+  - text: Take off with a nomai ship from [PLANET:tag(nomai_ship)]
+    categories: [ nomai_ship ]
+  - text: Travel from [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:STRANGER_LOCATIONS] to [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:STRANGER_LOCATIONS:avoid_duplicates:!tag(early_in_loop)]
+    categories: [ arbitrary_travel ]
+  - text: Travel around [PLANET] in a straight line
+    tooltip: Or at least as straight as possible.
+    categories: [ straight_line_travel ]
+
   - text: Reach [TIMBER_HEARTH_LOCATIONS] on Timber Hearth
     categories: [ location, timber_hearth ]
-  - text: Reach [EMBER_TWIN_LOCATIONS] on Ember Twin
-    categories: [ location, ember_twin ]
   - text: "Timber Hearth activity: [TIMBER_HEARTH_ACTIVITIES]"
     categories: [ activity, timber_hearth ]
+  - text: Reach [EMBER_TWIN_LOCATIONS] on Ember Twin
+    categories: [ location, ember_twin ]
+  - text: "Ember Twin activity: [EMBER_TWIN_ACTIVITIES]"
+    categories: [ activity, ember_twin ]
   - text: Reach [STRANGER_LOCATIONS] on The Stranger
     categories: [ location, stranger ]
   - text: "Stranger activity: [STRANGER_ACTIVITIES]"
@@ -38,30 +48,32 @@ snippets:
   PLANET:
     - text: Timber Hearth
       categories: [ timber_hearth ]
-      tags: [ campfire ]
+      tags: [ campfire, quantum_moon ]
     - text: The Attlerock
       categories: [ attlerock ]
       tags: [ campfire ]
     - text: The Ember Twin
       categories: [ ember_twin ]
-      tags: [ campfire ]
+      tags: [ campfire, nomai_ship, quantum_moon ]
     - text: The Ash Twin
       categories: [ ash_twin ]
+      tags: [ ]
     - text: Briddle Hollow
       categories: [ briddle_hollow ]
-      tags: [ campfire ]
+      tags: [ campfire, nomai_ship, quantum_moon ]
     - text: Hollows Lantern
       categories: [ hollows_lantern ]
     - text: Giant's Deep
-      categories: [ giants_deep ]
+      categories: [ giants_deep, quantum_moon ]
       tags: [ campfire ]
     - text: Dark Bramble
-      categories: [ dark_bramble ]
+      categories: [ dark_bramble, quantum_moon ]
       tags: [ campfire ]
     - text: The Interloper
       categories: [ interloper ]
     - text: The Quatum Moon
       categories: [ quatum_moon ]
+      tags: [ nomai_ship ]
     - text: The Stranger
       categories: [ stranger ]
       tags: [ campfire ]
@@ -134,7 +146,7 @@ snippets:
     - text: The Geyser Cave System
       tooltip: Enter a water-filled cave via the geysers.
       categories: [ water, timber_hearth ]
-    - text: The Warp Pad Receiver
+    - text: The Ash Twin Tower Receiver
       tooltip: The Ash Twin Tower Warp Pad Receiver.
       categories: [ warp_pad, timber_hearth ]
     - text: The First Encounter Mural
@@ -189,9 +201,64 @@ snippets:
     - text: "The Sunless City: Anglerfish Overlook District"
       categories: [ sunless_city, ember_twin ]
       tags: [ translate ]
+    - text: "The Sunless City: Stepping Stone District"
+      categories: [ sunless_city, ember_twin ]
+    - text: "The Sunless City: Anglerfish Fossil"
+      categories: [ anglerfish, sunless_city, ember_twin ]
+      tags: [ translate ]
+    - text: The Ember Twin Gravity Cannon
+      tooltip: The Gravity Cannon on Ember Twin.
+      categories: [ gravity_cannon, ember_twin ]
+      tags: [ translate ]
+    - text: The High Energy Lab
+      categories: [ high_energy_lab, ember_twin ]
+      tags: [ translate, early_in_loop ]
+    - text: Chert's Camp
+      categories: [ chert, ember_twin ]
+    - text: The Quantum Caves
+      tooltip: Stand in front of the quatum shard.
+      categories: [ quantum, ember_twin ]
+      tags: [ translate ]
+    - text: The Lakebed Cave
+      tooltip: Simply being down there is enough, no need to enter the cave.
+      categories: [ ember_twin ]
+      tags: [ early_in_loop ]
+    - text: The Lakebed Cave Quantum Shard
+      tooltip: Traverse the cave system to arrive at the quatum shard.
+      categories: [ quantum, ember_twin ]
+      tags: [ translate, early_in_loop ]
+    - text: The Quantum Moon Locator
+      tooltip: At the south pole, stand in the center.
+      categories: [ quantum, ember_twin ]
+      tags: [ translate ]
+    - text: The Ash Twin Tower Receiver
+      categories: [ warp_pad, ember_twin ]
+  EMBER_TWIN_ACTIVITIES:
+    - text: Turn on all lights in the Sunless City
+      categories: [ sunless_city, ember_twin ]
+    - text: Make Chert panick
+      categories: [ chert, ember_twin ]
+    - text: Touch a cactus
+      categories: [ ember_twin ]
+    - text: Enter the Sunless City via the Escape Pod
+      categories: [ escape_pod, escape_pod, ember_twin ]
+    - text: Perform the experiment in the High Energy Lab
+      tooltip: Time difference must be visible to the naked eye.
+      categories: [ high_energy_lab, ember_twin ]
+    - text: Shoot something from the Gravity Cannon
+      categories: [ gravity_cannon, ember_twin ]
+    - text: Watch the anglerfish skeleton from the Crashsite Caves
+      categories: [ escape_pod, ember_twin ]
+    - text: Travel between two caves using the Quantum Shard
+      categories: [ quantum, ember_twin ]
+    - text: Locate the Moon around [PLANET:tag(quantum_moon)], [PLANET:avoid_duplicates:tag(quantum_moon)] and [PLANET:avoid_duplicates:tag(quantum_moon)]
+      tooltip: Use the Quantum Moon Locator to observe the Moon.
+      categories: [ quantum, ember_twin ]
+    - text: Use a bridge to cross the huge gap carved by the sand.
+      categories: [ ember_twin ]
   STRANGER_LOCATIONS:
     - text: The Reservoir
-      categories: [ stranger, reservoir ]
+      categories: [ stranger, reservoir, early_in_loop ]
       tooltip: The area behind the warming gates and before/on top the dam.
     - text: The inside of the Submerged Bell
       categories: [ stranger, reservoir, strange_flames ]
@@ -199,6 +266,7 @@ snippets:
     - text: The River Lowlands
       tooltip: The area between the dam and the rapids.
       categories: [ stranger, river_lowlands ]
+      tags: [ early_in_loop ]
     - text: The Cinder Isles
       tooltip: The area between the rapids and gorges.
       categories: [ stranger, cinder_isles ]
@@ -217,7 +285,7 @@ snippets:
     - text: The Island Tower
       tooltip: Stand in front, inside or on top.
       categories: [ stranger, cinder_isles ]
-    - text: The Island Tower middle room
+    - text: The Island Tower mural room
       tooltip: The room reached by using the cave.
       categories: [ stranger, cinder_isles ]
     - text: The Island Tower code room
@@ -232,6 +300,7 @@ snippets:
     - text: The Shrouded Woodlands
       tooltip: Be outside the flame building.
       categories: [ stranger, shrouded_woodlands ]
+      tags: [ early_in_loop ]
     - text: Any Forbidden Archive
       tooltip: Enter any forbidden archive.
       categories: [ stranger, forbidden_archive ]
@@ -268,6 +337,9 @@ snippets:
       categories: [ stranger, refuel ]
     - text: Touch any antenna
       tooltip: Like the antenna on the Dream World shrines or the one at the signal blocker
+      categories: [ stranger ]
+    - text: Watch the projector in the supernova observation room switch images
+      tooltip: The supernova must have advanced by one stage while watching the projector.
       categories: [ stranger ]
   STRANGER_SLIDE:
     - text: First story reel
@@ -332,12 +404,27 @@ snippets:
       categories: [ endless_canyon, forbidden_archive, dream_world ]
 
 categories:
-  - categories: [ village ]
+  - categories: [ village, hearthian ]
     max:
       relative: 2
   - categories: [ esker, chert, riebek, gabbro, feldspar ]
     max:
       absolute: 1
+  - categories: [ escape_pod ]
+    max:
+      relative: 5
+  - categories: [ nomai_ship, straight_line_travel ]
+    max:
+      absolute: 2
+  - categories: [ arbitrary_travel ]
+    max:
+      relative: 5
+  - categories: [ dream_world ]
+    max:
+      relative: 5
+  - categories: [ quantum ]
+    min:
+      relative: 20
 
 
 value providers:

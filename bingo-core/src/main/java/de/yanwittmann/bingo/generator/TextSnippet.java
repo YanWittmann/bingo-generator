@@ -98,9 +98,15 @@ public class TextSnippet implements Weightable {
         return tags;
     }
 
-    public boolean matchesCondition(String condition) {
+    public boolean matchesCondition(String condition, String textSoFar) {
         if (condition == null) return true;
-        Matcher matcher = Pattern.compile("^([a-zA-Z0-9]+)(?:\\((.*)\\))?$").matcher(condition);
+
+        switch (condition) {
+            case "avoid_duplicates":
+                return !textSoFar.contains(text);
+        }
+
+        Matcher matcher = Pattern.compile("^([a-zA-Z0-9!]+)(?:\\((.*)\\))?$").matcher(condition);
         if (!matcher.matches()) {
             LOG.warn("Invalid condition [{}] on [{}]", condition, text);
             return true;

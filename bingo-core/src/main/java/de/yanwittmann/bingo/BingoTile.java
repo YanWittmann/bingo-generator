@@ -54,6 +54,14 @@ public class BingoTile implements Jsonable {
         return categories;
     }
 
+    public boolean isTextEqual(String text) {
+        if (text == null && this.text == null) return true;
+        if (text == null || this.text == null) return false;
+        String compare = text.toLowerCase().replaceAll("-?\\d", "").replace(" ", "");
+        String self = this.text.toLowerCase().replaceAll("-?\\d", "").replace(" ", "");
+        return compare.equalsIgnoreCase(self);
+    }
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

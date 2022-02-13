@@ -8,6 +8,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Random;
@@ -17,6 +20,7 @@ public class BingoFrame extends JFrame {
     private final JPanel bingoGridPanel;
     private final JPanel toolBarPanel;
     private final JTextField seedField;
+    private final JTextField searchField;
     private final JButton regenerateButton;
 
     public BingoFrame() {
@@ -50,7 +54,50 @@ public class BingoFrame extends JFrame {
         });
         toolBarPanel.add(regenerateButton, 0, 1);
 
+        searchField = new JTextField();
+        searchField.setText("");
+        searchField.setToolTipText("Search for a word");
+        searchField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                searchFor(searchField.getText());
+            }
+        });
+        toolBarPanel.add(searchField, 0, 2);
+
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F, KeyEvent.CTRL_DOWN_MASK), "search");
+        getRootPane().getActionMap().put("search", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchField.requestFocus();
+            }
+        });
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_G, KeyEvent.CTRL_DOWN_MASK), "generate");
+        getRootPane().getActionMap().put("generate", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    generateAndShow();
+                } catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
         setVisible(true);
+    }
+
+    private void searchFor(String text) {
+        for (Component component : bingoGridPanel.getComponents()) {
+            if (component instanceof JLabel) {
+                JLabel label = (JLabel) component;
+                if (text.length() > 0 && label.getText().toLowerCase().contains(text.toLowerCase())) {
+                    label.setBackground(new Color(222, 158, 227, 255));
+                } else {
+                    label.setBackground(new Color(255, 217, 217));
+                }
+            }
+        }
     }
 
     public void generateAndShow() throws FileNotFoundException {
@@ -85,6 +132,7 @@ public class BingoFrame extends JFrame {
                 bingoGridPanel.add(bingoTile, i, j);
             }
         }
+        searchFor(searchField.getText());
         bingoGridPanel.revalidate();
     }
 
