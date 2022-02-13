@@ -15,7 +15,7 @@ public class TileGenerator implements Weightable {
     private final List<String> difficulties;
     private final Set<Category> derivedCategories;
 
-    public TileGenerator(Map<String, Object> optionMap, Map<String, Category> categories, Map<String, List<TextSnippet>> textSnippets) {
+    public TileGenerator(Map<String, Object> optionMap, List<Category> categories, Map<String, List<TextSnippet>> textSnippets) {
         this.text = (String) optionMap.get(BingoConfiguration.KEY_TILE_GENERATOR_TEXT);
         this.tooltip = (String) optionMap.getOrDefault(BingoConfiguration.KEY_TILE_GENERATOR_TOOLTIP, null);
         this.difficulty = Double.parseDouble(String.valueOf(optionMap.getOrDefault(BingoConfiguration.KEY_TILE_GENERATOR_DIFFICULTY, 0)));

@@ -103,7 +103,7 @@ public class BingoBoard implements Jsonable {
         return difficulty;
     }
 
-    public void populate(List<BingoTile> tiles, Map<String, Category> categories, Random random) {
+    public void populate(List<BingoTile> tiles, List<Category> categories, Random random) {
         LOG.info("Populating board with [{}] tiles", tiles.size());
         int bestScore = Integer.MIN_VALUE;
         BingoTile[][] bestBoard = null;
@@ -146,7 +146,7 @@ public class BingoBoard implements Jsonable {
      * @param categories The categories to check the antisynergies and synergies of.
      * @return The score of the board. The higher, the better.
      */
-    private int scoreBoard(BingoTile[][] board, Map<String, Category> categories) {
+    private int scoreBoard(BingoTile[][] board, List<Category> categories) {
         // find vertical rows
         int score = 0;
         List<BingoTile> row = new ArrayList<>(getWidth());
@@ -238,18 +238,18 @@ public class BingoBoard implements Jsonable {
         return score;
     }
 
-    private int scoreRow(List<BingoTile> row, Map<String, Category> categories) {
+    private int scoreRow(List<BingoTile> row, List<Category> categories) {
         int score = 0;
-        for (Map.Entry<String, Category> category : categories.entrySet()) {
-            if (rowContainsCategory(row, category.getValue())) {
+        for (Category category : categories) {
+            if (rowContainsCategory(row, category)) {
                 // check for antisynergies
-                for (Category antisynergy : category.getValue().getAntisynergy()) {
+                for (Category antisynergy : category.getAntisynergy()) {
                     if (rowContainsCategory(row, antisynergy)) {
                         score -= 10;
                     }
                 }
                 // check for synergies
-                for (Category synergy : category.getValue().getSynergies()) {
+                for (Category synergy : category.getSynergies()) {
                     if (rowContainsCategory(row, synergy)) {
                         score += 4;
                     }

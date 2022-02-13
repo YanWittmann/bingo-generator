@@ -23,7 +23,7 @@ public class BingoConfiguration {
     private final Map<Difficulty, List<TileGenerator>> tileGeneratorsByDifficulty = new HashMap<>();
     private final Map<String, List<TextSnippet>> textSnippets = new HashMap<>();
     private final Map<String, ValueProvider> numberValueProviders = new HashMap<>();
-    private final Map<String, Category> categories = new HashMap<>();
+    private final List<Category> categories = new ArrayList<>();
     private final List<Difficulty> difficulties = new ArrayList<>();
 
     public BingoConfiguration(File file) throws FileNotFoundException {
@@ -42,7 +42,7 @@ public class BingoConfiguration {
         return textSnippets;
     }
 
-    public Map<String, Category> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
 
@@ -60,13 +60,13 @@ public class BingoConfiguration {
 
             if (rootMap.containsKey((KEY_CATEGORY))) {
                 Object optionsObject = rootMap.get(KEY_CATEGORY);
-                if (optionsObject instanceof Map) {
-                    Map<String, Object> optionsMap = (Map<String, Object>) optionsObject;
-                    for (Map.Entry<String, Object> entry : optionsMap.entrySet()) {
-                        if (entry.getValue() instanceof Map) {
-                            Map<String, Object> optionMap = (Map<String, Object>) entry.getValue();
-                            if (Category.validate(optionMap)) {
-                                categories.put(entry.getKey(), new Category(optionMap, categories));
+                if (optionsObject instanceof List) {
+                    List<Map<String, Object>> optionsList = (List<Map<String, Object>>) optionsObject;
+                    for (Map<String, Object> optionMap : optionsList) {
+                        if (Category.validate(optionMap)) {
+                            List<String> categoryCategories = (List<String>) optionMap.get(KEY_CATEGORY_CATEGORIES);
+                            for (String categoryCategory : categoryCategories) {
+                                categories.add(new Category(categoryCategory, optionMap, categories));
                             }
                         }
                     }
@@ -182,8 +182,8 @@ public class BingoConfiguration {
                 counts.compute(category, (k, v) -> v == null ? 1 : v + 1);
             }
         }
-        for (Category category : categories.values()) {
-            counts.computeIfAbsent(category, k -> 0);
+        for (Category category : categories) {
+            counts.putIfAbsent(category, 0);
         }
         return counts;
     }
@@ -313,58 +313,128 @@ public class BingoConfiguration {
             Matcher snippetsMatcher = TextSnippet.SNIPPET_PATTERN.matcher(text);
             while (snippetsMatcher.find()) {
                 String snippetType = snippetsMatcher.group(1);
+
+                // check if there are conditions or extra snippet types to be extracted
+                List<String> conditions = new ArrayList<>();
+                if (snippetType.contains(":")) {
+                    Arrays.stream(snippetType.split(":")).skip(1).forEach(conditions::add);
+                    snippetType = snippetType.split(":")[0];
+                }
+
                 if (textSnippets.containsKey(snippetType)) {
-                    List<TextSnippet> snippets = new ArrayList<>(textSnippets.get(snippetType));
-                    if (!createdMustBeCategories.isEmpty()) {
-                        List<TextSnippet> remainingSnippets = new ArrayList<>(snippets);
-                        for (int i = remainingSnippets.size() - 1; i >= 0; i--) {
-                            TextSnippet snippet = remainingSnippets.get(i);
-                            if (snippet.getCategories().stream().noneMatch(createdMustBeCategories::contains)) {
-                                remainingSnippets.remove(i);
-                            }
-                        }
-                        if (remainingSnippets.size() != 0) {
-                            snippets = remainingSnippets;
+                    // check if some conditions are actually snippet types
+                    List<String> snippetTypes = new ArrayList<>();
+                    snippetTypes.add(snippetType);
+                    for (int i = conditions.size() - 1; i >= 0; i--) {
+                        String condition = conditions.get(i);
+                        if (!condition.contains("(") && textSnippets.containsKey(condition)) {
+                            snippetTypes.add(condition);
+                            conditions.remove(i);
                         }
                     }
-                    if (!createdMayNotBeCategories.isEmpty()) {
-                        for (int i = snippets.size() - 1; i >= 0; i--) {
-                            TextSnippet snippet = snippets.get(i);
-                            if (snippet.getCategories().stream().anyMatch(createdMayNotBeCategories::contains)) {
-                                snippets.remove(i);
-                            }
-                        }
-                    }
-                    if (snippets.size() == 0) {
-                        snippets = textSnippets.getOrDefault(snippetType, new ArrayList<>());
-                        //LOG.warn("No snippets for [{}], [MUST {}] [CANNOT {}], using all [{}]", snippetType, createdMustBeCategories, createdMayNotBeCategories, snippets.size());
-                    }
+
+                    List<TextSnippet> snippets = getTextSnippets(snippetTypes, createdMustBeCategories, createdMayNotBeCategories, conditions);
                     TextSnippet selectedSnippet = getRandom(snippets, random);
+
                     currentDifficulty.set(currentDifficulty.get() + selectedSnippet.getDifficulty());
                     tileCategories.addAll(selectedSnippet.getCategories());
                     if (selectedSnippet.getTooltip() != null) currentTooltips.add(selectedSnippet.getTooltip());
                     text = text.replaceFirst(Pattern.quote(snippetsMatcher.group()), selectedSnippet.getText());
+
                     found = true;
-                } else {
-                    ValueProvider valueProvider = numberValueProviders.getOrDefault(snippetType, null);
-                    if (valueProvider != null) {
-                        Difficulty difficulty = getDifficulty(destinationDifficulty);
-                        ValueProvider.NumberProviderResult result = valueProvider.getValue(difficulty.getName());
-                        if (result != null) {
-                            text = text.replaceFirst(Pattern.quote(snippetsMatcher.group()), String.valueOf(result.getValue()));
-                            currentDifficulty.set(currentDifficulty.get() + result.getScore());
-                        }
-                    } else {
-                        if(snippetType.matches("-?\\d+-?\\d+")) {
-                            int min = Integer.parseInt(snippetType.split("-")[0]);
-                            int max = Integer.parseInt(snippetType.split("-")[1]);
-                            text = text.replaceFirst(Pattern.quote(snippetsMatcher.group()), String.valueOf(random.nextInt(max - min + 1) + min));
-                        }
+                    continue;
+                }
+
+                // check if it is a value provider or a random number generator
+                ValueProvider valueProvider = numberValueProviders.getOrDefault(snippetType, null);
+                if (valueProvider != null) {
+                    Difficulty difficulty = getDifficulty(destinationDifficulty);
+                    ValueProvider.NumberProviderResult result = valueProvider.getValue(difficulty.getName());
+                    if (result != null) {
+                        text = text.replaceFirst(Pattern.quote(snippetsMatcher.group()), String.valueOf(result.getValue()));
+                        currentDifficulty.set(currentDifficulty.get() + result.getScore());
                     }
+                } else if (snippetType.matches("-?\\d+-?\\d+")) {
+                    int min = Integer.parseInt(snippetType.split("-")[0]);
+                    int max = Integer.parseInt(snippetType.split("-")[1]);
+                    text = text.replaceFirst(Pattern.quote(snippetsMatcher.group()), String.valueOf(random.nextInt(max - min + 1) + min));
                 }
             }
         } while (found);
         return text;
+    }
+
+    private List<TextSnippet> getSnippets(List<String> snippetTypes) {
+        List<TextSnippet> snippets = new ArrayList<>();
+        for (String snippetType : snippetTypes) {
+            if (textSnippets.containsKey(snippetType)) {
+                snippets.addAll(textSnippets.get(snippetType));
+            }
+        }
+        return snippets;
+    }
+
+    private List<TextSnippet> getTextSnippets(List<String> snippetTypes, Set<Category> createdMustBeCategories, Set<Category> createdMayNotBeCategories, List<String> conditions) {
+        List<TextSnippet> limitedSnippets = getSnippets(snippetTypes);
+
+        if (conditions.size() > 0) {
+            List<TextSnippet> filteredSnippets = new ArrayList<>();
+            for (TextSnippet snippet : limitedSnippets) {
+                boolean valid = true;
+                for (String condition : conditions) {
+                    if (!snippet.matchesCondition(condition)) {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (valid) filteredSnippets.add(snippet);
+            }
+            if (filteredSnippets.size() == 0) {
+                LOG.warn("No snippets found for type [{}] with conditions {}", snippetTypes, conditions);
+            } else {
+                limitedSnippets = filteredSnippets;
+            }
+        }
+
+        if (!createdMustBeCategories.isEmpty()) {
+            List<TextSnippet> filteredSnippets = new ArrayList<>();
+            for (TextSnippet snippet : limitedSnippets) {
+                boolean valid = true;
+                for (Category category : createdMustBeCategories) {
+                    if (!snippet.getCategories().contains(category)) {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (valid) filteredSnippets.add(snippet);
+            }
+            if (filteredSnippets.size() == 0) {
+                LOG.warn("No snippets found for type {} with must-be categories {}", snippetTypes, createdMustBeCategories);
+            } else {
+                limitedSnippets = filteredSnippets;
+            }
+        }
+
+        if (!createdMayNotBeCategories.isEmpty()) {
+            List<TextSnippet> filteredSnippets = new ArrayList<>();
+            for (TextSnippet snippet : limitedSnippets) {
+                boolean valid = true;
+                for (Category category : createdMayNotBeCategories) {
+                    if (snippet.getCategories().contains(category)) {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (valid) filteredSnippets.add(snippet);
+            }
+            if (filteredSnippets.size() == 0) {
+                LOG.warn("No snippets found for type {} with may-not categories {}", snippetTypes, createdMayNotBeCategories);
+            } else {
+                limitedSnippets = filteredSnippets;
+            }
+        }
+
+        return limitedSnippets;
     }
 
     public Difficulty getDifficulty(double difficulty) {
@@ -435,13 +505,14 @@ public class BingoConfiguration {
 
     final static String KEY_TEXT_SNIPPETS = "snippets";
     final static String KEY_TEXT_SNIPPETS_CATEGORIES = "categories";
+    final static String KEY_TEXT_SNIPPETS_TAGS = "tags";
     final static String KEY_TEXT_SNIPPETS_TEXT = "text";
     final static String KEY_TEXT_SNIPPETS_TOOLTIP = "tooltip";
     final static String KEY_TEXT_SNIPPETS_DIFFICULTY = "difficulty";
     final static String KEY_TEXT_SNIPPETS_WEIGHT = "weight";
 
     final static String KEY_CATEGORY = "categories";
-    final static String KEY_CATEGORY_NAME = "name";
+    final static String KEY_CATEGORY_CATEGORIES = "categories";
     final static String KEY_CATEGORY_MAX = "max";
     final static String KEY_CATEGORY_MIN = "min";
     final static String KEY_CATEGORY_ABSOLUTE = "absolute";

@@ -1,6 +1,8 @@
 package de.yanwittmann.bingo.generator;
 
 import de.yanwittmann.bingo.interfaces.Weightable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -8,14 +10,17 @@ import java.util.regex.Pattern;
 
 public class TextSnippet implements Weightable {
 
+    private final Logger LOG = LoggerFactory.getLogger(getClass());
+
     private String text;
     private String tooltip;
     private double difficulty;
     private double weight;
     private final List<Category> categories;
     private final Set<Category> derivedCategories;
+    private final List<String> tags;
 
-    public TextSnippet(Map<String, Object> optionMap, Map<String, Category> categories) {
+    public TextSnippet(Map<String, Object> optionMap, List<Category> categories) {
         this.text = (String) optionMap.get(BingoConfiguration.KEY_TEXT_SNIPPETS_TEXT);
         this.tooltip = (String) optionMap.getOrDefault(BingoConfiguration.KEY_TEXT_SNIPPETS_TOOLTIP, null);
         this.difficulty = Double.parseDouble(String.valueOf(optionMap.getOrDefault(BingoConfiguration.KEY_TEXT_SNIPPETS_DIFFICULTY, 0)));
@@ -23,6 +28,7 @@ public class TextSnippet implements Weightable {
         this.categories = new ArrayList<>();
         Category.createCategories((List<String>) optionMap.getOrDefault(BingoConfiguration.KEY_TEXT_SNIPPETS_CATEGORIES, Collections.emptyList()), categories, this.categories, text);
         this.derivedCategories = new HashSet<>();
+        this.tags = (List<String>) optionMap.getOrDefault(BingoConfiguration.KEY_TEXT_SNIPPETS_TAGS, Collections.emptyList());
     }
 
     public void deriveSnippetCategories(String text, Map<String, List<TextSnippet>> textSnippets) {
@@ -88,6 +94,37 @@ public class TextSnippet implements Weightable {
         return tooltip;
     }
 
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public boolean matchesCondition(String condition) {
+        if (condition == null) return true;
+        Matcher matcher = Pattern.compile("^([a-zA-Z0-9]+)(?:\\((.*)\\))?$").matcher(condition);
+        if (!matcher.matches()) {
+            LOG.warn("Invalid condition [{}] on [{}]", condition, text);
+            return true;
+        }
+        String function = matcher.group(1);
+        String args = matcher.group(2);
+        switch (function) {
+            case "tag":
+                return tags.contains(args);
+            case "category":
+                return categories.stream().anyMatch(category -> category.getName().equals(args));
+            case "derivedCategory":
+                return derivedCategories.stream().anyMatch(category -> category.getName().equals(args));
+            case "!tag":
+                return !tags.contains(args);
+            case "!category":
+                return categories.stream().noneMatch(category -> category.getName().equals(args));
+            case "!derivedCategory":
+                return derivedCategories.stream().noneMatch(category -> category.getName().equals(args));
+        }
+        LOG.warn("Unknown condition function [{}] on [{}]", function, text);
+        return true;
+    }
+
     @Override
     public String toString() {
         return text;
@@ -97,6 +134,7 @@ public class TextSnippet implements Weightable {
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TEXT_SNIPPETS_TEXT, true, String.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TEXT_SNIPPETS_TOOLTIP, false, String.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TEXT_SNIPPETS_CATEGORIES, false, List.class);
+        BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TEXT_SNIPPETS_TAGS, false, List.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TEXT_SNIPPETS_DIFFICULTY, false, Double.class, Integer.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_TEXT_SNIPPETS_WEIGHT, false, Double.class, Integer.class);
         return true;

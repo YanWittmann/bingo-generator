@@ -18,8 +18,8 @@ public class Category {
     private final List<Category> synergies = new ArrayList<>();
     private final List<Category> antisynergy = new ArrayList<>();
 
-    public Category(Map<String, Object> optionMap, Map<String, Category> categories) {
-        this.name = (String) optionMap.get(BingoConfiguration.KEY_CATEGORY_NAME);
+    public Category(String category, Map<String, Object> optionMap, List<Category> categories) {
+        this.name = category;
         Map<String, Object> maxMap = (Map<String, Object>) optionMap.getOrDefault(BingoConfiguration.KEY_CATEGORY_MAX, null);
         Map<String, Object> minMap = (Map<String, Object>) optionMap.getOrDefault(BingoConfiguration.KEY_CATEGORY_MIN, null);
         if (maxMap != null) {
@@ -95,7 +95,7 @@ public class Category {
     }
 
     public static boolean validate(Map<String, Object> optionMap) {
-        BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_CATEGORY_NAME, false, String.class);
+        BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_CATEGORY_CATEGORIES, true, List.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_CATEGORY_MAX, false, Map.class);
         BingoConfiguration.validateContained(optionMap, BingoConfiguration.KEY_CATEGORY_MIN, false, Map.class);
         Map<String, Object> maxMap = (Map<String, Object>) optionMap.getOrDefault(BingoConfiguration.KEY_CATEGORY_MAX, null);
@@ -113,17 +113,21 @@ public class Category {
         return true;
     }
 
-    public static void createCategories(List<String> categories, Map<String, Category> knownCategories, List<Category> addTo, String forWhat) {
+    public static void createCategories(List<String> categories, List<Category> knownCategories, List<Category> addTo, String forWhat) {
         for (String category : categories) {
-            if (!knownCategories.containsKey(category)) {
+            if (getCategory(category, knownCategories) == null) {
                 LOG.warn("Creating category [{}] on [{}]", category, forWhat);
                 Category cat = new Category(category);
-                knownCategories.put(category, cat);
+                knownCategories.add(cat);
                 addTo.add(cat);
             } else {
-                addTo.add(knownCategories.get(category));
+                addTo.add(getCategory(category, knownCategories));
             }
         }
+    }
+
+    private static Category getCategory(String category, List<Category> knownCategories) {
+        return knownCategories.stream().filter(c -> c.getName().equals(category)).findFirst().orElse(null);
     }
 
     @Override
