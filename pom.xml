@@ -11,6 +11,7 @@
     <modules>
         <module>bingo-core</module>
         <module>bingo-java-visualizer</module>
+        <module>web-interface</module>
     </modules>
 
     <properties>

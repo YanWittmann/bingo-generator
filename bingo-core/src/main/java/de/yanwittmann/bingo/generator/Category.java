@@ -19,6 +19,7 @@ public class Category {
     private final List<Category> antisynergy = new ArrayList<>();
 
     public Category(String category, Map<String, Object> optionMap, List<Category> categories) {
+        categories.add(this);
         this.name = category;
         Map<String, Object> maxMap = (Map<String, Object>) optionMap.getOrDefault(BingoConfiguration.KEY_CATEGORY_MAX, null);
         Map<String, Object> minMap = (Map<String, Object>) optionMap.getOrDefault(BingoConfiguration.KEY_CATEGORY_MIN, null);

@@ -1,0 +1,68 @@
+
+:root {
+    --background-color: #0a0e12;
+    --navigation-color: #28282c;
+    --text-color: #cbc6c0;
+    --border-color: #4b4b52;
+    --board-tile-hover-color: #111f36;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    overflow-x: hidden;
+    color: var(--text-color);
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+    font-size: 40px;
+    margin: 0;
+    padding: 10px 5px;
+    color: var(--text-color);
+}
+
+.main-container {
+    padding: 20px;
+}
+
+/* This is a table element */
+.bingo-board {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid var(--border-color);
+    background-color: #0a0e12;
+    table-layout: fixed;
+}
+
+.bingo-board td {
+    height: 120px;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #28282c;
+}
+
+.bingo-board td:hover {
+    background-color: var(--board-tile-hover-color);
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .bingo-board td {
+        height: 80px;
+        padding: 5px;
+    }
+}
+
+#tooltip {
+    position: absolute;
+    z-index: 10;
+    background-color: var(--navigation-color);
+    padding: 10px;
+    max-width: 200px;
+    border-radius: 5px;
+    border: 2px solid var(--border-color);
+}

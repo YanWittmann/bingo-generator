@@ -241,16 +241,17 @@ public class BingoBoard implements Jsonable {
     private int scoreRow(List<BingoTile> row, List<Category> categories) {
         int score = 0;
         for (Category category : categories) {
-            if (rowContainsCategory(row, category)) {
+            BingoTile tile = rowContainsCategory(row, category, null);
+            if (tile != null) {
                 // check for antisynergies
                 for (Category antisynergy : category.getAntisynergy()) {
-                    if (rowContainsCategory(row, antisynergy)) {
+                    if (rowContainsCategory(row, antisynergy, tile) != null) {
                         score -= 10;
                     }
                 }
                 // check for synergies
                 for (Category synergy : category.getSynergies()) {
-                    if (rowContainsCategory(row, synergy)) {
+                    if (rowContainsCategory(row, synergy, tile) != null) {
                         score += 4;
                     }
                 }
@@ -259,8 +260,8 @@ public class BingoBoard implements Jsonable {
         return score;
     }
 
-    private boolean rowContainsCategory(List<BingoTile> row, Category category) {
-        return row.stream().anyMatch(tile -> tile.getCategories().contains(category));
+    private BingoTile rowContainsCategory(List<BingoTile> row, Category category, BingoTile exclude) {
+        return row.stream().filter(t -> t != exclude).filter(tile -> tile.getCategories().contains(category)).findFirst().orElse(null);
     }
 
     public String toString() {

@@ -1,4 +1,4 @@
-tilte: Outer Wilds Bingo
+title: Outer Wilds Bingo
 description: Bingo for Outer Wilds
 game: Outer Wilds
 version: 0.1
@@ -18,22 +18,29 @@ tile generators:
     categories: [ location, ship ]
   - text: Rest at a campfire on [PLANET:tag(campfire)]
     categories: [ activity, campfire ]
-  - text: "Translate any text at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:tag(translate)]"
+  - text: "Translate any text at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:GIANTS_DEEP_LOCATIONS:tag(translate)]"
     categories: [ translate ]
-  - text: "Use a projection pool at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:tag(projection_pool)]"
+  - text: "Use a projection pool at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:GIANTS_DEEP_LOCATIONS:tag(projection_pool)]"
     categories: [ projection_pool ]
-  - text: "Read the Hearthian Notes at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:tag(hearthian_notes)]"
+  - text: "Read the Hearthian Notes at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:GIANTS_DEEP_LOCATIONS:tag(hearthian_notes)]"
+    categories: [ hearthian_notes ]
+  - text: "Use a telekinetic orb at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:GIANTS_DEEP_LOCATIONS:tag(telekinetic_orb)]"
+    tooltip: A telekinetic orb is controled by the player looking at it.
     categories: [ hearthian_notes ]
   - text: Meet and talk to the Traveler [TRAVELER]
   - text: Meet and talk to the Hearthian [HEARTHIAN]
   - text: Take off with a nomai ship from [PLANET:tag(nomai_ship)]
     categories: [ nomai_ship ]
-  - text: Travel from [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:STRANGER_LOCATIONS:!tag(late_in_loop)] to [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:STRANGER_LOCATIONS:avoid_duplicates:!tag(early_in_loop)]
+  - text: Travel from [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:STRANGER_LOCATIONS:GIANTS_DEEP_LOCATIONS:!tag(late_in_loop)] to [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:STRANGER_LOCATIONS:GIANTS_DEEP_LOCATIONS:avoid_duplicates:!tag(early_in_loop)]
     tooltip: Must happen in a single loop in that order, but detours are allowed.
     categories: [ arbitrary_travel ]
   - text: Travel around [PLANET] in a straight line
     tooltip: Or at least as straight as possible.
     categories: [ straight_line_travel ]
+  - text: "[GENERAL_ACTIVITIES]"
+    categories: [ activity ]
+  - text: "[INCIDENTS]"
+    categories: [ incident ]
 
   - text: Reach [TIMBER_HEARTH_LOCATIONS] on Timber Hearth
     categories: [ location, timber_hearth ]
@@ -51,6 +58,10 @@ tile generators:
     categories: [ location, brittle_hollow ]
   - text: "Brittle Hollow activity: [BRITTLE_HOLLOW_ACTIVITIES]"
     categories: [ activity, brittle_hollow ]
+  - text: Reach [GIANTS_DEEP_LOCATIONS] on Giant's Deep
+    categories: [ location, giants_deep ]
+  - text: "Giant's Deep activity: [GIANTS_DEEP_ACTIVITIES]"
+    categories: [ activity, giants_deep ]
   - text: Reach [STRANGER_LOCATIONS] on The Stranger
     categories: [ location, stranger ]
   - text: "Stranger activity: [STRANGER_ACTIVITIES]"
@@ -170,7 +181,7 @@ snippets:
     - text: The Mining Site 2b
       tooltip: Open and enter the mining site inside the huge Geyser Mountain.
       categories: [ timber_hearth ]
-      tags: [ translate, projection_pool ]
+      tags: [ translate, projection_pool, telekinetic_orb ]
     - text: The Zero-G Cave
       tooltip: Enter the Zero-G-Cave via the elevator.
       categories: [ zero_g_cave, village, timber_hearth ]
@@ -209,7 +220,7 @@ snippets:
       tags: [ translate ]
     - text: The Sunless City
       categories: [ sunless_city, ember_twin ]
-      tags: [ translate ]
+      tags: [ translate, telekinetic_orb ]
     - text: "The Sunless City: Eye Shrine District"
       tooltip: The building must be entered and the ghost matter pit crossed.
       tags: [ translate ]
@@ -225,10 +236,10 @@ snippets:
     - text: The Ember Twin Gravity Cannon
       tooltip: The Gravity Cannon on Ember Twin.
       categories: [ gravity_cannon, ember_twin ]
-      tags: [ translate ]
+      tags: [ translate, telekinetic_orb ]
     - text: The High Energy Lab
       categories: [ high_energy_lab, ember_twin ]
-      tags: [ translate, early_in_loop ]
+      tags: [ translate, telekinetic_orb, early_in_loop ]
     - text: Chert's Camp
       categories: [ chert, ember_twin ]
     - text: The Quantum Caves
@@ -296,7 +307,7 @@ snippets:
     - text: The Ash Twin Project
       tooltip: Warp inside the chamber to reach the Ash Twin Project.
       categories: [ ash_twin_project, ash_twin ]
-      tags: [ translate, projection_pool ]
+      tags: [ translate, projection_pool, telekinetic_orb ]
   ASH_TWIN_ACTIVITIES:
     - text: Touch the core from the outside
       categories: [ ash_twin ]
@@ -311,6 +322,8 @@ snippets:
     - text: Turn off the gravity and open the casing.
       tooltip: You don't have to take the core out of the casing.
       categories: [ ash_twin_project, ash_twin ]
+    - text: Get flung to the Ember Twin by the sand column.
+      categories: [ ash_twin ]
 
   BRITTLE_HOLLOW_LOCATIONS:
     - text: The Northern Glacier
@@ -318,8 +331,8 @@ snippets:
       categories: [ brittle_hollow ]
       tags: [ translate, projection_pool ]
     - text: The Hanging City
-      tags: [ translate ]
       categories: [ hanging_city, brittle_hollow ]
+      tags: [ translate, telekinetic_orb ]
     - text: "The Hanging City: Outside the Black Hole Forge"
       tooltip: Standing on the ceiling suffices.
       tags: [ translate ]
@@ -331,7 +344,7 @@ snippets:
     - text: "The Hanging City: Meltwater District"
       tooltip: Must stand in front of the scroll walls.
       categories: [ hanging_city, brittle_hollow ]
-      tags: [ translate ]
+      tags: [ translate, telekinetic_orb ]
     - text: "The Hanging City: Eye Shrine District"
       tooltip: Must stand inside one of the houses.
       categories: [ hanging_city, brittle_hollow ]
@@ -344,16 +357,16 @@ snippets:
       tooltip: The small collection of houses.
       categories: [ brittle_hollow ]
       tags: [ hearthian_notes ]
-    - text: Crossroads
+    - text: The Crossroads
       tooltip: Be on either of the two levels of the Crossroads.
       categories: [ brittle_hollow ]
-      tags: [ hearthian_notes ]
-    - text: The Briddle Hollow Gravity Cannon
-      tooltip: The Gravity Cannon on Briddle Hollow.
+      tags: [ hearthian_notes, telekinetic_orb ]
+    - text: The Brittle Hollow Gravity Cannon
+      tooltip: The Gravity Cannon on Brittle Hollow.
       categories: [ gravity_cannon, brittle_hollow ]
-      tags: [ translate, projection_pool ]
-    - text: Escape Pod 1 on Briddle Hollow
-      categories: [ escape_pod, brittle_hollow ]
+      tags: [ translate, projection_pool, telekinetic_orb ]
+    - text: Escape Pod 1 on Brittle Hollow
+      categories: [ escape_pod, brittle_hollow, telekinetic_orb ]
       tags: [ translate ]
     - text: Old Settlement (upper level)
       tooltip: Cross at least the first bridge to the central room on the upper level.
@@ -374,7 +387,7 @@ snippets:
     - text: Southern Observatory
       tooltip: Must be inside the dome.
       categories: [ brittle_hollow ]
-      tags: [ translate, projection_pool ]
+      tags: [ translate, projection_pool, telekinetic_orb ]
   BRITTLE_HOLLOW_ACTIVITIES:
     - text: Fall inside the black hole.
       categories: [ brittle_hollow ]
@@ -384,6 +397,72 @@ snippets:
       categories: [ brittle_hollow ]
     - text: Enter the Hanging City via the meltwater shortcut.
       categories: [ brittle_hollow ]
+    - text: Use the Locator in the Southern Observatory to locate [PLANET:tag(quantum_moon)]
+      categories: [ brittle_hollow ]
+
+  GIANTS_DEEP_LOCATIONS:
+    - text: "Orbital Probe Cannon: Central Chamber"
+      tooltip: Enter the air lock to reach the central chamber.
+      categories: [ orbital_probe_cannon, giants_deep ]
+      tags: [ translate ]
+    - text: "Orbital Probe Cannon: Control Module"
+      tooltip: The intact module.
+      categories: [ orbital_probe_cannon, giants_deep ]
+      tags: [ translate, projection_pool ]
+    - text: "Orbital Probe Cannon: Launch Module"
+      tooltip: The module with the fractured window.
+      categories: [ orbital_probe_cannon, giants_deep ]
+      tags: [ translate, projection_pool ]
+    - text: "Orbital Probe Cannon: Probe Tracking Module"
+      tooltip: The module that sank to the core.
+      categories: [ orbital_probe_cannon, giants_deep ]
+      tags: [ translate, projection_pool ]
+    - text: Bramble Island
+      categories: [ island, giants_deep, hearthian_notes ]
+    - text: Construction Yard
+      categories: [ island, giants_deep ]
+      tags: [ translate, projection_pool ]
+    - text: Statue Island
+      categories: [ island, giants_deep ]
+      tags: [ translate ]
+    - text: Statue Island
+      categories: [ giants_deep ]
+      tags: [ translate ]
+    - text: The Giant's Deep Ash Twin Tower Receiver
+      tooltip: The Ash Twin Tower Warp Pad Receiver.
+      categories: [ warp_pad ]
+    - text: Statue Island Workshop
+      categories: [ giants_deep ]
+      tags: [ translate, projection_pool ]
+    - text: Gabbro's Island
+      categories: [ island, gabbro, giants_deep ]
+    - text: Tower of Quantum Trials Island
+      categories: [ island, giants_deep ]
+    - text: Tower of Quantum Trials (top)
+      categories: [ island, quantum, giants_deep ]
+    - text: Ocean Depths
+      categories: [ giants_deep ]
+  GIANTS_DEEP_ACTIVITIES:
+    - text: Ride a clockwise and a counter-clockwise spinning cyclone
+      tooltip: By yourself or with your ship.
+      categories: [ giants_deep ]
+    - text: Let a tornado throw you on into space on [1-2] island(s)
+      categories: [ island, giants_deep ]
+    - text: Find the coordinates of the Eye of the Universe
+      categories: [ orbital_probe_cannon, giants_deep ]
+    - text: Touch a living or dead Jellifish
+      categories: [ giants_deep ]
+
+  DARK_BRAMBLE_LOCATIONS:
+    - text: To Dojo
+      categories: [ dark_bramble ]
+  DARK_BRAMBLE_ACTIVITIES:
+    - text: Touch the red anglerfish eggs
+      categories: [ anglerfish, dark_bramble ]
+    - text: Shoot the scout through 2 unpassable bramble seeds
+      categories: [ dark_bramble ]
+    - text: Aggro an anglerfish and survive
+      categories: [ anglerfish, dark_bramble ]
 
   STRANGER_LOCATIONS:
     - text: The Reservoir
@@ -470,6 +549,11 @@ snippets:
     - text: Watch the projector in the supernova observation room switch images
       tooltip: The supernova must have advanced by one stage while watching the projector.
       categories: [ stranger ]
+    - text: Talk to the Prisoner
+      tooltip: As soon as you have talked, you can meditate until next loop.
+      categories: [ dream_world, prisoner, stranger ]
+    - text: Get caught by an Owlelk
+      categories: [ dream_world, stranger ]
   STRANGER_SLIDE:
     - text: First story reel
       tooltip: The story reel at the River Lowlands.
@@ -507,21 +591,21 @@ snippets:
     - text: Artifact experiments
       tooltip: The artifact experiments reel at the Damaged Laboratory.
       categories: [ damaged_laboratory ]
-    - text: Artifact experiments vision
-      tooltip: View any vision at the Damaged Laboratory.
-      categories: [ damaged_laboratory, vision ]
+    - text: Artifact experiments telekinetic
+      tooltip: View any telekinetic at the Damaged Laboratory.
+      categories: [ damaged_laboratory, telekinetic ]
     - text: Fourth story reel
       tooltip: The story reel at the Reservoir.
       categories: [ reservoir ]
     - text: Slide Burning Reel
       tooltip: "The reel in the Abandoned Temple (🌒 🪐 🌒 ✨ ✨)"
       categories: [ abandoned_temple ]
-    - text: Tower vision
-      tooltip: View the vision from the crack in the Valut in the Subterranean Lake.
-      categories: [ subterranean_lake, vision, dream_world ]
-    - text: Submerged bell vision
-      tooltip: View the vision from outside the bell in the Dream World.
-      categories: [ raft, vision, dream_world ]
+    - text: Tower telekinetic
+      tooltip: View the telekinetic from the crack in the Valut in the Subterranean Lake.
+      categories: [ subterranean_lake, telekinetic, dream_world ]
+    - text: Submerged bell telekinetic
+      tooltip: View the telekinetic from outside the bell in the Dream World.
+      categories: [ raft, telekinetic, dream_world ]
     - text: Shrouded Woodland Glitch reel
       tooltip: Get past the Fire and view Glitch reel in the Forbidden Archive.
       categories: [ shrouded_woodlands, forbidden_archive, dream_world ]
@@ -532,11 +616,63 @@ snippets:
       tooltip: Cross the invisible bridge and view Glitch reel in the Forbidden Archive.
       categories: [ endless_canyon, forbidden_archive, dream_world ]
 
+  GENERAL_ACTIVITIES:
+    - text: Touch [2-4] Quantum Shards
+      tooltip: You cannot get credit for the same location twice.
+      categories: [ quantum ]
+    - text: Light 3 Campfires
+      tooltip: You cannot get credit for the same location twice.\nFor example Radio Tower, Gravity Crystal Workshop, Quantum Moon Locator.
+      categories: [ campfire ]
+    - text: Touch [2-4] clothes Nomai corpses
+      tooltip: You cannot get credit for the same location twice.
+      categories: [ skeleton ]
+    - text: Touch [4-6] Nomai skeletons
+      tooltip: You cannot get credit for the same location twice.
+      categories: [ skeleton ]
+    - text: Use oxigen as propellant
+    - text: Talk to [2-4] Travelers.
+      tooltip: You cannot get credit for the same traveler twice.
+      categories: [ traveler ]
+    - text: Translate text on [2-4] bodies
+      tooltip: You cannot get credit for the same planet twice.
+      categories: [ translate ]
+    - text: Touch [2-4] travelers' ships
+      tooltip: You cannot get credit for the same ship twice.
+      categories: [ traveler ]
+    - text: Touch [1-3] distress beacon(s)
+      tooltip: You cannot get credit for the same beacon twice.
+      categories: [ beacon ]
+  INCIDENTS:
+    - text: Shock yourself or your ship
+      categories: [ incident ]
+    - text: Take fall damage
+      categories: [ incident ]
+    - text: Die by suffocating without your suit
+      categories: [ die, incident ]
+    - text: Die by suffocating while wearing your suit
+      categories: [ die, incident ]
+    - text: Die by burning (not in the starting campfire)
+      categories: [ die, incident ]
+    - text: Die by getting crushed
+      categories: [ die, incident ]
+    - text: Die from fall damage
+      categories: [ die, incident ]
+    - text: Die by drowning
+      categories: [ die, incident ]
+    - text: Die from ghost matter
+      categories: [ die, incident ]
+    - text: Die from ghost matter
+      categories: [ die, incident ]
+    - text: Die by falling into the sun
+      categories: [ die, incident ]
+    - text: Die on [PLANET]
+      categories: [ die, incident ]
+
 categories:
   - categories: [ village, hearthian ]
     max:
       relative: 2
-  - categories: [ esker, chert, riebek, gabbro, feldspar ]
+  - categories: [ esker, chert, riebek, gabbro, feldspar, prisoner, solanum ]
     max:
       absolute: 1
   - categories: [ escape_pod ]
@@ -572,6 +708,15 @@ categories:
       relative: 10
     max:
       relative: 45
+  - categories: [ orbital_probe_cannon ]
+    antisynergy: [ orbital_probe_cannon ]
+  - categories: [ incident ]
+    antisynergy: [ incident ]
+    min:
+      absolute: 1
+    max:
+      absolute: 3
+      relative: 8
 
 
 value providers:

@@ -91,7 +91,7 @@ public class BingoFrame extends JFrame {
         for (Component component : bingoGridPanel.getComponents()) {
             if (component instanceof JLabel) {
                 JLabel label = (JLabel) component;
-                if (text.length() > 0 && label.getText().toLowerCase().contains(text.toLowerCase())) {
+                if (searchMatches(text, label)) {
                     label.setBackground(new Color(222, 158, 227, 255));
                 } else {
                     label.setBackground(new Color(255, 217, 217));
@@ -100,11 +100,21 @@ public class BingoFrame extends JFrame {
         }
     }
 
+    private boolean searchMatches(String text, JLabel label) {
+        if (text.length() == 0) return false;
+        if (label.getText() != null && label.getText().toLowerCase().contains(text.toLowerCase()))
+            return true;
+        if (label.getToolTipText() != null && label.getToolTipText().toLowerCase().contains(text.toLowerCase()))
+            return true;
+        return false;
+    }
+
     public void generateAndShow() throws FileNotFoundException {
         BingoConfiguration configuration = new BingoConfiguration(new File("bingo-core/src/test/resources/bingo/generate/outer_wilds.yaml"));
         BingoGenerator generator = new BingoGenerator(configuration);
         generator.setWidth(10);
         generator.setHeight(7);
+        generator.setMaxGenerationAttempts(1);
         Random random;
         if (seedField.getText().isEmpty() || !seedField.getText().matches("[0-9]+")) {
             random = new Random();
@@ -113,6 +123,7 @@ public class BingoFrame extends JFrame {
         }
         BingoBoard bingoBoard = generator.generateBingoBoard(random);
         showBoard(bingoBoard);
+        System.out.println(bingoBoard.toJson());
     }
 
     public void showBoard(BingoBoard bingoBoard) {

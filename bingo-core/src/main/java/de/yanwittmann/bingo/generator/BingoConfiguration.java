@@ -66,7 +66,7 @@ public class BingoConfiguration {
                         if (Category.validate(optionMap)) {
                             List<String> categoryCategories = (List<String>) optionMap.get(KEY_CATEGORY_CATEGORIES);
                             for (String categoryCategory : categoryCategories) {
-                                categories.add(new Category(categoryCategory, optionMap, categories));
+                                new Category(categoryCategory, optionMap, categories);
                             }
                         }
                     }
@@ -496,7 +496,7 @@ public class BingoConfiguration {
         }
     }
 
-    final static String KEY_GENERAL_TITLE = "tilte";
+    final static String KEY_GENERAL_TITLE = "title";
     final static String KEY_GENERAL_DESCRIPTION = "description";
     final static String KEY_GENERAL_GAME = "game";
     final static String KEY_GENERAL_AUTHORS = "authors";
