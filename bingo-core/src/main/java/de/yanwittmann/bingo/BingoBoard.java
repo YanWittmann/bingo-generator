@@ -284,6 +284,11 @@ public class BingoBoard implements Jsonable {
         if (boardMetadata != null) json.put("metadata", boardMetadata.toJson());
         if (categoryCount != null) json.put("categories", categoryCount);
         if (difficulty != -1) json.put("difficulty", difficulty);
+        json.put("board", getBoardTilesJson());
+        return json;
+    }
+
+    public JSONArray getBoardTilesJson() {
         JSONArray rows = new JSONArray();
         for (int x = 0; x < getWidth(); x++) {
             JSONArray row = new JSONArray();
@@ -292,7 +297,6 @@ public class BingoBoard implements Jsonable {
             }
             rows.put(row);
         }
-        json.put("board", rows);
-        return json;
+        return rows;
     }
 }

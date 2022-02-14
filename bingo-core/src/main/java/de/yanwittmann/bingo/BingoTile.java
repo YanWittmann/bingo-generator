@@ -2,6 +2,7 @@ package de.yanwittmann.bingo;
 
 import de.yanwittmann.bingo.generator.Category;
 import de.yanwittmann.bingo.interfaces.Jsonable;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +28,12 @@ public class BingoTile implements Jsonable {
 
     public BingoTile(JSONObject jsonObject) {
         text = jsonObject.getString("text");
-        tooltip = jsonObject.getString("tooltip");
+        tooltip = jsonObject.optString("tooltip", null);
         difficulty = jsonObject.getDouble("difficulty");
-        categories.addAll(jsonObject.getJSONArray("categories").toList().stream().map(s -> new Category(String.valueOf(s))).collect(Collectors.toList()));
+        JSONArray categories = jsonObject.optJSONArray("categories");
+        if (categories != null) {
+            this.categories.addAll(categories.toList().stream().map(s -> new Category(String.valueOf(s))).collect(Collectors.toList()));
+        }
     }
 
     public String getText() {

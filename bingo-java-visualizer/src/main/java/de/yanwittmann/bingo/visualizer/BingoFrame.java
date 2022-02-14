@@ -112,8 +112,8 @@ public class BingoFrame extends JFrame {
     public void generateAndShow() throws FileNotFoundException {
         BingoConfiguration configuration = new BingoConfiguration(new File("bingo-core/src/test/resources/bingo/generate/outer_wilds.yaml"));
         BingoGenerator generator = new BingoGenerator(configuration);
-        generator.setWidth(10);
-        generator.setHeight(7);
+        generator.setWidth(5);
+        generator.setHeight(5);
         generator.setMaxGenerationAttempts(1);
         Random random;
         if (seedField.getText().isEmpty() || !seedField.getText().matches("[0-9]+")) {
