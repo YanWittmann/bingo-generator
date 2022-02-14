@@ -1,3 +1,5 @@
+// the base directory where the php files are located in on the server (with a trailing '/')
+const baseApiUrl = '';
 const bingoBoard = document.getElementById('bingo-board');
 
 function loadBoard(tilesJson) {
@@ -15,8 +17,8 @@ function loadBoard(tilesJson) {
     let bingoSubtitle = document.getElementById('bingo-subtitle');
     if (bingoSubtitle) {
         let subtitle = [];
-        if (metadata['description']) subtitle.push(metadata['description']);
-        if (metadata['authors']) subtitle.push('Author(s): ' + metadata['authors'].join(', '));
+        if (metadata['description']) subtitle.push(metadata['description'].replaceAll('\n', '<br>'));
+        if (metadata['authors']) subtitle.push('Author' + (metadata['authors'].length !== 1 ? 's' : '') + ': ' + metadata['authors'].join(', '));
         if (metadata['game']) subtitle.push('Game: ' + metadata['game']);
         if (metadata['version']) subtitle.push('Version: ' + metadata['version']);
         if (difficulty) subtitle.push('Difficulty: ' + difficulty);
@@ -60,6 +62,41 @@ function loadBoard(tilesJson) {
 
 function onCellClicked(x, y) {
     console.log('cell clicked at x: ' + x + ', y: ' + y);
+}
+
+function switchColor(color) {
+    setLocalStorage('bingoColor', color);
+    apiCall('http://yanwittmann.de/', {color: color}, function (response) {
+        console.log(response);
+    });
+}
+
+function apiCall(file, postData, callback) {
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            callback(JSON.parse(this.responseText));
+        }
+    };
+    xhr.open('POST', baseApiUrl + file, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(postData));
+}
+
+function setLocalStorage(key, value) {
+    localStorage.setItem(key, value);
+}
+
+function getLocalStorage(key) {
+    return localStorage.getItem(key);
+}
+
+function clearLocalStorage() {
+    localStorage.clear();
+}
+
+function hasLocalStorage(key) {
+    return localStorage.getItem(key) !== null;
 }
 
 // create a global hover listener for all elements for the tooltips

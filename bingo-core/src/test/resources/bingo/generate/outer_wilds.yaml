@@ -350,7 +350,7 @@ snippets:
       categories: [ hanging_city, brittle_hollow ]
       tags: [ translate ]
     - text: "The Hanging City: School District"
-      tooltip: Must walk over to the central room with the tree.
+      tooltip: The central room with the tree.
       categories: [ hanging_city, brittle_hollow ]
       tags: [ translate ]
     - text: Gravity Crystal Workshop
