@@ -1,5 +1,4 @@
 <?php
-include('db-login-data.php');
 
 $conn = new mysqli($dbServername, $dbUsername, $dbPassword, $dbDatabase);
 
