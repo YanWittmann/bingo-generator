@@ -1,6 +1,6 @@
 <?php
 
-$conn = new mysqli($dbServername, $dbUsername, $dbPassword, $dbDatabase);
+$conn = new mysqli('localhost', '', '', '');
 
 // check if the connection works
 if ($conn->connect_error) {
