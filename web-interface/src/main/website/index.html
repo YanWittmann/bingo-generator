@@ -9,17 +9,27 @@
 
 <!-- The site is split into a navigation on the left and the bingo board on the right side -->
 <div class="main-container">
-    <div class="bingo-container">
-        <table class="bingo-board" id="bingo-board">
-        </table>
-    </div>
     <div class="navigation-settings">
-        <h1 id="bingo-title">Online-Multiplayer Bingo Board</h1>
-        <span id="bingo-subtitle">A cloud bingo game by Yan Wittmann.<br>Load a bingo board using the input below!</span>
+        <div id="bingo-container" class="box-container">
+            <table class="bingo-board" id="bingo-board">
+            </table>
+        </div>
+        <div class="box-container container-padding">
+            <h1 id="bingo-title">Online-Multiplayer Bingo Board</h1>
+            <span id="bingo-subtitle">A cloud bingo game by Yan Wittmann.<br>Load a bingo board using the input below!</span>
+        </div>
+        <div id="color-selection" class="box-container container-padding">
+            <button class="color-picker red" color="red">Red</button>
+            <button class="color-picker orange" color="orange">Orange</button>
+            <button class="color-picker yellow" color="yellow">Yellow</button>
+            <button class="color-picker green" color="green">Green</button>
+            <button class="color-picker aqua" color="aqua">Aqua</button>
+            <button class="color-picker blue" color="blue">Blue</button>
+            <button class="color-picker purple" color="purple">Purple</button>
+            <button class="color-picker pink" color="pink">Pink</button>
+        </div>
     </div>
 </div>
-
-<span id="tooltip" style="display: none;"></span>
 
 <script src="bingo.js"></script>
 

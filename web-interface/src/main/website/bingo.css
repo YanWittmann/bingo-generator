@@ -3,8 +3,17 @@
     --background-color: #0a0e12;
     --navigation-color: #28282c;
     --text-color: #cbc6c0;
+    --text-color-inverted: #252525;
     --border-color: #4b4b52;
     --board-tile-hover-color: #111f36;
+    --bingo-color-red: #dc2e2e;
+    --bingo-color-blue: #1e7ce5;
+    --bingo-color-green: #7de72e;
+    --bingo-color-yellow: #ffd52d;
+    --bingo-color-orange: #f6883a;
+    --bingo-color-purple: #732dff;
+    --bingo-color-pink: #ff2dff;
+    --bingo-color-aqua: #2dffd5;
 }
 
 html, body {
@@ -20,7 +29,7 @@ html, body {
 h1 {
     font-size: 40px;
     margin: 0;
-    padding: 10px 5px;
+    padding: 2px 5px 10px;
     color: var(--text-color);
 }
 
@@ -28,7 +37,6 @@ h1 {
     padding: 20px;
 }
 
-/* This is a table element */
 .bingo-board {
     width: 100%;
     border-collapse: collapse;
@@ -36,6 +44,10 @@ h1 {
     border: 1px solid var(--border-color);
     background-color: #0a0e12;
     table-layout: fixed;
+}
+
+#bingo-container {
+    max-width: 1000px;
 }
 
 .bingo-board td {
@@ -65,4 +77,78 @@ h1 {
     max-width: 200px;
     border-radius: 5px;
     border: 2px solid var(--border-color);
+}
+
+.navigation-settings {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    grid-gap: 10px;
+}
+
+.box-container {
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    flex-wrap: wrap;
+}
+
+.box-container.container-padding {
+    padding: 10px;
+}
+
+#color-selection {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    grid-gap: 4px;
+    max-width: 300px;
+}
+
+.color-picker {
+    width: 70px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid var(--border-color);
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.red {
+    background-color: var(--bingo-color-red);
+}
+
+.blue {
+    background-color: var(--bingo-color-blue);
+}
+
+.green {
+    background-color: var(--bingo-color-green);
+    color: var(--text-color-inverted);
+}
+
+.yellow {
+    background-color: var(--bingo-color-yellow);
+    color: var(--text-color-inverted);
+}
+
+.orange {
+    background-color: var(--bingo-color-orange);
+    color: var(--text-color-inverted);
+}
+
+.purple {
+    background-color: var(--bingo-color-purple);
+}
+
+.pink {
+    background-color: var(--bingo-color-pink);
+}
+
+.aqua {
+    background-color: var(--bingo-color-aqua);
+    color: var(--text-color-inverted);
 }
