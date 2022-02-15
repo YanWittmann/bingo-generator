@@ -9,13 +9,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-class BoardUploaderTest {
+class BingoDatabaseInterfaceTest {
 
     @Test
     public void uploadTest() throws IOException {
-        BoardUploader boardUploader = new BoardUploader("http://yanwittmann.de/projects/bingo/backend/");
+        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("http://yanwittmann.de/projects/bingo/backend/");
         BingoBoard bingoBoard = new BingoBoard(new JSONObject(String.join("", FileUtils.readLines(new File("../bingo-core/src/test/resources/bingo/load/outer_wilds.json"), StandardCharsets.UTF_8))));
-        boardUploader.upload(bingoBoard);
+        System.out.println("Uploaded board #" + bingoDatabaseInterface.upload(bingoBoard));
     }
 
 }

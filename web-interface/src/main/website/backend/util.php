@@ -41,7 +41,7 @@ function post_or_get_or_die($var_name) {
     return null;
 }
 
-function post_or_get($var_name) {
+function post_or_get_or_default($var_name, $default_value) {
     if (isset($_POST[$var_name])) {
         $var = $_POST[$var_name];
         if (isset($db)) $var = $db->real_escape_string($var);
@@ -50,6 +50,15 @@ function post_or_get($var_name) {
         $var = $_GET[$var_name];
         if (isset($db)) $var = $db->real_escape_string($var);
         return $var;
+    }
+    return $default_value;
+}
+
+function isset_or_die($json, $var_name) {
+    if (isset($json) and isset($json[$var_name])) {
+        return $json[$var_name];
+    } else {
+        die_with_message("Missing parameter " . $var_name);
     }
     return null;
 }

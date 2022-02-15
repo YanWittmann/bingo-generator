@@ -55,11 +55,12 @@ h1 {
     padding: 10px;
     text-align: center;
     border: 1px solid #28282c;
-    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+    transition: box-shadow 0.1s ease-in-out, background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
 
 .bingo-board td:hover {
     background-color: var(--board-tile-hover-color);
+    box-shadow: inset black 0 0 14px -4px;
     cursor: pointer;
 }
 
@@ -117,12 +118,15 @@ h1 {
     font-weight: bold;
     color: var(--text-color);
     cursor: pointer;
-    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+    transition: box-shadow 0.1s ease-in-out;
 }
 
 .color-picker:hover {
-    background-color: var(--text-color-inverted);
-    color: var(--text-color);
+    box-shadow: inset black 0 0 14px -4px;
+}
+
+.color-picker:active {
+    box-shadow: inset black 0 0 14px 0;
 }
 
 .red {
