@@ -263,7 +263,7 @@ snippets:
   EMBER_TWIN_ACTIVITIES:
     - text: Turn on all lights in the Sunless City
       categories: [ sunless_city, ember_twin ]
-    - text: Make Chert panick
+    - text: Make Chert panic
       categories: [ chert, ember_twin ]
     - text: Touch a cactus
       categories: [ ember_twin ]

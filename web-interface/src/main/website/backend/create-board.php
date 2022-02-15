@@ -16,6 +16,8 @@ try {
     $game = isset_or_die($boardMetadata, 'game');
     $version = isset_or_die($boardMetadata, 'version');
 
+    $authors = implode(', ', $authors);
+
     $difficulty = $boardJson['difficulty'];
     $width = $boardJson['width'];
     $height = $boardJson['height'];

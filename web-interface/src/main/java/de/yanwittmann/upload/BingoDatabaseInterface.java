@@ -1,6 +1,7 @@
 package de.yanwittmann.upload;
 
 import de.yanwittmann.bingo.BingoBoard;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -31,6 +32,12 @@ public class BingoDatabaseInterface {
         Map<String, String> postData = new HashMap<>();
         postData.put("boardId", String.valueOf(boardId));
         return new JSONObject(apiCall("delete-board.php", postData));
+    }
+
+    public JSONObject getBoardTiles(int boardId) throws IOException {
+        Map<String, String> postData = new HashMap<>();
+        postData.put("boardId", String.valueOf(boardId));
+        return new JSONObject(apiCall("get-board-tiles.php", postData));
     }
 
     private String apiCall(String file, Map<String, String> postData) throws IOException {

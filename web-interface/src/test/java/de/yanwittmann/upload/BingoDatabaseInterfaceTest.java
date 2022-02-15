@@ -24,4 +24,10 @@ class BingoDatabaseInterfaceTest {
         bingoDatabaseInterface.delete(4);
     }
 
+    @Test
+    public void getBoardTilesTest() throws IOException {
+        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("http://yanwittmann.de/projects/bingo/backend/");
+        bingoDatabaseInterface.getBoardTiles(4);
+    }
+
 }
