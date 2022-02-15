@@ -19,13 +19,18 @@ public class BingoDatabaseInterface {
         this.baseUrl = baseUrl.replaceAll("/$", "") + "/";
     }
 
-    public int upload(BingoBoard board) throws IOException {
+    public JSONObject upload(BingoBoard board) throws IOException {
         Map<String, String> postData = new HashMap<>();
         JSONObject boardJson = board.toJson();
         boardJson.remove("categories");
         postData.put("boardJson", boardJson.toString());
-        JSONObject response = new JSONObject(apiCall("create-board.php", postData));
-        return response.getInt("message");
+        return new JSONObject(apiCall("create-board.php", postData));
+    }
+
+    public JSONObject delete(int boardId) throws IOException {
+        Map<String, String> postData = new HashMap<>();
+        postData.put("boardId", String.valueOf(boardId));
+        return new JSONObject(apiCall("delete-board.php", postData));
     }
 
     private String apiCall(String file, Map<String, String> postData) throws IOException {

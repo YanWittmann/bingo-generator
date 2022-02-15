@@ -15,7 +15,13 @@ class BingoDatabaseInterfaceTest {
     public void uploadTest() throws IOException {
         BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("http://yanwittmann.de/projects/bingo/backend/");
         BingoBoard bingoBoard = new BingoBoard(new JSONObject(String.join("", FileUtils.readLines(new File("../bingo-core/src/test/resources/bingo/load/outer_wilds.json"), StandardCharsets.UTF_8))));
-        System.out.println("Uploaded board #" + bingoDatabaseInterface.upload(bingoBoard));
+        bingoDatabaseInterface.upload(bingoBoard);
+    }
+
+    @Test
+    public void deleteTest() throws IOException {
+        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("http://yanwittmann.de/projects/bingo/backend/");
+        bingoDatabaseInterface.delete(4);
     }
 
 }
