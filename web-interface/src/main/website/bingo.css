@@ -189,3 +189,27 @@ h1 {
     color: var(--text-color-inverted);
     font-weight: bold;
 }
+
+.input-thing {
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 2px solid var(--border-color);
+    font-weight: bold;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    transition: box-shadow 0.1s ease-in-out;
+}
+
+button.input-thing:hover {
+    box-shadow: inset white 0 0 1px 0;
+    cursor: pointer;
+}
+
+button.input-thing:active {
+    box-shadow: white 0 0 4px 0;
+}
+
+.hidden {
+    display: none;
+}

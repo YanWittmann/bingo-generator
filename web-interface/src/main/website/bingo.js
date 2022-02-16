@@ -3,10 +3,23 @@ const baseApiUrl = '';
 const bingoBoard = document.getElementById('bingo-board');
 
 let currentBoardId = 0;
+let bingoBoardLoaded = false;
+
+function loadBoardFromInput() {
+    const boardInput = document.getElementById('board-input');
+    const boardId = boardInput.value;
+    if (boardId !== '' && !isNaN(boardId)) {
+        loadBoard(boardId);
+    }
+}
 
 function loadBoard(boardId) {
+    console.log('loading board ' + boardId + '...');
+    setBoardVisible(false);
+    bingoBoardLoaded = false;
     setLocalStorage('boardId', boardId);
     currentBoardId = boardId;
+    document.getElementById('board-input').value = boardId;
     apiCall('get-board-tiles.php', {boardId: boardId}, function (response) {
         createBoardFromApiResponse(response);
         updateClaims();
@@ -19,8 +32,10 @@ function loadBoard(boardId) {
 function setBoardMetadataFromApiResponse(json) {
     let difficulty = json['difficulty'];
 
+    if (difficulty == null) return;
+
     let bingoTitle = document.getElementById('bingo-title');
-    if (bingoTitle) bingoTitle.innerHTML = json['title'];
+    if (bingoTitle && json['title'] != null) bingoTitle.innerHTML = json['title'];
     let bingoSubtitle = document.getElementById('bingo-subtitle');
     if (bingoSubtitle) {
         let subtitle = [];
@@ -37,6 +52,13 @@ function createBoardFromApiResponse(json) {
     let width = json['width'];
     let height = json['height'];
     let board = json['tiles'];
+
+    if (width == null || height == null) {
+        return;
+    } else {
+        setBoardVisible(true);
+        bingoBoardLoaded = true;
+    }
 
     // clear the board
     bingoBoard.innerHTML = '';
@@ -96,6 +118,11 @@ function updateClaimsFromApiResponse(json) {
     let width = json['width'];
     let height = json['height'];
 
+    if (width == null || height == null) {
+        setBoardVisible(false);
+        return;
+    }
+
     for (let i = 0; i < width; i++) {
         for (let j = 0; j < height; j++) {
             let cell = getCell(i, j);
@@ -153,9 +180,11 @@ function getCell(x, y) {
 }
 
 function updateClaims() {
-    apiCall('get-board-claims.php', {boardId: currentBoardId}, function (response) {
-        updateClaimsFromApiResponse(response);
-    });
+    if (bingoBoardLoaded) {
+        apiCall('get-board-claims.php', {boardId: currentBoardId}, function (response) {
+            updateClaimsFromApiResponse(response);
+        });
+    }
 }
 
 function onCellClicked(x, y) {
@@ -259,11 +288,25 @@ document.addEventListener('mousemove', function (e) {
     }
 });
 
+function setBoardVisible(visible) {
+    let board = document.getElementById('bingo-container');
+    if (visible) {
+        console.log('show board');
+        board.classList.remove('hidden');
+    } else {
+        console.log('hiding board');
+        document.getElementById('bingo-title').innerHTML = 'Online-Multiplayer Bingo Board';
+        document.getElementById('bingo-subtitle').innerHTML = 'A cloud bingo game by Yan Wittmann.<br>Load a bingo board using the input below!';
+        board.classList.add('hidden');
+    }
+}
+
 function case_insensitive_comp(strA, strB) {
     return strA.toLowerCase().localeCompare(strB.toLowerCase());
 }
 
 function init() {
+    setBoardVisible(false);
     if (hasLocalStorage('boardId')) {
         loadBoard(getLocalStorage('boardId'));
     }
