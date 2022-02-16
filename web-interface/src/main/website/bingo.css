@@ -234,7 +234,6 @@ button.input-thing:active {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    /* add glow effect to the text */
     text-shadow: 0 0 10px #fff, 0 0 30px var(--glow-color), 0 0 40px var(--glow-color), 0 0 50px var(--glow-color), 0 0 60px var(--glow-color), 0 0 70px var(--glow-color), 0 0 300px var(--glow-color);
 }
 
