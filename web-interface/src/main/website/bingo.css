@@ -1,7 +1,6 @@
 
 :root {
     --background-color: #0a0e12;
-    --navigation-color: #28282c;
     --text-color: #cbc6c0;
     --text-color-inverted: #252525;
     --border-color: #4b4b52;
@@ -84,11 +83,21 @@ h1 {
 #tooltip {
     position: absolute;
     z-index: 10;
-    background-color: var(--navigation-color);
     padding: 10px;
     max-width: 200px;
     border-radius: 5px;
+    background-color: rgba(40, 40, 40, 0.7);
     border: 2px solid var(--border-color);
+}
+
+@-moz-document url-prefix() {
+    #tooltip {
+        background-color: rgba(40, 40, 40, 0.95);
+    }
+}
+
+.blur {
+    backdrop-filter: blur(5px);
 }
 
 .main-grid {

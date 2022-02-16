@@ -279,6 +279,7 @@ document.addEventListener('mousemove', function (e) {
         let tooltip = document.createElement('div');
         tooltip.setAttribute('id', 'tooltip');
         tooltip.innerText = tooltipText;
+        tooltip.classList.add('blur');
         document.body.appendChild(tooltip);
         // respect the bounding box of the tooltip and the screen
         // give it an offset of 10px
