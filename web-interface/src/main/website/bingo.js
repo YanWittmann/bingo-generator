@@ -13,7 +13,18 @@ function loadBoardFromInput() {
     }
 }
 
+let currentlyLoadingId = -1;
+
 function loadBoard(boardId) {
+    if (boardId !== '' && !isNaN(boardId)) {
+        currentlyLoadingId = boardId;
+        transition(loadBoardReal);
+    }
+}
+
+function loadBoardReal() {
+    let boardId = currentlyLoadingId;
+    currentlyLoadingId = -1;
     console.log('loading board ' + boardId + '...');
     setBoardVisible(false);
     bingoBoardLoaded = false;
@@ -303,6 +314,19 @@ function setBoardVisible(visible) {
 
 function case_insensitive_comp(strA, strB) {
     return strA.toLowerCase().localeCompare(strB.toLowerCase());
+}
+
+function transition(callback) {
+    let transitionBox = document.createElement('div');
+    transitionBox.setAttribute('class', 'transition-box');
+    transitionBox.innerText = 'Loading...';
+    document.body.appendChild(transitionBox);
+    setTimeout(function () {
+        callback();
+    }, 360);
+    setTimeout(function () {
+        transitionBox.remove();
+    }, 1600);
 }
 
 function init() {
