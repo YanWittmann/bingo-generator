@@ -11,6 +11,8 @@ import java.nio.charset.StandardCharsets;
 
 class BingoDatabaseInterfaceTest {
 
+    private final static int boardId = 12;
+
     @Test
     public void uploadTest() throws IOException {
         BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("http://yanwittmann.de/projects/bingo/backend/");
@@ -21,13 +23,24 @@ class BingoDatabaseInterfaceTest {
     @Test
     public void deleteTest() throws IOException {
         BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("http://yanwittmann.de/projects/bingo/backend/");
-        bingoDatabaseInterface.delete(4);
+        bingoDatabaseInterface.delete(boardId);
     }
 
     @Test
     public void getBoardTilesTest() throws IOException {
         BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("http://yanwittmann.de/projects/bingo/backend/");
-        bingoDatabaseInterface.getBoardTiles(4);
+        bingoDatabaseInterface.getBoardTiles(boardId);
     }
 
+    @Test
+    public void getBoardClaims() throws IOException {
+        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("http://yanwittmann.de/projects/bingo/backend/");
+        bingoDatabaseInterface.getBoardClaims(boardId);
+    }
+
+    @Test
+    public void claimBoardTile() throws IOException {
+        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("http://yanwittmann.de/projects/bingo/backend/");
+        bingoDatabaseInterface.claimBoardTile(boardId, 2, 2, '3');
+    }
 }

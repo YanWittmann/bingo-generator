@@ -2,13 +2,18 @@
 const baseApiUrl = '';
 const bingoBoard = document.getElementById('bingo-board');
 
+let currentBoardId = 0;
+
 function loadBoard(boardId) {
+    setLocalStorage('boardId', boardId);
+    currentBoardId = boardId;
     apiCall('get-board-tiles.php', {boardId: boardId}, function (response) {
         createBoardFromApiResponse(response);
     });
     apiCall('get-board-metadata.php', {boardId: boardId}, function (response) {
         setBoardMetadataFromApiResponse(response);
     });
+    updateClaims();
 }
 
 function setBoardMetadataFromApiResponse(json) {
@@ -36,28 +41,25 @@ function createBoardFromApiResponse(json) {
     // clear the board
     bingoBoard.innerHTML = '';
     // board is an array of arrays of strings, iterate over the outer array and inner arrays
-    for (let row = 0; row < width; row++) {
+    for (let col = 0; col < height; col++) {
         let tr = document.createElement('tr');
         bingoBoard.appendChild(tr);
-        for (let col = 0; col < height; col++) {
+        for (let row = 0; row < width; row++) {
             let cell = document.createElement('td');
-            cell.setAttribute('x', col);
-            cell.setAttribute('y', row);
+            cell.setAttribute('x', row);
+            cell.setAttribute('y', col);
             // set the cell's text to the value of the board at the current row and column
-            // check if board[row][col] has text first
-            if (board[row][col]['text']) {
-                cell.innerHTML = board[row][col]['text'].replaceAll('\\n', '<br>');
+            if (board[col][row]['text']) {
+                cell.innerHTML = board[col][row]['text'].replaceAll('\\n', '<br>');
             } else {
                 cell.innerHTML = '&nbsp;';
             }
             tr.appendChild(cell);
 
             // add a tooltip hint element to the cell
-            if (board[row][col]['tooltip']) {
-                cell.setAttribute('tooltip', board[row][col]['tooltip']);
-                // append a line break and a [?] to the cell's text
-                let br = document.createElement('br');
-                cell.appendChild(br);
+            if (board[col][row]['tooltip']) {
+                cell.setAttribute('tooltip', board[col][row]['tooltip']);
+                cell.appendChild(document.createElement('br'));
                 cell.append('[?]');
             }
 
@@ -69,12 +71,85 @@ function createBoardFromApiResponse(json) {
     }
 }
 
+const colorClaimConversion = {
+    "red": "1",
+    "orange": "2",
+    "yellow": "3",
+    "green": "4",
+    "aqua": "5",
+    "blue": "6",
+    "purple": "7",
+    "pink": "8",
+}
+
+function convertIdToColor(id) {
+    for (let color in colorClaimConversion) {
+        if (colorClaimConversion[color] === id) {
+            return color;
+        }
+    }
+    return null;
+}
+
+function updateClaimsFromApiResponse(json) {
+    let claims = json['claims'];
+    let width = json['width'];
+    let height = json['height'];
+
+    for (let i = 0; i < width; i++) {
+        for (let j = 0; j < height; j++) {
+            let cell = getCell(i, j);
+            if (cell) {
+                for (let color in colorClaimConversion) {
+                    cell.classList.remove(color);
+                }
+                if (claims[j][i] && claims[j][i].length) {
+                    cell.classList.add(convertIdToColor(claims[j][i]));
+                }
+            }
+        }
+    }
+}
+
+function getCell(x, y) {
+    let cells = bingoBoard.getElementsByTagName('td');
+    for (let i = 0; i < cells.length; i++) {
+        if (cells[i].getAttribute('x') === '' + x && cells[i].getAttribute('y') === '' + y) {
+            return cells[i];
+        }
+    }
+    return null;
+}
+
+function updateClaims() {
+    apiCall('get-board-claims.php', {boardId: currentBoardId}, function (response) {
+        updateClaimsFromApiResponse(response);
+    });
+}
+
 function onCellClicked(x, y) {
-    console.log('cell clicked at x: ' + x + ', y: ' + y);
+    apiCall('claim-board-tile.php', {
+        boardId: currentBoardId,
+        x: x,
+        y: y,
+        claim: getCurrentColorId()
+    }, function (response) {
+        if (response.code === 'success') {
+            updateClaims();
+        }
+    });
 }
 
 function switchColor(color) {
     setLocalStorage('bingoColor', color);
+}
+
+function getCurrentColorId() {
+    if (hasLocalStorage('bingoColor')) {
+        return colorClaimConversion[getLocalStorage('bingoColor')];
+    } else {
+        return '1';
+    }
 }
 
 function apiCall(file, data, callback) {
@@ -145,4 +220,11 @@ document.addEventListener('mousemove', function (e) {
     }
 });
 
-loadBoard(5);
+function init() {
+    if (hasLocalStorage('boardId')) {
+        loadBoard(getLocalStorage('boardId'));
+    }
+}
+
+// call the init function when the page is loaded
+window.addEventListener('load', init);

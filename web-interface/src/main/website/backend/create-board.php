@@ -73,6 +73,7 @@ try {
             $x++;
         }
         $y++;
+        $x = 0;
     }
 
     success_exit_with_message($boardId);

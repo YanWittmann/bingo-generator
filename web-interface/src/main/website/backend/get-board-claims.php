@@ -22,7 +22,7 @@ try {
     $stmt->close();
 
     // select all the tiles for the boardId
-    $query = "SELECT * FROM bingotiles WHERE board_id = ? ORDER BY y, x";
+    $query = "SELECT x, y, claimed FROM bingotiles WHERE board_id = ? ORDER BY x, y";
     $stmt = $db->prepare($query);
     $stmt->bind_param('i', $boardId);
     $stmt->execute();
@@ -32,22 +32,25 @@ try {
     }
 
     $result = $stmt->get_result();
-    $tiles = $result->fetch_all(MYSQLI_ASSOC);
-    $stmt->close();
 
-    // create an array containing an array of tiles for each row
-    $tilesByRow = array();
+    $tiles = array();
+    while ($row = $result->fetch_assoc()) {
+        $tiles[] = $row;
+    }
+    $stmt->close();
+    $db->close();
+
+    // echo only the claimed part of the result but use the x and y coordinates to order them into an array of arrays
+    $claimed = array();
     foreach ($tiles as $tile) {
-        $tilesByRow[$tile['y']][] = $tile;
+        $claimed[$tile['y']][$tile['x']] = $tile['claimed'];
     }
 
-    $result = array(
+    echo json_encode([
         'width' => $width,
         'height' => $height,
-        'tiles' => $tilesByRow
-    );
-
-    echo json_encode($result);
+        'claims' => $claimed
+    ]);
 } catch (Exception $e) {
     die_with_message_and_error('unknown error', $e->getMessage());
 }

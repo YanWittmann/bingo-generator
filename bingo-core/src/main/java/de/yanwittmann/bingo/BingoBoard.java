@@ -29,10 +29,10 @@ public class BingoBoard implements Jsonable {
             boardMetadata = new BingoBoardMetadata(json.getJSONObject("metadata").toMap());
         }
         JSONArray jsonBoard = json.getJSONArray("board");
-        for (int x = 0; x < getWidth(); x++) {
-            JSONArray row = jsonBoard.getJSONArray(x);
-            for (int y = 0; y < getHeight(); y++) {
-                BingoTile tile = new BingoTile(row.getJSONObject(y));
+        for (int y = 0; y < getHeight(); y++) {
+            JSONArray row = jsonBoard.getJSONArray(y);
+            for (int x = 0; x < getWidth(); x++) {
+                BingoTile tile = new BingoTile(row.getJSONObject(x));
                 set(x, y, tile);
             }
         }
@@ -290,9 +290,9 @@ public class BingoBoard implements Jsonable {
 
     public JSONArray getBoardTilesJson() {
         JSONArray rows = new JSONArray();
-        for (int x = 0; x < getWidth(); x++) {
+        for (int y = 0; y < getHeight(); y++) {
             JSONArray row = new JSONArray();
-            for (int y = 0; y < getHeight(); y++) {
+            for (int x = 0; x < getWidth(); x++) {
                 row.put(board[x][y].toJson());
             }
             rows.put(row);

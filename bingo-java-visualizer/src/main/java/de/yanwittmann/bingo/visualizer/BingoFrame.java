@@ -112,7 +112,7 @@ public class BingoFrame extends JFrame {
     public void generateAndShow() throws FileNotFoundException {
         BingoConfiguration configuration = new BingoConfiguration(new File("bingo-core/src/test/resources/bingo/generate/outer_wilds.yaml"));
         BingoGenerator generator = new BingoGenerator(configuration);
-        generator.setWidth(5);
+        generator.setWidth(6);
         generator.setHeight(5);
         generator.setMaxGenerationAttempts(1);
         Random random;
@@ -142,7 +142,7 @@ public class BingoFrame extends JFrame {
                 bingoTile.setOpaque(true);
                 bingoTile.setVisible(true);
                 bingoTile.setBorder(BorderFactory.createCompoundBorder(lBorder, eBorder));
-                bingoGridPanel.add(bingoTile, i, j);
+                bingoGridPanel.add(bingoTile);
             }
         }
         searchFor(searchField.getText());

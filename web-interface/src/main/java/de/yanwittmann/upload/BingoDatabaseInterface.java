@@ -40,6 +40,21 @@ public class BingoDatabaseInterface {
         return new JSONObject(apiCall("get-board-tiles.php", postData));
     }
 
+    public JSONObject claimBoardTile(int boardId, int x, int y, char claimer) throws IOException {
+        Map<String, String> postData = new HashMap<>();
+        postData.put("boardId", String.valueOf(boardId));
+        postData.put("x", String.valueOf(x));
+        postData.put("y", String.valueOf(y));
+        postData.put("claim", String.valueOf(claimer));
+        return new JSONObject(apiCall("claim-board-tile.php", postData));
+    }
+
+    public JSONObject getBoardClaims(int boardId) throws IOException {
+        Map<String, String> postData = new HashMap<>();
+        postData.put("boardId", String.valueOf(boardId));
+        return new JSONObject(apiCall("get-board-claims.php", postData));
+    }
+
     private String apiCall(String file, Map<String, String> postData) throws IOException {
         URL url = new URL(baseUrl + file);
         System.out.println("Performing request to " + url);
