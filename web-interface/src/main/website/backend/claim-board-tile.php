@@ -51,7 +51,7 @@ try {
     } else {
         if (strlen($claimed) > 0 and strcmp($claimed, $claim) == 0) {
             $claimed = '';
-        } else {
+        } else if (strlen($claimed) == 0) {
             $claimed = $claim;
         }
     }

@@ -9,11 +9,11 @@ function loadBoard(boardId) {
     currentBoardId = boardId;
     apiCall('get-board-tiles.php', {boardId: boardId}, function (response) {
         createBoardFromApiResponse(response);
+        updateClaims();
     });
     apiCall('get-board-metadata.php', {boardId: boardId}, function (response) {
         setBoardMetadataFromApiResponse(response);
     });
-    updateClaims();
 }
 
 function setBoardMetadataFromApiResponse(json) {
@@ -103,8 +103,39 @@ function updateClaimsFromApiResponse(json) {
                 for (let color in colorClaimConversion) {
                     cell.classList.remove(color);
                 }
-                if (claims[j][i] && claims[j][i].length) {
-                    cell.classList.add(convertIdToColor(claims[j][i]));
+                cell.style.background = '';
+                cell.classList.remove('claimed-tile');
+                cell.classList.remove('multi-color');
+                if (claims[j][i] && claims[j][i].length > 0) {
+                    if (claims[j][i].length > 1) { // multiple claims
+                        let backgroundLinearGradient = 'linear-gradient(332deg';
+                        let currentPercent = 0;
+                        let previousColor = null;
+                        for (let claim of claims[j][i].split('').sort(case_insensitive_comp)) {
+                            let color = convertIdToColor(claim);
+                            if (color) {
+                                if (previousColor !== null) {
+                                    backgroundLinearGradient += ', var(--bingo-color-' + previousColor + ') ' + (currentPercent - 1) + '%';
+                                }
+                                previousColor = color;
+                                backgroundLinearGradient += ', var(--bingo-color-' + color + ') ' + currentPercent + '%';
+                                currentPercent += 100 / claims[j][i].length;
+                            }
+                        }
+                        backgroundLinearGradient += ')';
+                        cell.style.background = backgroundLinearGradient;
+                        cell.classList.add('multi-color');
+                    } else { // single claim
+                        if (claims[j][i].length === 1) {
+                            for (let claim of claims[j][i].split('')) {
+                                let color = convertIdToColor(claim);
+                                if (color) {
+                                    cell.classList.add(color);
+                                }
+                            }
+                        }
+                    }
+                    cell.classList.add('claimed-tile');
                 }
             }
         }
@@ -142,6 +173,14 @@ function onCellClicked(x, y) {
 
 function switchColor(color) {
     setLocalStorage('bingoColor', color);
+    let colorElements = document.getElementsByClassName('color-picker');
+    for (let i = 0; i < colorElements.length; i++) {
+        if (colorElements[i].getAttribute('color') === color) {
+            colorElements[i].classList.add('selected');
+        } else {
+            colorElements[i].classList.remove('selected');
+        }
+    }
 }
 
 function getCurrentColorId() {
@@ -220,10 +259,20 @@ document.addEventListener('mousemove', function (e) {
     }
 });
 
+function case_insensitive_comp(strA, strB) {
+    return strA.toLowerCase().localeCompare(strB.toLowerCase());
+}
+
 function init() {
     if (hasLocalStorage('boardId')) {
         loadBoard(getLocalStorage('boardId'));
     }
+    if (hasLocalStorage('bingoColor')) {
+        switchColor(getLocalStorage('bingoColor'));
+    } else {
+        switchColor('red');
+    }
+    setInterval(updateClaims, 10000);
 }
 
 // call the init function when the page is loaded
