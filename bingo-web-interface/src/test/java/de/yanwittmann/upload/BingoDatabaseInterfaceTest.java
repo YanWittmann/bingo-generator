@@ -16,38 +16,38 @@ class BingoDatabaseInterfaceTest {
 
     @Test
     public void uploadTest() throws IOException {
-        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("");
+        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface(baseApiUrl);
         BingoBoard bingoBoard = new BingoBoard(new JSONObject(String.join("", FileUtils.readLines(new File("../bingo-core/src/test/resources/bingo/load/outer_wilds.json"), StandardCharsets.UTF_8))));
         bingoDatabaseInterface.upload(bingoBoard, true);
     }
 
     @Test
     public void deleteTest() throws IOException {
-        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("");
+        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface(baseApiUrl);
         bingoDatabaseInterface.delete(boardId);
     }
 
     @Test
     public void getBoardTilesTest() throws IOException {
-        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("");
+        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface(baseApiUrl);
         bingoDatabaseInterface.getBoardTiles(boardId);
     }
 
     @Test
     public void getBoardClaims() throws IOException {
-        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("");
+        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface(baseApiUrl);
         bingoDatabaseInterface.getBoardClaims(boardId);
     }
 
     @Test
     public void claimBoardTile() throws IOException {
-        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("");
+        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface(baseApiUrl);
         bingoDatabaseInterface.claimBoardTile(boardId, 2, 2, '3');
     }
 
     @Test
     public void getBoards() throws IOException {
-        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("");
+        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface(baseApiUrl);
         bingoDatabaseInterface.getBoards();
     }
 }
