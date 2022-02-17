@@ -24,6 +24,9 @@ public class UploadMojo extends AbstractMojo {
     @Parameter(required = true)
     private URL apiUrl;
 
+    @Parameter(defaultValue = "false")
+    private boolean allowMultipleClaims;
+
     public void execute() throws MojoExecutionException {
         if (!active) {
             getLog().info("Uploading is disabled by configuration.");
@@ -42,11 +45,11 @@ public class UploadMojo extends AbstractMojo {
 
         BingoDatabaseInterface database = new BingoDatabaseInterface(apiUrl);
         try {
-            JSONObject response = database.upload(board);
+            JSONObject response = database.upload(board, allowMultipleClaims);
             if (response.optString("code", "error").equals("success")) {
                 getLog().info("Upload successful. Created board with id " + response.optInt("message", -1));
             } else {
-                getLog().error("Upload failed: " + response.optString("message", "unknown error"));
+                throw new MojoExecutionException("Upload failed: " + response.optString("message", "unknown error"));
             }
         } catch (IOException e) {
             throw new MojoExecutionException("Could not upload board to " + apiUrl, e);

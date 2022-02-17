@@ -24,11 +24,12 @@ public class BingoDatabaseInterface {
         this.baseUrl = baseUrl.toString().replaceAll("/$", "") + "/";
     }
 
-    public JSONObject upload(BingoBoard board) throws IOException {
+    public JSONObject upload(BingoBoard board, boolean allowMultipleClaims) throws IOException {
         Map<String, String> postData = new HashMap<>();
         JSONObject boardJson = board.toJson();
         boardJson.remove("categories");
         postData.put("boardJson", boardJson.toString());
+        postData.put("allow_multiple_claims", allowMultipleClaims ? "1" : "0");
         return new JSONObject(apiCall("create-board.php", postData));
     }
 

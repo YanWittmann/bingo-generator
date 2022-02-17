@@ -37,7 +37,7 @@ public class DeleteMojo extends AbstractMojo {
             if (response.optString("code", "error").equals("success")) {
                 getLog().info(response.optString("message", "Successfully deleted board."));
             } else {
-                getLog().error("Deletion failed: " + response.optString("message", "unknown error"));
+                throw new MojoExecutionException("Deletion failed: " + response.optString("message", "unknown error"));
             }
         } catch (IOException e) {
             throw new MojoExecutionException("Could not delete board from " + apiUrl, e);

@@ -69,6 +69,8 @@ public class GenerateMojo extends AbstractMojo {
         } else if (difficulty instanceof String && !difficulty.equals("")) {
             bingoGenerator.setDifficultyLevel((String) difficulty);
         }
+        bingoGenerator.setWidth(width);
+        bingoGenerator.setHeight(height);
         Random random;
         if (seed != -1) {
             random = new Random(seed);

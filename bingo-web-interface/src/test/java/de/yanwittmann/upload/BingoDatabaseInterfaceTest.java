@@ -17,7 +17,7 @@ class BingoDatabaseInterfaceTest {
     public void uploadTest() throws IOException {
         BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("http://yanwittmann.de/projects/bingo/backend/");
         BingoBoard bingoBoard = new BingoBoard(new JSONObject(String.join("", FileUtils.readLines(new File("../bingo-core/src/test/resources/bingo/load/outer_wilds.json"), StandardCharsets.UTF_8))));
-        bingoDatabaseInterface.upload(bingoBoard);
+        bingoDatabaseInterface.upload(bingoBoard, true);
     }
 
     @Test
