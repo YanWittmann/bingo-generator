@@ -6,11 +6,11 @@ authors: [ Yan Wittmann ]
 
 difficulty:
   - name: Easy
-    score: 2
+    score: 0
   - name: Normal
-    score: 4
+    score: 1.5
   - name: Hard
-    score: 6
+    score: 2.5
 
 tile generators:
   - text: Land your ship on [PLANET]
@@ -978,6 +978,9 @@ snippets:
       tooltip: You cannot get credit for the same pool twice.
       tags: [ projection_pool ]
       difficulty: 0.9
+    - text: Find [2-4] nomai statues at different locations
+      tooltip: You cannot get credit for the same location twice.
+      difficulty: 1.2
   INCIDENTS:
     - text: Shock yourself or your ship
       categories: [ incident ]

@@ -41,8 +41,14 @@ public class BingoGenerator {
         List<BingoTile> tiles = new ArrayList<>();
         int maxAttempts = this.maxGenerationAttempts == -1 ? (2000 / Math.max(1, width * height - 10)) + 10 : this.maxGenerationAttempts;
         LOG.info("Generation attempts [{}]", maxAttempts);
-        for (int i = 0; i < maxAttempts; i++) {
-            createAndRemoveTiles(tiles, width * height, random);
+        LOG.info("Generating board with [{}]x[{}]", width, height);
+        LOG.info("Difficulty [{}]", difficulty);
+        if (difficulty == -1) {
+            fillBoard(tiles, random);
+        } else {
+            for (int i = 0; i < maxAttempts; i++) {
+                createAndRemoveTiles(tiles, width * height, random);
+            }
         }
 
         BingoBoard board = new BingoBoard(width, height);
@@ -61,7 +67,11 @@ public class BingoGenerator {
         for (int i = 0; i < maxTileCount; i++) {
             fillBoard(tiles, random);
             ArrayList<BingoTile> backup = new ArrayList<>(tiles);
-            removeByDifficulty(tiles, (width + height) / 2);
+            if (difficulty != -1) {
+                removeByDifficulty(tiles, (width + height) / 2);
+            } else {
+                removeRandom(tiles, (width + height) / 2, random);
+            }
             fillBoard(tiles, random);
             double newDifficultyDistance = distanceToDestinationDifficulty(calculateDifficulty(tiles));
             double oldDifficultyDistance = distanceToDestinationDifficulty(calculateDifficulty(backup));

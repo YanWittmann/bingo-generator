@@ -33,7 +33,7 @@ public class GenerateMojo extends AbstractMojo {
     @Parameter(defaultValue = "-1")
     private int generationAttempts;
 
-    @Parameter(defaultValue = "0")
+    @Parameter(defaultValue = "")
     private Object difficulty;
 
     @Parameter(required = true)
@@ -82,8 +82,11 @@ public class GenerateMojo extends AbstractMojo {
                 bingoGenerator.setDifficultyLevel((String) difficulty);
                 difficultyType = 5;
             }
+        } else {
+            bingoGenerator.setDifficulty(-1);
+            difficultyType = 6;
         }
-        getLog().info("Difficulty type: " + difficultyType);
+        getLog().info("Effective difficulty [" + bingoGenerator.getDifficulty() + "] of type [" + difficultyType + "]");
         bingoGenerator.setWidth(width);
         bingoGenerator.setHeight(height);
         Random random;

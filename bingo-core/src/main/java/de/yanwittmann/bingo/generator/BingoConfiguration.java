@@ -189,9 +189,14 @@ public class BingoConfiguration {
     }
 
     public BingoTile generateTile(List<BingoTile> existingTiles, int destAmount, double destinationDifficulty, Random random) {
-        List<TileGenerator> allowedTileGeneratorsByDifficulty = tileGeneratorsByDifficulty.getOrDefault(getDifficulty(destinationDifficulty), new ArrayList<>());
-        if (allowedTileGeneratorsByDifficulty.size() == 0) {
-            LOG.warn("No tile generators found for difficulty [{}], using all generators", destinationDifficulty);
+        List<TileGenerator> allowedTileGeneratorsByDifficulty;
+        if (destinationDifficulty != -1) {
+            allowedTileGeneratorsByDifficulty = tileGeneratorsByDifficulty.getOrDefault(getDifficulty(destinationDifficulty), new ArrayList<>());
+            if (allowedTileGeneratorsByDifficulty.size() == 0) {
+                LOG.warn("No tile generators found for difficulty [{}], using all generators", destinationDifficulty);
+                allowedTileGeneratorsByDifficulty = new ArrayList<>(tileGenerators);
+            }
+        } else {
             allowedTileGeneratorsByDifficulty = new ArrayList<>(tileGenerators);
         }
 
@@ -212,7 +217,7 @@ public class BingoConfiguration {
 
         List<TileGenerator> filteredTileGenerators = new ArrayList<>(allowedTileGeneratorsByDifficulty);
         // remove all tile generators that are not the right difficulty level
-        if (difficulties.size() > 0) {
+        if (destinationDifficulty != -1 && difficulties.size() > 0) {
             Difficulty destDiff = getDifficulty(destinationDifficulty);
             for (int i = filteredTileGenerators.size() - 1; i >= 0; i--) {
                 List<String> difficulties = filteredTileGenerators.get(i).getDifficulties();
@@ -255,17 +260,20 @@ public class BingoConfiguration {
         String currentClosestTooltips = null;
         Set<Category> bestTileCategories = new HashSet<>();
         int repeatCount = 0;
-        for (int i = 0; i < 3; i++) { // try finding a better tile 3 times
+        int maxAttempts = destinationDifficulty == -1 ? 1 : 3;
+        for (int i = 0; i < maxAttempts; i++) { // try finding a better tile 3 times
             AtomicReference<Double> currentDifficulty = new AtomicReference<>(selectedGenerator.getDifficulty());
             Set<Category> currentTileCategories = new HashSet<>();
             StringJoiner currentTooltips = new StringJoiner("\n");
             String tmp = insertSnippets(text, createdMustBeCategories, createdMayNotBeCategories, currentDifficulty, destinationDifficulty, currentTileCategories, currentTooltips, random);
 
-            if (repeatCount < 40) {
-                if (hasAntisynergies(currentTileCategories, selectedGenerator.getCategories()) || doesTileAlreadyExist(tmp, existingTiles)) {
-                    repeatCount++;
-                    i--;
-                    continue;
+            if (destinationDifficulty != -1) {
+                if (repeatCount < 40) {
+                    if (hasAntisynergies(currentTileCategories, selectedGenerator.getCategories()) || doesTileAlreadyExist(tmp, existingTiles)) {
+                        repeatCount++;
+                        i--;
+                        continue;
+                    }
                 }
             }
             double currentDistance = Math.abs(currentDifficulty.get() - destinationDifficulty);
