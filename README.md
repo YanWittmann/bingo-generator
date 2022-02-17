@@ -58,7 +58,7 @@ to display it locally.
 This test class allows you to upload, delete, modify or list bingo boards from/to the database. You will have to specify
 an API URL for this, see the 'Configure database & Web interface' section below.
 
-### Configure database & Web interface
+## Configure database & Web interface
 
 On an SQL-based database that is available on the internet, create the two tables using
 [init.sql](bingo-web-interface/src/main/website/backend/init.sql).
@@ -70,6 +70,6 @@ server. The URL to the `backend` directory is your API URL. In
 You should now be able to use the scripts above to generate bingo boards and upload them to the database. Then you can
 enter the board ID that has been created by the uploader to show the board in the web interface.
 
-### Bingo Configuration
+## Bingo Configuration
 
 TODO, for now see [these examples](bingo-core/src/test/resources/bingo/generate).
