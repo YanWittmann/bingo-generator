@@ -43,4 +43,10 @@ class BingoDatabaseInterfaceTest {
         BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("http://yanwittmann.de/projects/bingo/backend/");
         bingoDatabaseInterface.claimBoardTile(boardId, 2, 2, '3');
     }
+
+    @Test
+    public void getBoards() throws IOException {
+        BingoDatabaseInterface bingoDatabaseInterface = new BingoDatabaseInterface("http://yanwittmann.de/projects/bingo/backend/");
+        bingoDatabaseInterface.getBoards();
+    }
 }

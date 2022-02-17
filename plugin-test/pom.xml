@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>multiplayer-bingo</artifactId>
+        <groupId>de.yanwittmann</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>plugin-test</artifactId>
+
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <apiUrl>http://yanwittmann.de/projects/bingo/backend/</apiUrl>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>de.yanwittmann</groupId>
+                <artifactId>web-interface</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <executions>
+
+                    <execution>
+                        <id>generate</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>generate-board</goal>
+                        </goals>
+                        <configuration>
+                            <active>true</active>
+                            <width>5</width>
+                            <height>5</height>
+                            <seed>147</seed>
+                            <generationAttempts>147</generationAttempts>
+                            <difficulty>1</difficulty>
+                            <configurationFile>D:\files\create\programming\projects\bingo-generator\bingo-core\src\test\resources\bingo\generate\outer_wilds.yaml</configurationFile>
+                            <outputFile>D:\files\create\programming\projects\bingo-generator\bingo-core\src\test\resources\bingo\load\outer_wilds.json</outputFile>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>upload</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>upload-board</goal>
+                        </goals>
+                        <configuration>
+                            <active>false</active>
+                            <apiUrl>${apiUrl}</apiUrl>
+                            <boardJson>D:\files\create\programming\projects\bingo-generator\bingo-core\src\test\resources\bingo\load\outer_wilds.json</boardJson>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>list</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>list-boards</goal>
+                        </goals>
+                        <configuration>
+                            <active>false</active>
+                            <apiUrl>${apiUrl}</apiUrl>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>delete</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>delete-board</goal>
+                        </goals>
+                        <configuration>
+                            <active>false</active>
+                            <apiUrl>${apiUrl}</apiUrl>
+                            <boardId>15</boardId>
+                        </configuration>
+                    </execution>
+
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

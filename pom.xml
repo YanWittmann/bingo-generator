@@ -12,6 +12,7 @@
         <module>bingo-core</module>
         <module>bingo-java-visualizer</module>
         <module>web-interface</module>
+        <module>plugin-test</module>
     </modules>
 
     <properties>

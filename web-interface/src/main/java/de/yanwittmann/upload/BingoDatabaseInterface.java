@@ -20,6 +20,10 @@ public class BingoDatabaseInterface {
         this.baseUrl = baseUrl.replaceAll("/$", "") + "/";
     }
 
+    public BingoDatabaseInterface(URL baseUrl) {
+        this.baseUrl = baseUrl.toString().replaceAll("/$", "") + "/";
+    }
+
     public JSONObject upload(BingoBoard board) throws IOException {
         Map<String, String> postData = new HashMap<>();
         JSONObject boardJson = board.toJson();
@@ -53,6 +57,11 @@ public class BingoDatabaseInterface {
         Map<String, String> postData = new HashMap<>();
         postData.put("boardId", String.valueOf(boardId));
         return new JSONObject(apiCall("get-board-claims.php", postData));
+    }
+
+    public JSONArray getBoards() throws IOException {
+        Map<String, String> postData = new HashMap<>();
+        return new JSONArray(apiCall("get-boards.php", postData));
     }
 
     private String apiCall(String file, Map<String, String> postData) throws IOException {

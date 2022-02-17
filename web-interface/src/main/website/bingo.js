@@ -308,7 +308,9 @@ function setBoardVisible(visible) {
     } else {
         console.log('hiding board');
         document.getElementById('bingo-title').innerHTML = 'Online-Multiplayer Bingo Board';
-        document.getElementById('bingo-subtitle').innerHTML = 'A cloud bingo game by Yan Wittmann.<br>Load a bingo board using the input below!';
+        document.getElementById('bingo-subtitle').innerHTML = 'A cloud bingo game by Yan Wittmann.<br>\n' +
+            '                Load a bingo board using the input below!<br>\n' +
+            '                Don\'t have an ID? Use the <a href="https://github.com/Skyball2000/bingo-generator" target="_blank">bingo generator and uploader</a> to change this.';
         board.classList.add('hidden');
     }
 }

@@ -3,12 +3,17 @@ package de.yanwittmann.bingo;
 import de.yanwittmann.bingo.generator.BingoBoardMetadata;
 import de.yanwittmann.bingo.generator.Category;
 import de.yanwittmann.bingo.interfaces.Jsonable;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class BingoBoard implements Jsonable {
 
@@ -21,6 +26,10 @@ public class BingoBoard implements Jsonable {
 
     public BingoBoard(int width, int height) {
         board = new BingoTile[width][height];
+    }
+
+    public BingoBoard(File bingoJsonFile) throws IOException {
+        this(new JSONObject(FileUtils.readLines(bingoJsonFile, StandardCharsets.UTF_8).stream().map(String::trim).collect(Collectors.joining())));
     }
 
     public BingoBoard(JSONObject json) {

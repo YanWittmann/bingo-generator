@@ -265,6 +265,12 @@ button.input-thing:active {
     }
 }
 
+a {
+    color: var(--bingo-color-blue);
+    text-decoration: none;
+    font-weight: bold;
+}
+
 .hidden {
     display: none;
 }
