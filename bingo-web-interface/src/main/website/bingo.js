@@ -1,5 +1,5 @@
 // the base directory where the php files are located in on the server (with a trailing '/')
-const baseApiUrl = 'http://yanwittmann.de/projects/bingo/backend/';
+const baseApiUrl = '';
 const bingoBoard = document.getElementById('bingo-board');
 
 let currentBoardId = 0;
