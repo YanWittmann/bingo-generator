@@ -21,7 +21,6 @@ public class BingoGenerator {
     private int height = 5;
     private int maxGenerationAttempts = -1;
 
-
     public BingoGenerator(File configurationFile) throws FileNotFoundException {
         this.configuration = new BingoConfiguration(configurationFile);
     }
@@ -77,10 +76,10 @@ public class BingoGenerator {
                     tiles.clear();
                     tiles.addAll(backup);
                 } else if (newDifficultyDistance < oldDifficultyDistance) {
-                    LOG.info("Found better board [{}] -> [{}]", oldDifficultyDistance, newDifficultyDistance);
+                    LOG.info("Found better board [{}] -> [{}] [{}]", oldDifficultyDistance, newDifficultyDistance, calculateDifficulty(tiles));
                 }
             } else if (newDifficultyDistance < oldDifficultyDistance) {
-                LOG.info("Found better board [{}] -> [{}]", oldDifficultyDistance, newDifficultyDistance);
+                LOG.info("Found better board [{}] -> [{}] [{}]", oldDifficultyDistance, newDifficultyDistance, calculateDifficulty(tiles));
             }
         }
     }

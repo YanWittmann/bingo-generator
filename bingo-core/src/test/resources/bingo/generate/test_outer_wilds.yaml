@@ -43,8 +43,8 @@ snippets:
       categories: [ ash_twin ]
       difficulty: 1.5
       weight: 10
-    - text: Briddle Hollow
-      categories: [ briddle_hollow ]
+    - text: Brittle Hollow
+      categories: [ brittle_hollow ]
       difficulty: 1.5
       weight: 10
     - text: Hollows Lantern

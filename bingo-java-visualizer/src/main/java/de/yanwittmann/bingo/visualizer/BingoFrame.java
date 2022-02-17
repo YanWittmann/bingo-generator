@@ -3,6 +3,7 @@ package de.yanwittmann.bingo.visualizer;
 import de.yanwittmann.bingo.BingoBoard;
 import de.yanwittmann.bingo.generator.BingoConfiguration;
 import de.yanwittmann.bingo.generator.BingoGenerator;
+import de.yanwittmann.bingo.generator.Category;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -14,6 +15,8 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Random;
+import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 public class BingoFrame extends JFrame {
 
@@ -112,9 +115,10 @@ public class BingoFrame extends JFrame {
     public void generateAndShow() throws FileNotFoundException {
         BingoConfiguration configuration = new BingoConfiguration(new File("bingo-core/src/test/resources/bingo/generate/outer_wilds.yaml"));
         BingoGenerator generator = new BingoGenerator(configuration);
-        generator.setWidth(6);
-        generator.setHeight(5);
+        generator.setWidth(10);
+        generator.setHeight(7);
         generator.setMaxGenerationAttempts(1);
+        generator.setDifficulty(2);
         Random random;
         if (seedField.getText().isEmpty() || !seedField.getText().matches("[0-9]+")) {
             random = new Random();
@@ -134,8 +138,16 @@ public class BingoFrame extends JFrame {
         for (int i = 0; i < bingoBoard.getWidth(); i++) {
             for (int j = 0; j < bingoBoard.getHeight(); j++) {
                 JLabel bingoTile = new JLabel("<html><center>" + bingoBoard.get(i, j).getText() + "</center></html>");
-                if (bingoBoard.get(i, j).getTooltip() != null)
-                    bingoTile.setToolTipText("<html>" + bingoBoard.get(i, j).getTooltip().replace("\n", "<br>") + "</html>");
+                StringJoiner tooltip = new StringJoiner("<br>");
+                if (bingoBoard.get(i, j).getTooltip() != null) {
+                    tooltip.add(bingoBoard.get(i, j).getTooltip().replace("\n", "<br>").replace("\\n", "<br>"));
+                }
+                if (bingoBoard.get(i, j).getCategories() != null && bingoBoard.get(i, j).getCategories().size() > 0) {
+                    tooltip.add(bingoBoard.get(i, j).getCategories().stream().map(Category::getName).collect(Collectors.joining(", ")).replace("\n", "<br>").replace("\\n", "<br>"));
+                }
+                if (tooltip.length() > 0) {
+                    bingoTile.setToolTipText("<html>" + tooltip + "</html>");
+                }
                 bingoTile.setHorizontalAlignment(SwingConstants.CENTER);
                 bingoTile.setVerticalAlignment(SwingConstants.CENTER);
                 bingoTile.setBackground(new Color(255, 217, 217));

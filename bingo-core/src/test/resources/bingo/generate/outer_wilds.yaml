@@ -18,20 +18,20 @@ tile generators:
     categories: [ location, ship ]
   - text: Rest at a campfire on [PLANET:tag(campfire)]
     categories: [ activity, campfire ]
-  - text: "Translate any text at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:GIANTS_DEEP_LOCATIONS:tag(translate)]"
+  - text: "Translate any text at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:GIANTS_DEEP_LOCATIONS:DARK_BRAMBLE_LOCATIONS:INTERLOPER_LOCATIONS:ATTLEROCK_LOCATIONS:QUANTUM_MOON_LOCATIONS:tag(translate)]"
     categories: [ translate ]
-  - text: "Use a projection pool at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:GIANTS_DEEP_LOCATIONS:tag(projection_pool)]"
+  - text: "Use a projection pool at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:GIANTS_DEEP_LOCATIONS:DARK_BRAMBLE_LOCATIONS:INTERLOPER_LOCATIONS:ATTLEROCK_LOCATIONS:QUANTUM_MOON_LOCATIONS:tag(projection_pool)]"
     categories: [ projection_pool ]
-  - text: "Read the Hearthian Notes at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:GIANTS_DEEP_LOCATIONS:tag(hearthian_notes)]"
+  - text: "Read the Hearthian Notes at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:GIANTS_DEEP_LOCATIONS:DARK_BRAMBLE_LOCATIONS:INTERLOPER_LOCATIONS:ATTLEROCK_LOCATIONS:QUANTUM_MOON_LOCATIONS:tag(hearthian_notes)]"
     categories: [ hearthian_notes ]
-  - text: "Use a telekinetic orb at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:GIANTS_DEEP_LOCATIONS:tag(telekinetic_orb)]"
+  - text: "Use a telekinetic orb at [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:GIANTS_DEEP_LOCATIONS:DARK_BRAMBLE_LOCATIONS:INTERLOPER_LOCATIONS:ATTLEROCK_LOCATIONS:QUANTUM_MOON_LOCATIONS:tag(telekinetic_orb)]"
     tooltip: A telekinetic orb is controled by the player looking at it.
     categories: [ hearthian_notes ]
   - text: Meet and talk to the Traveler [TRAVELER]
   - text: Meet and talk to the Hearthian [HEARTHIAN]
   - text: Take off with a nomai ship from [PLANET:tag(nomai_ship)]
     categories: [ nomai_ship ]
-  - text: Travel from [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:STRANGER_LOCATIONS:GIANTS_DEEP_LOCATIONS:!tag(late_in_loop)] to [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:STRANGER_LOCATIONS:GIANTS_DEEP_LOCATIONS:avoid_duplicates:!tag(early_in_loop)]
+  - text: Travel from [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:STRANGER_LOCATIONS:GIANTS_DEEP_LOCATIONS:DARK_BRAMBLE_LOCATIONS:INTERLOPER_LOCATIONS:ATTLEROCK_LOCATIONS:QUANTUM_MOON_LOCATIONS:!tag(late_in_loop)] to [TIMBER_HEARTH_LOCATIONS:EMBER_TWIN_LOCATIONS:ASH_TWIN_LOCATIONS:BRITTLE_HOLLOW_LOCATIONS:STRANGER_LOCATIONS:GIANTS_DEEP_LOCATIONS:DARK_BRAMBLE_LOCATIONS:INTERLOPER_LOCATIONS:ATTLEROCK_LOCATIONS:QUANTUM_MOON_LOCATIONS:avoid_duplicates:!tag(early_in_loop)]
     tooltip: Must happen in a single loop in that order, but detours are allowed.
     categories: [ arbitrary_travel ]
   - text: Travel around [PLANET] in a straight line
@@ -46,22 +46,47 @@ tile generators:
     categories: [ location, timber_hearth ]
   - text: "Timber Hearth activity: [TIMBER_HEARTH_ACTIVITIES]"
     categories: [ activity, timber_hearth ]
+
   - text: Reach [EMBER_TWIN_LOCATIONS] on Ember Twin
     categories: [ location, ember_twin ]
   - text: "Ember Twin activity: [EMBER_TWIN_ACTIVITIES]"
     categories: [ activity, ember_twin ]
+
   - text: Reach [ASH_TWIN_LOCATIONS] on Ash Twin
     categories: [ location, ash_twin ]
   - text: "Ash Twin activity: [ASH_TWIN_ACTIVITIES]"
     categories: [ activity, ash_twin ]
+
   - text: Reach [BRITTLE_HOLLOW_LOCATIONS] on Brittle Hollow
     categories: [ location, brittle_hollow ]
   - text: "Brittle Hollow activity: [BRITTLE_HOLLOW_ACTIVITIES]"
     categories: [ activity, brittle_hollow ]
+
   - text: Reach [GIANTS_DEEP_LOCATIONS] on Giant's Deep
     categories: [ location, giants_deep ]
   - text: "Giant's Deep activity: [GIANTS_DEEP_ACTIVITIES]"
     categories: [ activity, giants_deep ]
+
+  - text: Reach [DARK_BRAMBLE_LOCATIONS] in Dark Bramble
+    categories: [ location, dark_bramble ]
+  - text: "Dark Bramble activity: [DARK_BRAMBLE_ACTIVITIES]"
+    categories: [ activity, dark_bramble ]
+
+  - text: Reach [INTERLOPER_LOCATIONS] on the Interloper
+    categories: [ location, interloper ]
+  - text: "Interloper activity: [INTERLOPER_ACTIVITIES]"
+    categories: [ activity, interloper ]
+
+  - text: Reach [ATTLEROCK_LOCATIONS] on the Attlerock
+    categories: [ location, attlerock ]
+  - text: "Attlerock activity: [ATTLEROCK_ACTIVITIES]"
+    categories: [ activity, attlerock ]
+
+  - text: Reach [QUANTUM_MOON_LOCATIONS] on the Quantum Moon
+    categories: [ location, quantum_moon ]
+  - text: "Quantum Moon activity: [QUANTUM_MOON_ACTIVITIES]"
+    categories: [ activity, quantum_moon ]
+
   - text: Reach [STRANGER_LOCATIONS] on The Stranger
     categories: [ location, stranger ]
   - text: "Stranger activity: [STRANGER_ACTIVITIES]"
@@ -72,51 +97,66 @@ snippets:
   PLANET:
     - text: Timber Hearth
       categories: [ timber_hearth ]
-      tags: [ campfire, quantum_moon ]
+      tags: [ campfire, has_quantum_moon ]
+      difficulty: 0.1
     - text: The Attlerock
       categories: [ attlerock ]
       tags: [ campfire ]
+      difficulty: 0.2
     - text: The Ember Twin
       categories: [ ember_twin ]
-      tags: [ campfire, nomai_ship, quantum_moon ]
+      tags: [ campfire, nomai_ship, has_quantum_moon ]
+      difficulty: 0.2
     - text: The Ash Twin
       categories: [ ash_twin ]
-      tags: [ ]
+      difficulty: 0.2
     - text: Brittle Hollow
       categories: [ brittle_hollow ]
-      tags: [ campfire, nomai_ship, quantum_moon ]
+      tags: [ campfire, nomai_ship, has_quantum_moon, attlerock_locatable ]
+      difficulty: 0.2
     - text: Hollows Lantern
       categories: [ hollows_lantern ]
+      difficulty: 0.5
     - text: Giant's Deep
-      categories: [ giants_deep, quantum_moon ]
-      tags: [ campfire ]
+      categories: [ giants_deep ]
+      tags: [ campfire, has_quantum_moon, attlerock_locatable ]
+      difficulty: 0.2
     - text: Dark Bramble
-      categories: [ dark_bramble, quantum_moon ]
-      tags: [ campfire ]
+      categories: [ dark_bramble ]
+      tags: [ campfire, has_quantum_moon ]
+      difficulty: 0.5
     - text: The Interloper
       categories: [ interloper ]
+      difficulty: 0.5
     - text: The Quatum Moon
-      categories: [ quatum_moon ]
+      categories: [ quantum_moon ]
       tags: [ nomai_ship ]
+      difficulty: 0.5
     - text: The Stranger
       categories: [ stranger ]
       tags: [ campfire ]
+      difficulty: 0.5
   TRAVELER:
     - text: Esker
       tooltip: The Traveler on The Attlerock.
       categories: [ hearthian, traveler, esker, attlerock ]
+      difficulty: 0.3
     - text: Chert
       tooltip: The Traveler on The Ember Twin.
       categories: [ hearthian, traveler, chert, ember_twin ]
+      difficulty: 0.5
     - text: Riebek
       tooltip: The Traveler on Brittle Hollow.
       categories: [ hearthian, traveler, riebek, brim_hollow ]
+      difficulty: 0.6
     - text: Gabbro
       tooltip: The Traveler on Giant's Deep.
       categories: [ hearthian, traveler, gabbro, giants_deep ]
+      difficulty: 0.5
     - text: Feldspar
       tooltip: The Traveler in Dark Bramble.
       categories: [ hearthian, traveler, feldspar, dark_bramble ]
+      difficulty: 1.8
   HEARTHIAN:
     - text: Arkose
       tooltip: The Hearthian that trows rocks at the Ghost Matter.
@@ -160,6 +200,7 @@ snippets:
     - text: Tuff
       tooltip: The Hearthian in the Zero-G-Cave.
       categories: [ hearthian, village, timber_hearth, zero_g_cave ]
+      difficulty: 0.5
     - text: Tektite
       tooltip: The Hearthian checking on the Bramble Seed on Timber Hearth.
       categories: [ hearthian, timber_hearth ]
@@ -168,505 +209,816 @@ snippets:
     - text: The Geyser Mountains
       tooltip: Large mountains scattered around Timber Hearth that periodically spout water columns from their geyser peaks.
       categories: [ water, timber_hearth ]
+      difficulty: 0.2
     - text: The Geyser Cave System
       tooltip: Enter a water-filled cave via the geysers.
       categories: [ water, timber_hearth ]
+      difficulty: 0.4
     - text: The Timber Hearth Ash Twin Tower Receiver
       tooltip: The Ash Twin Tower Warp Pad Receiver.
       categories: [ warp_pad, timber_hearth ]
+      difficulty: 0.2
     - text: The First Encounter Mural
       tooltip: The reservoir under the bridge to the Nomai Mines at the bottom of the large Geyser Mountain.
       categories: [ mural, water, timber_hearth ]
       tags: [ translate ]
+      difficulty: 0.4
     - text: The Mining Site 2b
       tooltip: Open and enter the mining site inside the huge Geyser Mountain.
       categories: [ timber_hearth ]
       tags: [ translate, projection_pool, telekinetic_orb ]
+      difficulty: 0.7
     - text: The Zero-G Cave
       tooltip: Enter the Zero-G-Cave via the elevator.
       categories: [ zero_g_cave, village, timber_hearth ]
+      difficulty: 0.4
     - text: The Museum
       categories: [ museum, village, timber_hearth ]
       tags: [ translate ]
+      difficulty: 0.2
     - text: The Quantum Grove Crater
       categories: [ quantum, timber_hearth ]
+      difficulty: 0.4
     - text: Youngbark Crater
       tooltip: The crater containing the Bramble Seed.
       categories: [ timber_hearth ]
+      difficulty: 0.3
     - text: The Radio Tower
       tooltip: The Radio Tower that starts the DLC.
       categories: [ timber_hearth ]
       tags: [ hearthian_notes ]
+      difficulty: 0.2
   TIMBER_HEARTH_ACTIVITIES:
     - text: Geyser Cave System loop
       tooltip: Use the water streams to travel between all the caves
       categories: [ water, timber_hearth ]
+      difficulty: 0.7
     - text: Fix the training satellite in the Zero-G-Cave
       categories: [ zero_g_cave, village, timber_hearth ]
+      difficulty: 0.5
     - text: Land the model ship on a geyser platform
       categories: [ village, timber_hearth ]
-    - text: Take a photo using the Postcard Satelite
+      difficulty: 0.2
+    - text: Take a photo using the "Sky Shutter" Postcard Satelite
       categories: [ village, timber_hearth ]
+      difficulty: 0.2
     - text: Jump across the bridge to the Mining Site 2b
       categories: [ timber_hearth ]
+      difficulty: 0.4
     - text: Read [2-5] quantum poems
       categories: [ quantum, timber_hearth ]
+      difficulty: 0.4
     - text: Touch the Postcard Satelite
       categories: [ timber_hearth ]
+      difficulty: 0.6
 
   EMBER_TWIN_LOCATIONS:
     - text: Escape Pod 2 on Ember Twin
       categories: [ escape_pod, ember_twin ]
       tags: [ translate ]
+      difficulty: 0.8
     - text: The Sunless City
       categories: [ sunless_city, ember_twin ]
       tags: [ translate, telekinetic_orb ]
+      difficulty: 1
     - text: "The Sunless City: Eye Shrine District"
       tooltip: The building must be entered and the ghost matter pit crossed.
-      tags: [ translate ]
       categories: [ sunless_city, ember_twin ]
+      tags: [ translate ]
+      difficulty: 1
     - text: "The Sunless City: Anglerfish Overlook District"
       categories: [ sunless_city, ember_twin ]
       tags: [ translate ]
+      difficulty: 1
     - text: "The Sunless City: Stepping Stone District"
       categories: [ sunless_city, ember_twin ]
+      difficulty: 1
     - text: "The Sunless City: Anglerfish Fossil"
       categories: [ anglerfish, sunless_city, ember_twin ]
       tags: [ translate ]
+      difficulty: 1
     - text: The Ember Twin Gravity Cannon
       tooltip: The Gravity Cannon on Ember Twin.
       categories: [ gravity_cannon, ember_twin ]
       tags: [ translate, telekinetic_orb ]
+      difficulty: 0.8
     - text: The High Energy Lab
       categories: [ high_energy_lab, ember_twin ]
       tags: [ translate, telekinetic_orb, early_in_loop ]
+      difficulty: 1.8
     - text: Chert's Camp
       categories: [ chert, ember_twin ]
+      difficulty: 0.5
     - text: The Quantum Caves
       tooltip: Stand in front of the quatum shard.
       categories: [ quantum, ember_twin ]
       tags: [ translate ]
-    - text: The Lakebed Cave
+      difficulty: 0.5
+    - text: The Lakebed Cave (entrance)
       tooltip: Simply being down there is enough, no need to enter the cave.
       categories: [ ember_twin ]
       tags: [ early_in_loop ]
-    - text: The Lakebed Cave Quantum Shard
+      difficulty: 0.5
+    - text: The Lakebed Cave (Quantum Shard)
       tooltip: Traverse the cave system to arrive at the quatum shard.
       categories: [ quantum, ember_twin ]
       tags: [ translate, early_in_loop ]
+      difficulty: 1.8
     - text: The Quantum Moon Locator
       tooltip: At the south pole, stand in the center.
       categories: [ quantum, ember_twin ]
       tags: [ translate, hearthian_notes ]
+      difficulty: 0.5
     - text: The Ember Twin Ash Twin Tower Receiver
       categories: [ warp_pad, ember_twin ]
+      difficulty: 0.4
   EMBER_TWIN_ACTIVITIES:
     - text: Turn on all lights in the Sunless City
       categories: [ sunless_city, ember_twin ]
+      difficulty: 1
     - text: Make Chert panic
       categories: [ chert, ember_twin ]
-    - text: Touch a cactus
+      difficulty: 0.5
+    - text: Touch [2-5] cactus
+      tooltip: You cannot get credit for touching the same cactus twice.
       categories: [ ember_twin ]
+      difficulty: 0.3
     - text: Enter the Sunless City via the Escape Pod
       categories: [ escape_pod, escape_pod, ember_twin ]
+      difficulty: 1
     - text: Perform the experiment in the High Energy Lab
       tooltip: Time difference must be visible to the naked eye.
       categories: [ high_energy_lab, ember_twin ]
+      difficulty: 1.8
     - text: Shoot something from the Gravity Cannon
       categories: [ gravity_cannon, ember_twin ]
+      difficulty: 0.5
     - text: Watch the anglerfish skeleton from the Crashsite Caves
       categories: [ escape_pod, ember_twin ]
+      difficulty: 0.6
     - text: Travel between two caves using the Quantum Shard
       categories: [ quantum, ember_twin ]
-    - text: Locate the Moon around [PLANET:tag(quantum_moon)], [PLANET:avoid_duplicates:tag(quantum_moon)] and [PLANET:avoid_duplicates:tag(quantum_moon)]
+      difficulty: 0.4
+    - text: Locate the Moon around [PLANET:tag(has_quantum_moon)], [PLANET:avoid_duplicates:tag(has_quantum_moon)] and [PLANET:avoid_duplicates:tag(has_quantum_moon)]
       tooltip: Use the Quantum Moon Locator to observe the Moon.
       categories: [ quantum, ember_twin ]
+      difficulty: 0.6
     - text: Use a bridge to cross the huge gap carved by the sand.
       categories: [ ember_twin ]
+      difficulty: 0.4
 
   ASH_TWIN_LOCATIONS:
     - text: The Giant's Deep Tower
       tooltip: Must be standing inside the tower.
       categories: [ ash_twin_tower, ash_twin ]
+      difficulty: 0.5
     - text: The Sun Station Tower
       tooltip: Must be standing inside the tower (not at the warp pad).
       categories: [ ash_twin_tower, ash_twin ]
+      difficulty: 0.5
     - text: The Hourglass Twins Tower
       tooltip: Must be standing inside one of the towers.
       categories: [ ash_twin_tower, ash_twin ]
+      difficulty: 0.5
     - text: The Brittle Hollow Tower
       tooltip: Must be standing inside the tower.
       categories: [ ash_twin_tower, ash_twin ]
       tags: [ translate ]
+      difficulty: 0.5
     - text: The Timber Hearth Tower
       tooltip: Must be standing inside the tower.
       categories: [ ash_twin_tower, ash_twin ]
+      difficulty: 0.5
     - text: The Solar Panels
       tooltip: Stand on top of one of the towers.
       categories: [ ash_twin ]
+      difficulty: 0.4
     - text: The Ash Twin Project
       tooltip: Warp inside the chamber to reach the Ash Twin Project.
       categories: [ ash_twin_project, ash_twin ]
       tags: [ translate, projection_pool, telekinetic_orb ]
+      difficulty: 1
   ASH_TWIN_ACTIVITIES:
     - text: Touch the core from the outside
       categories: [ ash_twin ]
-    - text: Make a full loop around the Ash Twin Tower band.
+      difficulty: 0.5
+    - text: Make a full loop around the Ash Twin Tower band
       categories: [ ash_twin ]
-    - text: Touch the core material from the outside
-      categories: [ ash_twin ]
+      difficulty: 0.3
     - text: Touch the core material from the inside
       categories: [ ash_twin_project, ash_twin ]
-    - text: Touch the nomai masks.
+      difficulty: 1.8
+    - text: Touch the nomai masks
       categories: [ ash_twin_project, ash_twin ]
-    - text: Turn off the gravity and open the casing.
-      tooltip: You don't have to take the core out of the casing.
+      difficulty: 1.8
+    - text: Turn off the gravity and open the casing
+      tooltip: You don't have to take the core out of the casing
       categories: [ ash_twin_project, ash_twin ]
-    - text: Get flung to the Ember Twin by the sand column.
+      difficulty: 1.8
+    - text: Get flung to the Ember Twin by the sand column
       categories: [ ash_twin ]
+      difficulty: 0.5
+    - text: Reach the sun station viewing area using the Warp Pad
+      categories: [ warp_pad, sun, ash_twin ]
+      difficulty: 1.8
 
   BRITTLE_HOLLOW_LOCATIONS:
     - text: The Northern Glacier
       tooltip: Must touch the snow.
       categories: [ brittle_hollow ]
       tags: [ translate, projection_pool ]
+      difficulty: 0.6
     - text: The Hanging City
       categories: [ hanging_city, brittle_hollow ]
       tags: [ translate, telekinetic_orb ]
+      difficulty: 1
     - text: "The Hanging City: Outside the Black Hole Forge"
       tooltip: Standing on the ceiling suffices.
       tags: [ translate ]
       categories: [ hanging_city, black_hole_forge, brittle_hollow ]
+      difficulty: 1
     - text: "The Hanging City: Inside the Black Hole Forge"
       tooltip: Must use the elevator to bring the forge up and enter it.
       categories: [ hanging_city, black_hole_forge, brittle_hollow ]
       tags: [ translate, projection_pool ]
+      difficulty: 1
     - text: "The Hanging City: Meltwater District"
       tooltip: Must stand in front of the scroll walls.
       categories: [ hanging_city, brittle_hollow ]
       tags: [ translate, telekinetic_orb ]
+      difficulty: 1
     - text: "The Hanging City: Eye Shrine District"
       tooltip: Must stand inside one of the houses.
       categories: [ hanging_city, brittle_hollow ]
       tags: [ translate ]
+      difficulty: 1
     - text: "The Hanging City: School District"
       tooltip: The central room with the tree.
       categories: [ hanging_city, brittle_hollow ]
       tags: [ translate ]
+      difficulty: 1
     - text: Gravity Crystal Workshop
       tooltip: The small collection of houses.
       categories: [ brittle_hollow ]
       tags: [ hearthian_notes ]
+      difficulty: 0.9
     - text: The Crossroads
       tooltip: Be on either of the two levels of the Crossroads.
       categories: [ brittle_hollow ]
       tags: [ hearthian_notes, telekinetic_orb ]
+      difficulty: 1
     - text: The Brittle Hollow Gravity Cannon
       tooltip: The Gravity Cannon on Brittle Hollow.
       categories: [ gravity_cannon, brittle_hollow ]
       tags: [ translate, projection_pool, telekinetic_orb ]
+      difficulty: 0.9
     - text: Escape Pod 1 on Brittle Hollow
       categories: [ escape_pod, brittle_hollow, telekinetic_orb ]
       tags: [ translate ]
+      difficulty: 0.9
     - text: Old Settlement (upper level)
       tooltip: Cross at least the first bridge to the central room on the upper level.
       categories: [ brittle_hollow ]
       tags: [ translate ]
+      difficulty: 0.9
     - text: Old Settlement (lower level)
       tooltip: Stand in the central room on the lower level.
       categories: [ brittle_hollow ]
+      difficulty: 1.2
       tags: [ translate ]
     - text: Tower of Quantum Knowledge (outside)
-      tooltip: No need to enter the tower.
+      tooltip: No need to enter the tower. Top also counts.
       categories: [ quantum, brittle_hollow ]
       tags: [ translate ]
+      difficulty: 0.7
     - text: Tower of Quantum Knowledge (inside)
       tooltip: Get inside the tower.
+      difficulty: 1.5
       categories: [ quantum, brittle_hollow ]
       tags: [ late_in_loop, translate ]
     - text: Southern Observatory
       tooltip: Must be inside the dome.
       categories: [ brittle_hollow ]
       tags: [ translate, projection_pool, telekinetic_orb ]
+      difficulty: 1.8
   BRITTLE_HOLLOW_ACTIVITIES:
     - text: Fall inside the black hole.
       categories: [ brittle_hollow ]
     - text: Call back Solanums shuttle.
       categories: [ brittle_hollow ]
+      difficulty: 0.5
     - text: Fling yourself around the black hole and land back on the surface.
+      tooltip: Land anywhere but in the black hole.
       categories: [ brittle_hollow ]
+      difficulty: 0.5
     - text: Enter the Hanging City via the meltwater shortcut.
       categories: [ brittle_hollow ]
-    - text: Use the Locator in the Southern Observatory to locate [PLANET:tag(quantum_moon)]
+    - text: Use the Locator in the Southern Observatory to locate [PLANET:tag(has_quantum_moon)]
       categories: [ brittle_hollow ]
+      difficulty: 2
 
   GIANTS_DEEP_LOCATIONS:
     - text: "Orbital Probe Cannon: Central Chamber"
       tooltip: Enter the air lock to reach the central chamber.
       categories: [ orbital_probe_cannon, giants_deep ]
       tags: [ translate ]
+      difficulty: 0.8
     - text: "Orbital Probe Cannon: Control Module"
       tooltip: The intact module.
       categories: [ orbital_probe_cannon, giants_deep ]
       tags: [ translate, projection_pool ]
+      difficulty: 0.8
     - text: "Orbital Probe Cannon: Launch Module"
       tooltip: The module with the fractured window.
       categories: [ orbital_probe_cannon, giants_deep ]
       tags: [ translate, projection_pool ]
+      difficulty: 1.2
     - text: "Orbital Probe Cannon: Probe Tracking Module"
       tooltip: The module that sank to the core.
       categories: [ orbital_probe_cannon, giants_deep ]
       tags: [ translate, projection_pool ]
+      difficulty: 1.8
     - text: Bramble Island
       categories: [ island, giants_deep, hearthian_notes ]
+      difficulty: 0.6
     - text: Construction Yard
       categories: [ island, giants_deep ]
       tags: [ translate, projection_pool ]
+      difficulty: 0.6
     - text: Statue Island
       categories: [ island, giants_deep ]
       tags: [ translate ]
-    - text: Statue Island
-      categories: [ giants_deep ]
-      tags: [ translate ]
-    - text: The Giant's Deep Ash Twin Tower Receiver
-      tooltip: The Ash Twin Tower Warp Pad Receiver.
-      categories: [ warp_pad ]
+      difficulty: 0.6
     - text: Statue Island Workshop
       categories: [ giants_deep ]
       tags: [ translate, projection_pool ]
+      difficulty: 1.2
+    - text: The Giant's Deep Ash Twin Tower Receiver
+      tooltip: The Ash Twin Tower Warp Pad Receiver.
+      categories: [ warp_pad ]
+      difficulty: 0.9
     - text: Gabbro's Island
       categories: [ island, gabbro, giants_deep ]
+      difficulty: 0.6
     - text: Tower of Quantum Trials Island
       categories: [ island, giants_deep ]
+      difficulty: 0.7
     - text: Tower of Quantum Trials (top)
       categories: [ island, quantum, giants_deep ]
+      difficulty: 1.2
     - text: Ocean Depths
       categories: [ giants_deep ]
+      difficulty: 0.7
   GIANTS_DEEP_ACTIVITIES:
     - text: Ride a clockwise and a counter-clockwise spinning cyclone
       tooltip: By yourself or with your ship.
       categories: [ giants_deep ]
+      difficulty: 0.7
     - text: Let a tornado throw you on into space on [1-2] island(s)
       categories: [ island, giants_deep ]
+      difficulty: 1.2
     - text: Find the coordinates of the Eye of the Universe
       categories: [ orbital_probe_cannon, giants_deep ]
+      difficulty: 1.8
     - text: Touch a living or dead Jellifish
       categories: [ giants_deep ]
+      difficulty: 1
+    - text: Use a storm shelter
+      categories: [ giants_deep ]
+      difficulty: 0.7
+    - text: Complete the Quantum Trials
+      categories: [ quantum, giants_deep ]
+      difficulty: 1.8
 
   DARK_BRAMBLE_LOCATIONS:
-    - text: To Dojo
+    - text: The Anglerfish Eggs
+      categories: [ anglerfish, dark_bramble ]
+      difficulty: 1.6
+    - text: Feldspar's Camp
+      categories: [ feldspar, dark_bramble ]
+      difficulty: 1.6
+    - text: Escape Pod 1 in Dark Bramble
       categories: [ dark_bramble ]
+      tags: [ translate, telekinetic_orb ]
+      difficulty: 1.2
+    - text: Nomai Grave
+      categories: [ dark_bramble ]
+      tags: [ translate ]
+      difficulty: 1.3
+    - text: The Vessel (outside)
+      tooltip: Being in the vessel Dark Bramble node suffices.
+      categories: [ vessel, dark_bramble ]
+      difficulty: 2
+    - text: The Vessel (inside)
+      tooltip: The center room of the vessel.
+      categories: [ vessel, dark_bramble ]
+      tags: [ translate, telekinetic_orb ]
+      difficulty: 2.4
+    - text: Frozen Jellifish in Dark Bramble
+      tooltip: No need to enter it, simply standing in front of it suffices.
+      categories: [ dark_bramble ]
+      difficulty: 1.5
   DARK_BRAMBLE_ACTIVITIES:
     - text: Touch the red anglerfish eggs
       categories: [ anglerfish, dark_bramble ]
+      difficulty: 1.6
     - text: Shoot the scout through 2 unpassable bramble seeds
       categories: [ dark_bramble ]
+      difficulty: 0.6
     - text: Aggro an anglerfish and survive
       categories: [ anglerfish, dark_bramble ]
+      difficulty: 1.6
+
+  INTERLOPER_LOCATIONS:
+    - text: The Frozen Nomai Shuttle
+      tooltip: The shuttle enclosed in ice.\nYou can also call the shuttle back to the Ember Twin gravity cannon.
+      categories: [ nomai_ship, interloper ]
+      tags: [ translate, early_in_loop ]
+      difficulty: 0.6
+    - text: The Sunward side on The Interloper
+      tooltip: Standing on top of the fissure in the ice suffices.
+      categories: [ interloper ]
+      tags: [ early_in_loop ]
+      difficulty: 0.5
+    - text: The Middle room on The Interloper
+      tooltip: The room where the Nomai left their message and tree.
+      categories: [ interloper ]
+      tags: [ translate, early_in_loop ]
+      difficulty: 1
+    - text: The Ruptured Core
+      tooltip: Being in the main room suffices.
+      categories: [ translate, interloper ]
+      tags: [ translate, early_in_loop ]
+      difficulty: 1.8
+  INTERLOPER_ACTIVITIES:
+    - text: Slide through a ghost matter patch and get hurt
+      categories: [ interloper ]
+      difficulty: 1.5
+    - text: Touch the top of the tallest ice pillar
+      categories: [ interloper ]
+      difficulty: 0.7
+
+  ATTLEROCK_LOCATIONS:
+    - text: The Lunar Outpost
+      tooltip: Stand inside the crater.
+      categories: [ esker, attlerock ]
+      difficulty: 0.3
+    - text: The Lunar Lookout
+      tooltip: The platform where the log is located talking about the harmonica.
+      categories: [ attlerock ]
+      difficulty: 0.3
+    - text: The Eye Signal Locator
+      tooltip: Stand on the platform.
+      categories: [ attlerock ]
+      tags: [ translate, telekinetic_orb ]
+      difficulty: 0.3
+    - text: The Large Impact Crater
+      categories: [ hearthian_notes, attlerock ]
+      difficulty: 0.3
+    - text: Esker's Ship
+      categories: [ esker, attlerock ]
+      difficulty: 0.3
+    - text: The hearthian Flag on the Attlerock
+      categories: [ attlerock ]
+      difficulty: 0.3
+  ATTLEROCK_ACTIVITIES:
+    - text: Locate [PLANET:tag(attlerock_locatable)] using the Eye Signal Locator
+      categories: [ attlerock ]
+      difficulty: 0.5
+
+  QUANTUM_MOON_LOCATIONS:
+    - text: The Quantum Shrine
+      tooltip: Stand inside the shrine.
+      categories: [ quantum, quantum_moon ]
+      tags: [ translate, telekinetic_orb ]
+      difficulty: 0.4
+    - text: Solanum's Shuttle
+      tooltip: Be inside the shuttle.
+      categories: [ quantum, quantum_moon ]
+      tags: [ translate, telekinetic_orb ]
+      difficulty: 0.4
+    - text: Solanum
+      tooltip: Talk to her.
+      categories: [ solanum, quantum_moon ]
+      tags: [ translate ]
+      difficulty: 1.5
+    - text: The Sixth Location of the Quantum Moon (inside)
+      tooltip: No need to be at the north pole.
+      categories: [ quantum_moon ]
+      difficulty: 0.8
+    - text: The Sixth Location of the Quantum Moon (outside)
+      tooltip: Must use the Quantum Shrine at the moons north pole.
+      categories: [ quantum_moon ]
+      difficulty: 1.3
+    - text: The [PLANET:tag(has_quantum_moon)] version of the Quantum Moon
+      tooltip: You have to leave the Quantum Shrine for this.
+      categories: [ quantum_moon ]
+      difficulty: 0.7
+  QUANTUM_MOON_ACTIVITIES:
+    - text: Translate [2-5] different text stone combinations from Solanum
+      categories: [ solanum, quantum_moon ]
+      tags: [ translate ]
+      difficulty: 2
+    - text: Call Solanum's Shuttle back to Brittle Hollow
+      categories: [ quantum_moon ]
+      difficulty: 0.7
 
   STRANGER_LOCATIONS:
     - text: The Reservoir
       categories: [ stranger, reservoir, early_in_loop ]
       tooltip: The area behind the warming gates and before/on top the dam.
+      difficulty: 0.7
     - text: The inside of the Submerged Bell
       categories: [ stranger, reservoir, strange_flames ]
       tooltip: Must be inside the bell, standing on the surface (not in the water).
+      difficulty: 0.8
     - text: The River Lowlands
       tooltip: The area between the dam and the rapids.
       categories: [ stranger, river_lowlands ]
       tags: [ early_in_loop ]
+      difficulty: 0.5
     - text: The Cinder Isles
       tooltip: The area between the rapids and gorges.
       categories: [ stranger, cinder_isles ]
+      difficulty: 0.5
     - text: The Hidden Gorge
       tooltip: Must use the elevator to reach the top.
       categories: [ stranger, hidden_gorge ]
+      difficulty: 0.6
     - text: The Damaged Laboratory
       tooltip: Enter the stranger via the hull breach.
       categories: [ stranger, damaged_laboratory ]
+      difficulty: 0.7
     - text: The Abandoned temple
       tooltip: The temple at the Hidden Gorge.
       categories: [ stranger, abandoned_temple ]
+      difficulty: 0.9
     - text: Any slide burning room
       tooltip: Reach any of the hidden rooms with the burned slides.
       categories: [ stranger ]
+      difficulty: 0.9
     - text: The Island Tower
       tooltip: Stand in front, inside or on top.
       categories: [ stranger, cinder_isles ]
+      difficulty: 0.6
     - text: The Island Tower mural room
       tooltip: The room reached by using the cave.
       categories: [ stranger, cinder_isles ]
+      difficulty: 0.6
     - text: The Island Tower code room
       tooltip: The room behind the mural that requires entering the dream world.
       categories: [ stranger, dream_world, cinder_isles ]
+      difficulty: 1.4
     - text: The Endless Canion
       tooltip: Be outside the flame building.
       categories: [ stranger, dream_world, endless_canyon ]
+      difficulty: 1
     - text: The Starlit Cove
       tooltip: Be outside the flame building.
       categories: [ stranger, starlit_cove ]
+      difficulty: 1.3
     - text: The Shrouded Woodlands
       tooltip: Be outside the flame building.
       categories: [ stranger, shrouded_woodlands ]
       tags: [ early_in_loop ]
+      difficulty: 1
     - text: Any Forbidden Archive
       tooltip: Enter any forbidden archive.
       categories: [ stranger, forbidden_archive ]
+      difficulty: 2
     - text: The Dam
       tooltip: Stand on top of the dam.
       categories: [ stranger, reservoir ]
+      difficulty: 0.7
     - text: The Dam supernova room
       tooltip: The lower room with the projector.
       categories: [ stranger, reservoir ]
+      difficulty: 0.8
     - text: Burned Eye Church in the Dream World
       tooltip: The eye church in the Starlit Cove.
       categories: [ stranger, dream_world, starlit_cove ]
+      difficulty: 1.2
+    - text: Bottom of Hidden Gorge hotel
+      tooltip: Light up the bridge to get to the stairs and down to the large mural.
+      categories: [ stranger, dream_world, starlit_cove ]
+      difficulty: 1.3
   STRANGER_ACTIVITIES:
     - text: Ride a raft
       categories: [ stranger, raft ]
+      difficulty: 0.5
     - text: Make a full loop around the ring world
       tooltip: Stand on a raft and use any light source to move it.
       categories: [ stranger, raft ]
+      difficulty: 0.8
     - text: View the slide "[STRANGER_SLIDE]"
       tooltip: Must be viewed completely, burned or not.
       categories: [ stranger, slide ]
+      difficulty: 1
     - text: Enter any Code
       tooltip: The code must be correct.
       categories: [ stranger ]
+      difficulty: 0.7
     - text: Use an elevator
       categories: [ stranger ]
+      difficulty: 0.7
     - text: Use a structure in the dream world to extinguish/light lanterns
       categories: [ stranger, dream_world ]
+      difficulty: 1
     - text: (fail to) translate any text
       categories: [ stranger, translate ]
+      difficulty: 0.2
     - text: Touch any Symbol of the Eye of the Universe
       categories: [ stranger ]
+      difficulty: 0.4
     - text: Refuel your jetpack
       categories: [ stranger, refuel ]
+      difficulty: 0.4
     - text: Touch any antenna
       tooltip: Like the antenna on the Dream World shrines or the one at the signal blocker
       categories: [ stranger ]
+      difficulty: 0.4
     - text: Watch the projector in the supernova observation room switch images
       tooltip: The supernova must have advanced by one stage while watching the projector.
       categories: [ stranger ]
+      difficulty: 0.9
     - text: Talk to the Prisoner
       tooltip: As soon as you have talked, you can meditate until next loop.
       categories: [ dream_world, prisoner, stranger ]
+      difficulty: 2
     - text: Get caught by an Owlelk
       categories: [ dream_world, stranger ]
+      difficulty: 1.1
   STRANGER_SLIDE:
     - text: First story reel
       tooltip: The story reel at the River Lowlands.
       categories: [ river_lowlands ]
+      difficulty: 0.1
     - text: Seal reel 1
       tooltip: The first seal reel at the River Lowlands.
       categories: [ river_lowlands ]
+      difficulty: 0.1
     - text: Archive path reel 1
       tooltip: The first archive path reel for the Shrouded Woodlands at the River Lowlands.
       categories: [ river_lowlands ]
+      difficulty: 0.3
     - text: Second story reel
       tooltip: The story reel at the Cinder Isles.
       categories: [ cinder_isles ]
+      difficulty: 0.1
     - text: Seal reel 2
       tooltip: The second seal reel at the Cinder Isles.
       categories: [ cinder_isles ]
+      difficulty: 0.1
     - text: Archive path reel 2
       tooltip: The second archive path reel for the Starlit Cove at the Cinder Isles.
       categories: [ cinder_isles ]
+      difficulty: 0.3
     - text: Lantern secret reel
-      tooltip: The lantern secret reel inside the Cinder Isles Tower.
+      tooltip: The lantern secret reel inside the Cinder Isles Tower, showing the hidden room behind the mural.
       categories: [ cinder_isles ]
+      difficulty: 0.3
     - text: Third story reel
       tooltip: The story reel at the Hidden Gorge.
       categories: [ hidden_gorge ]
+      difficulty: 0.1
     - text: Seal reel 3
       tooltip: The third seal reel at the Hidden Gorge.
       categories: [ hidden_gorge ]
+      difficulty: 0.1
     - text: Archive path reel 3
       tooltip: The third archive path reel for the Endless Canyon at the Hidden Gorge.
       categories: [ hidden_gorge ]
+      difficulty: 0.3
     - text: Damage report
       tooltip: The damage report reel at the Hidden Gorge.
       categories: [ hidden_gorge ]
+      difficulty: 0.3
     - text: Artifact experiments
       tooltip: The artifact experiments reel at the Damaged Laboratory.
       categories: [ damaged_laboratory ]
+      difficulty: 0.3
     - text: Artifact experiments telekinetic
       tooltip: View any telekinetic at the Damaged Laboratory.
       categories: [ damaged_laboratory, telekinetic ]
+      difficulty: 0.2
     - text: Fourth story reel
       tooltip: The story reel at the Reservoir.
       categories: [ reservoir ]
+      difficulty: 0.2
     - text: Slide Burning Reel
       tooltip: "The reel in the Abandoned Temple (🌒 🪐 🌒 ✨ ✨)"
       categories: [ abandoned_temple ]
+      difficulty: 0.3
     - text: Tower telekinetic
       tooltip: View the telekinetic from the crack in the Valut in the Subterranean Lake.
       categories: [ subterranean_lake, telekinetic, dream_world ]
+      difficulty: 0.4
     - text: Submerged bell telekinetic
       tooltip: View the telekinetic from outside the bell in the Dream World.
       categories: [ raft, telekinetic, dream_world ]
+      difficulty: 0.4
     - text: Shrouded Woodland Glitch reel
       tooltip: Get past the Fire and view Glitch reel in the Forbidden Archive.
       categories: [ shrouded_woodlands, forbidden_archive, dream_world ]
+      difficulty: 0.5
     - text: Starlit Cove Glitch reel
       tooltip: Get past into the well and view any of the two Glitch reels in the Forbidden Archive.
       categories: [ starlit_cove, forbidden_archive, dream_world ]
+      difficulty: 0.5
     - text: Endless Canyon Glitch reel
       tooltip: Cross the invisible bridge and view Glitch reel in the Forbidden Archive.
       categories: [ endless_canyon, forbidden_archive, dream_world ]
+      difficulty: 0.5
 
   GENERAL_ACTIVITIES:
     - text: Touch [2-4] Quantum Shards
       tooltip: You cannot get credit for the same location twice.
       categories: [ quantum ]
+      difficulty: 0.6
     - text: Light 3 Campfires
       tooltip: You cannot get credit for the same location twice.\nFor example Radio Tower, Gravity Crystal Workshop, Quantum Moon Locator.
       categories: [ campfire ]
+      difficulty: 1
     - text: Touch [2-4] clothes Nomai corpses
       tooltip: You cannot get credit for the same location twice.
       categories: [ skeleton ]
+      difficulty: 0.7
     - text: Touch [4-6] Nomai skeletons
       tooltip: You cannot get credit for the same location twice.
       categories: [ skeleton ]
+      difficulty: 0.5
     - text: Use oxigen as propellant
+      difficulty: 0.2
     - text: Talk to [2-4] Travelers.
       tooltip: You cannot get credit for the same traveler twice.
       categories: [ traveler ]
+      difficulty: 1
     - text: Translate text on [2-4] bodies
       tooltip: You cannot get credit for the same planet twice.
       categories: [ translate ]
+      difficulty: 0.2
     - text: Touch [2-4] travelers' ships
       tooltip: You cannot get credit for the same ship twice.
       categories: [ traveler ]
-    - text: Touch [1-3] distress beacon(s)
+      difficulty: 0.3
+    - text: Touch [2-3] distress beacons
       tooltip: You cannot get credit for the same beacon twice.
       categories: [ beacon ]
+      difficulty: 0.8
+    - text: Take any [2-4] warps
+      tooltip: You cannot get credit for the same warp twice. Back-warps are not counted.
+      categories: [ warp_pad ]
+      difficulty: 0.9
+    - text: Roast and eat marshmallows at [2-4] campfires
+      tooltip: May not be burned! You cannot get credit for the same campfire twice.
+      difficulty: 0.8
+    - text: Press the eject button
+      difficulty: 0.2
+    - text: Use [2-4] projection pools
+      tooltip: You cannot get credit for the same pool twice.
+      tags: [ projection_pool ]
+      difficulty: 0.9
   INCIDENTS:
     - text: Shock yourself or your ship
       categories: [ incident ]
+      difficulty: 0.7
     - text: Take fall damage
       categories: [ incident ]
+      difficulty: 0.2
     - text: Die by suffocating without your suit
       categories: [ die, incident ]
+      difficulty: 0.2
     - text: Die by suffocating while wearing your suit
       categories: [ die, incident ]
+      difficulty: 0.5
     - text: Die by burning (not in the starting campfire)
       categories: [ die, incident ]
+      difficulty: 0.5
     - text: Die by getting crushed
       categories: [ die, incident ]
+      difficulty: 0.2
     - text: Die from fall damage
       categories: [ die, incident ]
+      difficulty: 0.2
     - text: Die by drowning
       categories: [ die, incident ]
+      difficulty: 0.2
     - text: Die from ghost matter
       categories: [ die, incident ]
-    - text: Die from ghost matter
-      categories: [ die, incident ]
+      difficulty: 0.5
+    - text: Enter the Dream World by dying
+      categories: [ dream_world, die, incident ]
+      difficulty: 0.8
     - text: Die by falling into the sun
       categories: [ die, incident ]
+      difficulty: 0.3
     - text: Die on [PLANET]
       categories: [ die, incident ]
+      difficulty: 0.7
+    - text: Watch the Supernova with [TRAVELER]
+      tooltip: Must be arround the camp.
+      categories: [ die, incident ]
+      difficulty: 1
 
 categories:
   - categories: [ village, hearthian ]
@@ -685,7 +1037,7 @@ categories:
     min:
       absolute: 1
     max:
-      relative: 10
+      relative: 15
   - categories: [ dream_world ]
     max:
       relative: 5
@@ -708,8 +1060,13 @@ categories:
       relative: 10
     max:
       relative: 45
+  - categories: [ quantum_moon ]
+    max:
+      absolute: 3
   - categories: [ orbital_probe_cannon ]
     antisynergy: [ orbital_probe_cannon ]
+  - categories: [ vessel ]
+    antisynergy: [ vessel ]
   - categories: [ incident ]
     antisynergy: [ incident ]
     min:
@@ -717,6 +1074,3 @@ categories:
     max:
       absolute: 3
       relative: 8
-
-
-value providers:

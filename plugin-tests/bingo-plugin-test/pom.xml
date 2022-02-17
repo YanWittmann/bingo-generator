@@ -32,7 +32,7 @@
                             <active>true</active>
                             <width>5</width>
                             <height>5</height>
-                            <!--<difficulty>1</difficulty>-->
+                            <difficulty>0.5</difficulty>
                             <!--<seed>147</seed>-->
                             <!--<generationAttempts>147</generationAttempts>-->
                             <configurationFile>../../bingo-core/src/test/resources/bingo/generate/outer_wilds.yaml</configurationFile>

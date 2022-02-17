@@ -64,11 +64,26 @@ public class GenerateMojo extends AbstractMojo {
         if (generationAttempts > 0) {
             bingoGenerator.setMaxGenerationAttempts(generationAttempts);
         }
+        int difficultyType = -1;
         if (difficulty instanceof Double && ((Double) difficulty) > 0) {
             bingoGenerator.setDifficulty((Double) difficulty);
+            difficultyType = 1;
+        } else if (difficulty instanceof Integer && ((Integer) difficulty) > 0) {
+            bingoGenerator.setDifficulty((Integer) difficulty);
+            difficultyType = 2;
         } else if (difficulty instanceof String && !difficulty.equals("")) {
-            bingoGenerator.setDifficultyLevel((String) difficulty);
+            if (((String) difficulty).matches("[0-9]+")) {
+                bingoGenerator.setDifficulty(Integer.parseInt((String) difficulty));
+                difficultyType = 3;
+            } else if (((String) difficulty).matches("[0-9]+.?[0-9]*")) {
+                bingoGenerator.setDifficulty(Double.parseDouble((String) difficulty));
+                difficultyType = 4;
+            } else {
+                bingoGenerator.setDifficultyLevel((String) difficulty);
+                difficultyType = 5;
+            }
         }
+        getLog().info("Difficulty type: " + difficultyType);
         bingoGenerator.setWidth(width);
         bingoGenerator.setHeight(height);
         Random random;
