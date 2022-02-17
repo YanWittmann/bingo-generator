@@ -9,19 +9,19 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>plugin-test</artifactId>
+    <artifactId>bingo-plugin-test</artifactId>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <apiUrl></apiUrl>
+        <apiUrl>http://yanwittmann.de/projects/bingo/backend/</apiUrl>
     </properties>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>de.yanwittmann</groupId>
-                <artifactId>web-interface</artifactId>
+                <artifactId>bingo-web-interface</artifactId>
                 <version>1.0-SNAPSHOT</version>
                 <executions>
 
