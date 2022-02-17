@@ -14,7 +14,7 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <apiUrl>http://yanwittmann.de/projects/bingo/backend/</apiUrl>
+        <apiUrl></apiUrl>
     </properties>
 
     <build>
@@ -35,11 +35,11 @@
                             <active>true</active>
                             <width>5</width>
                             <height>5</height>
-                            <seed>147</seed>
-                            <generationAttempts>147</generationAttempts>
-                            <difficulty>1</difficulty>
-                            <configurationFile>D:\files\create\programming\projects\bingo-generator\bingo-core\src\test\resources\bingo\generate\outer_wilds.yaml</configurationFile>
-                            <outputFile>D:\files\create\programming\projects\bingo-generator\bingo-core\src\test\resources\bingo\load\outer_wilds.json</outputFile>
+                            <!--<difficulty>1</difficulty>-->
+                            <!--<seed>147</seed>-->
+                            <!--<generationAttempts>147</generationAttempts>-->
+                            <configurationFile>../bingo-core/src/test/resources/bingo/generate/outer_wilds.yaml</configurationFile>
+                            <outputFile>../bingo-core/src/test/resources/bingo/load/outer_wilds.json</outputFile>
                         </configuration>
                     </execution>
 
@@ -52,7 +52,7 @@
                         <configuration>
                             <active>false</active>
                             <apiUrl>${apiUrl}</apiUrl>
-                            <boardJson>D:\files\create\programming\projects\bingo-generator\bingo-core\src\test\resources\bingo\load\outer_wilds.json</boardJson>
+                            <boardJson>../bingo-core/src/test/resources/bingo/load/outer_wilds.json</boardJson>
                         </configuration>
                     </execution>
 
