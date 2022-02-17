@@ -2,19 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>multiplayer-bingo</artifactId>
-        <groupId>de.yanwittmann</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>bingo-plugin-test</artifactId>
+    <groupId>de.yanwittmann</groupId>
+    <version>1.0-SNAPSHOT</version>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <apiUrl>http://yanwittmann.de/projects/bingo/backend/</apiUrl>
+        <apiUrl></apiUrl>
     </properties>
 
     <build>
@@ -38,8 +35,8 @@
                             <!--<difficulty>1</difficulty>-->
                             <!--<seed>147</seed>-->
                             <!--<generationAttempts>147</generationAttempts>-->
-                            <configurationFile>../bingo-core/src/test/resources/bingo/generate/outer_wilds.yaml</configurationFile>
-                            <outputFile>../bingo-core/src/test/resources/bingo/load/outer_wilds.json</outputFile>
+                            <configurationFile>../../bingo-core/src/test/resources/bingo/generate/outer_wilds.yaml</configurationFile>
+                            <outputFile>../../bingo-core/src/test/resources/bingo/load/outer_wilds.json</outputFile>
                         </configuration>
                     </execution>
 
@@ -52,7 +49,7 @@
                         <configuration>
                             <active>false</active>
                             <apiUrl>${apiUrl}</apiUrl>
-                            <boardJson>../bingo-core/src/test/resources/bingo/load/outer_wilds.json</boardJson>
+                            <boardJson>../../bingo-core/src/test/resources/bingo/load/outer_wilds.json</boardJson>
                         </configuration>
                     </execution>
 
