@@ -315,6 +315,27 @@ function setBoardVisible(visible) {
     }
 }
 
+function isFullWidthBoard() {
+    return hasLocalStorage('fullWidthBoard') && getLocalStorage('fullWidthBoard') === 'true';
+}
+
+function toggleFullWidthBoard() {
+    if (isFullWidthBoard()) {
+        setLocalStorage('fullWidthBoard', 'false');
+    } else {
+        setLocalStorage('fullWidthBoard', 'true');
+    }
+    applyFullWidthBoard();
+}
+
+function applyFullWidthBoard() {
+    if (isFullWidthBoard()) {
+        document.getElementById('bingo-container').classList.add('full-width');
+    } else {
+        document.getElementById('bingo-container').classList.remove('full-width');
+    }
+}
+
 function case_insensitive_comp(strA, strB) {
     return strA.toLowerCase().localeCompare(strB.toLowerCase());
 }
@@ -337,12 +358,22 @@ function init() {
     if (hasLocalStorage('boardId')) {
         loadBoard(getLocalStorage('boardId'));
     }
+
     if (hasLocalStorage('bingoColor')) {
         switchColor(getLocalStorage('bingoColor'));
     } else {
         switchColor('red');
     }
+
     setInterval(updateClaims, 10000);
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            loadBoardFromInput();
+        }
+    });
+
+    applyFullWidthBoard();
 }
 
 // call the init function when the page is loaded

@@ -48,7 +48,7 @@ h1 {
     table-layout: fixed;
 }
 
-#bingo-container {
+#bingo-container:not(.full-width) {
     max-width: 1000px;
 }
 

@@ -1038,7 +1038,7 @@ categories:
       absolute: 2
   - categories: [ arbitrary_travel ]
     min:
-      absolute: 1
+      absolute: 2
     max:
       relative: 15
   - categories: [ dream_world ]
