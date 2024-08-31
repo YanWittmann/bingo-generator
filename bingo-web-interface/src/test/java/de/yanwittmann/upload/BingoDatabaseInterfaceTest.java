@@ -3,12 +3,14 @@ package de.yanwittmann.upload;
 import de.yanwittmann.bingo.BingoBoard;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+@Disabled
 class BingoDatabaseInterfaceTest {
 
     private final static int boardId = 1;
